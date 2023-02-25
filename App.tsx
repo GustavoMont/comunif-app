@@ -23,11 +23,10 @@ import {
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
 
-function HomeScreen() {
+function Placeholder() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>Essa tela ainda não existe</Text>
     </View>
   );
 }
@@ -62,8 +61,9 @@ function App() {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Sign In" component={SignIn} />
-              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Sign up" component={SignIn} />
+              <Stack.Screen name="Forgot password" component={Placeholder} />
+              <Stack.Screen name="Home" component={Placeholder} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>

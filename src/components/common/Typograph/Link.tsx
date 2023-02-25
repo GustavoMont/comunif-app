@@ -3,12 +3,20 @@ import React from "react";
 import { Typograph } from "../../../types/components/Typograph";
 import { BodyText } from "./BodyText";
 import { Title } from "./Title";
+import { Link as Navigator } from "@react-navigation/native";
 
-interface Props extends TextProps, Typograph {
-  type: "title" | "text";
+type linkType = "title" | "text";
+
+interface LinkStyleProps extends TextProps, Typograph {
+  type: linkType;
 }
 
-export const Link: React.FC<Props> = ({ type, ...props }) => {
+interface Props extends LinkStyleProps {
+  screen: string;
+  params?: any;
+}
+
+const LinkStyleHandler = ({ type, ...props }: LinkStyleProps) => {
   switch (type) {
     case "text":
       return (
@@ -19,4 +27,12 @@ export const Link: React.FC<Props> = ({ type, ...props }) => {
     default:
       throw new Error("You must pass a text type");
   }
+};
+
+export const Link: React.FC<Props> = ({ params, screen, align, ...props }) => {
+  return (
+    <Navigator style={{ textAlign: align || "left" }} to={{ screen, params }}>
+      <LinkStyleHandler {...props} />
+    </Navigator>
+  );
 };

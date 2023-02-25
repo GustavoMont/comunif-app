@@ -33,7 +33,13 @@ const Login = () => {
             <TextInput placeholder="insira seu username ou email" />
             <FlexGap style={{ width: "100%" }} gap={8}>
               <PasswordInput placeholder="insira sua senha" />
-              <Link type="text" size={14} color="secondary" align="right">
+              <Link
+                screen="Forgot password"
+                type="text"
+                size={14}
+                color="secondary"
+                align="right"
+              >
                 Esqueceu sua senha?
               </Link>
             </FlexGap>
@@ -46,7 +52,7 @@ const Login = () => {
               <BodyText size={14} color="darkWhite">
                 Ainda não possui conta?
               </BodyText>
-              <Link type="text" size={14} color="secondary">
+              <Link screen="Sign up" type="text" size={14} color="secondary">
                 Cadastre-se
               </Link>
             </FlexGap>
