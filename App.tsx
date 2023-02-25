@@ -5,9 +5,8 @@ import { Platform, StyleSheet, Text, UIManager, View } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
-import SignIn from "./src/screens/SignIn";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Login from "./src/screens/Login";
+import Login from "./src/screens/Login/Login";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -22,6 +21,7 @@ import {
   Poppins_600SemiBold,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
+import Signup from "./src/screens/Signup/Signup";
 
 function Placeholder() {
   return (
@@ -61,7 +61,7 @@ function App() {
           <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Sign up" component={SignIn} />
+              <Stack.Screen name="Sign up" component={Signup} />
               <Stack.Screen name="Forgot password" component={Placeholder} />
               <Stack.Screen name="Home" component={Placeholder} />
             </Stack.Navigator>

@@ -2,11 +2,11 @@ import React from "react";
 import { render, screen } from "@testing-library/react-native";
 import Login from "../Login";
 import { ThemeProvider } from "styled-components/native";
-import { light } from "../../styles/themes/light";
-import "../../components/common/Typograph/Link";
+import { light } from "../../../styles/themes/light";
+import "../../../components/common/Typograph/Link";
 
-jest.mock("../../components/common/Typograph/Link", () => ({
-  ...jest.requireActual("../../components/common/Typograph/Link"),
+jest.mock("../../../components/common/Typograph/Link", () => ({
+  ...jest.requireActual("../../../components/common/Typograph/Link"),
   Link({ children, ...props }: any) {
     const { Text } = require("react-native");
     return <Text {...props}>{children}</Text>;

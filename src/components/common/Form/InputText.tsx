@@ -1,9 +1,14 @@
+import React from "react";
+import { TextInputProps, View } from "react-native";
 import styled from "styled-components/native";
+import { BodyText } from "../Typograph/BodyText";
 
-export const TextInput = styled.TextInput.attrs(({ theme, ...props }) => ({
-  placeholderTextColor: theme.input.placeholderColor,
-  ...props,
-}))`
+const Input = styled.TextInput.attrs(({ theme, ...props }) => {
+  return {
+    placeholderTextColor: theme.input.placeholderColor,
+    ...props,
+  };
+})`
   border: 1.5px solid ${({ theme }) => theme.input.borderColor};
   border-radius: 4px;
   width: 100%;
@@ -12,3 +17,16 @@ export const TextInput = styled.TextInput.attrs(({ theme, ...props }) => ({
   font-size: ${({ theme }) => theme.input.fontSize}px;
   color: ${({ theme }) => theme.input.color};
 `;
+
+interface InputProps extends TextInputProps {
+  label?: string;
+}
+
+export const TextInput: React.FC<InputProps> = ({ label, style, ...props }) => {
+  return (
+    <View style={[{ width: "100%" }, style]}>
+      {label && <BodyText style={{ width: "100%" }}>{label}</BodyText>}
+      <Input {...props} />
+    </View>
+  );
+};

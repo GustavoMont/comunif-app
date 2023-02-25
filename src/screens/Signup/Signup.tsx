@@ -1,17 +1,12 @@
-import React from "react";
 import { Dimensions } from "react-native";
-import { CircleProps } from "../types/components/BackgroundCircle";
-import BackgroundCircle from "../components/common/Layout/BackgroundCircle";
+import React from "react";
+import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
+import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
+import { FlexGap } from "../../components/common/Layout/FlexGap";
+import { Title } from "../../components/common/Typograph/Title";
 import styled from "styled-components/native";
-import { TextInput } from "../components/common/Form/InputText";
-import { PasswordInput } from "../components/common/Form/PasswordInput";
-import { Button } from "../components/common/Buttons/Button";
-import { FullScreenContainer } from "../components/common/Layout/FullScreenContainer";
-import { FlexGap } from "../components/common/Layout/FlexGap";
-import { Title } from "../components/common/Typograph/Title";
-import { BodyText } from "../components/common/Typograph/BodyText";
-import { ButtonText } from "../components/common/Buttons/ButtonText";
-import { Link } from "../components/common/Typograph/Link";
+import { CircleProps } from "../../types/components/BackgroundCircle";
+import { UserInfoStep } from "./Steps/UserInfoStep";
 
 interface HandlePositionParams {
   size: number;
@@ -21,40 +16,17 @@ interface HandlePositionParams {
 const handlePosition = ({ size, showPercentage }: HandlePositionParams) =>
   -size + size * showPercentage;
 
-const Login = () => {
+const Signup: React.FC = () => {
   return (
     <FullScreenContainer>
       <BackgroundCircle circles={cicles}>
         <Container>
           <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
             <Title color="primary" size={32}>
-              Login
+              Cadastro
             </Title>
-            <TextInput placeholder="insira seu username ou email" />
-            <FlexGap style={{ width: "100%" }} gap={8}>
-              <PasswordInput placeholder="insira sua senha" />
-              <Link
-                screen="Forgot password"
-                type="text"
-                size={14}
-                color="secondary"
-                align="right"
-              >
-                Esqueceu sua senha?
-              </Link>
-            </FlexGap>
-            <Button>
-              <ButtonText size={20} color="white">
-                Login
-              </ButtonText>
-            </Button>
-            <FlexGap direction="row" gap={4}>
-              <BodyText size={14} color="darkWhite">
-                Ainda não possui conta?
-              </BodyText>
-              <Link screen="Sign up" type="text" size={14} color="secondary">
-                Cadastre-se
-              </Link>
+            <FlexGap gap={16} style={{ width: "100%" }}>
+              <UserInfoStep />
             </FlexGap>
           </FlexGap>
         </Container>
@@ -126,4 +98,4 @@ const cicles: CircleProps[] = [
   },
 ];
 
-export default Login;
+export default Signup;
