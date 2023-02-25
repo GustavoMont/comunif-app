@@ -1,5 +1,5 @@
-import { Dimensions } from "react-native";
 import React from "react";
+import { Dimensions } from "react-native";
 import { CircleProps } from "../types/components/BackgroundCircle";
 import BackgroundCircle from "../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
@@ -11,6 +11,7 @@ import { FlexGap } from "../components/common/Layout/FlexGap";
 import { Title } from "../components/common/Typograph/Title";
 import { BodyText } from "../components/common/Typograph/BodyText";
 import { ButtonText } from "../components/common/Buttons/ButtonText";
+import { Link } from "../components/common/Typograph/Link";
 
 interface HandlePositionParams {
   size: number;
@@ -32,9 +33,9 @@ const Login = () => {
             <TextInput placeholder="insira seu username ou email" />
             <FlexGap style={{ width: "100%" }} gap={8}>
               <PasswordInput placeholder="insira sua senha" />
-              <BodyText size={14} color="secondary" align="right">
+              <Link type="text" size={14} color="secondary" align="right">
                 Esqueceu sua senha?
-              </BodyText>
+              </Link>
             </FlexGap>
             <Button>
               <ButtonText size={20} color="white">
@@ -45,9 +46,9 @@ const Login = () => {
               <BodyText size={14} color="darkWhite">
                 Ainda não possui conta?
               </BodyText>
-              <BodyText size={14} color="secondary">
+              <Link type="text" size={14} color="secondary">
                 Cadastre-se
-              </BodyText>
+              </Link>
             </FlexGap>
           </FlexGap>
         </Container>
