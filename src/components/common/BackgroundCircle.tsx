@@ -1,7 +1,7 @@
-import { FlatList, Text, View } from "react-native";
-import React, { Component } from "react";
+import React from "react";
+import { LayoutAnimation } from "react-native";
 import styled from "styled-components/native";
-import { colorKeyType } from "../../types/colors";
+import { CircleProps } from "../../types/components/BackgroundCircle";
 
 const Container = styled.View`
   position: relative;
@@ -10,19 +10,6 @@ const Container = styled.View`
   flex: 1;
   overflow: hidden;
 `;
-
-interface Position {
-  top?: number;
-  left?: number;
-  bottom?: number;
-  right?: number;
-}
-
-interface CircleProps {
-  size: number;
-  position: Position;
-  color: colorKeyType;
-}
 
 const Circle = styled.View<CircleProps>`
   width: ${({ size }) => `${size}px`};
@@ -34,7 +21,7 @@ const Circle = styled.View<CircleProps>`
     bottom !== undefined ? `bottom: ${bottom}px` : ""}
   ${({ position: { right } }) =>
     right !== undefined ? `right: ${right}px` : ""}
-  
+
   border-radius: ${({ size }) => `${size / 2}px`};
   background-color: ${({ theme, color }) => theme.colors[color]};
 `;
@@ -45,10 +32,13 @@ interface Props {
 }
 
 const BackgroundCircle: React.FC<Props> = ({ children, circles }) => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+
   return (
     <Container>
       {circles.map((circle, i) => (
         <Circle
+          style={{ top: circle.position.top }}
           key={i}
           position={circle.position}
           color={circle.color}
