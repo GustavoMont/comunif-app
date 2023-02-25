@@ -1,13 +1,16 @@
-import { Text, Dimensions, View } from "react-native";
+import { Dimensions } from "react-native";
 import React from "react";
-import { FullScreenContainer } from "../components/common/FullScreenContainer";
 import { CircleProps } from "../types/components/BackgroundCircle";
-import BackgroundCircle from "../components/common/BackgroundCircle";
+import BackgroundCircle from "../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
-import { H2 } from "../components/common/Typograph/H2";
 import { TextInput } from "../components/common/Form/InputText";
 import { PasswordInput } from "../components/common/Form/PasswordInput";
 import { Button } from "../components/common/Buttons/Button";
+import { FullScreenContainer } from "../components/common/Layout/FullScreenContainer";
+import { FlexGap } from "../components/common/Layout/FlexGap";
+import { Title } from "../components/common/Typograph/Title";
+import { BodyText } from "../components/common/Typograph/BodyText";
+import { ButtonText } from "../components/common/Buttons/ButtonText";
 
 interface HandlePositionParams {
   size: number;
@@ -22,16 +25,31 @@ const Login = () => {
     <FullScreenContainer>
       <BackgroundCircle circles={cicles}>
         <Container>
-          <H2>Login</H2>
-          <TextInput placeholder="insira seu username ou email" />
-          <PasswordInput placeholder="insira sua senha" />
-          <Button>
-            <Text>Login</Text>
-          </Button>
-          <View>
-            <Text>Esqueceu sua senha?</Text>
-            <Text>Ainda não possui conta?</Text>
-          </View>
+          <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
+            <Title color="primary" size={32}>
+              Login
+            </Title>
+            <TextInput placeholder="insira seu username ou email" />
+            <FlexGap style={{ width: "100%" }} gap={8}>
+              <PasswordInput placeholder="insira sua senha" />
+              <BodyText size={14} color="secondary" align="right">
+                Esqueceu sua senha?
+              </BodyText>
+            </FlexGap>
+            <Button>
+              <ButtonText size={20} color="white">
+                Login
+              </ButtonText>
+            </Button>
+            <FlexGap direction="row" gap={4}>
+              <BodyText size={14} color="darkWhite">
+                Ainda não possui conta?
+              </BodyText>
+              <BodyText size={14} color="secondary">
+                Cadastre-se
+              </BodyText>
+            </FlexGap>
+          </FlexGap>
         </Container>
       </BackgroundCircle>
     </FullScreenContainer>
@@ -42,7 +60,7 @@ const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  border: 2px solid red;
+  padding: 16px;
 `;
 
 const height = Dimensions.get("window").height;

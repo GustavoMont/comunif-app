@@ -9,6 +9,20 @@ import SignIn from "./src/screens/SignIn";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Login from "./src/screens/Login";
 import colors from "./src/styles/themes/colors";
+import { useFonts } from "expo-font";
+import {
+  Montserrat_500Medium,
+  Montserrat_300Light,
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+} from "@expo-google-fonts/montserrat";
+import {
+  Poppins_300Light,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_400Regular,
+} from "@expo-google-fonts/poppins";
+
 function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -21,6 +35,19 @@ function HomeScreen() {
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_300: Poppins_300Light,
+    Poppins_400: Poppins_400Regular,
+    Poppins_500: Poppins_500Medium,
+    Poppins_600: Poppins_600SemiBold,
+    Montserrat_300: Montserrat_300Light,
+    Montserrat_400: Montserrat_400Regular,
+    Montserrat_500: Montserrat_500Medium,
+    Montserrat_600: Montserrat_600SemiBold,
+  });
+  if (!fontsLoaded) {
+    return <></>;
+  }
   if (
     Platform.OS === "android" &&
     UIManager.setLayoutAnimationEnabledExperimental

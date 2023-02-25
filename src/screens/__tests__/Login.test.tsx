@@ -18,5 +18,6 @@ describe("Login screen", () => {
     expect(screen.getByPlaceholderText(/sua senha/gi)).toBeOnTheScreen();
     expect(screen.getByText(/Esqueceu sua senha?/gi)).toBeOnTheScreen();
     expect(screen.getByText(/Ainda não possui conta?/gi)).toBeOnTheScreen();
+    expect(screen.getByText(/Cadastre-se/gi)).toBeOnTheScreen();
   });
 });

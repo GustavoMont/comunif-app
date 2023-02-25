@@ -1,7 +1,7 @@
 import React from "react";
 import { LayoutAnimation } from "react-native";
 import styled from "styled-components/native";
-import { CircleProps } from "../../types/components/BackgroundCircle";
+import { CircleProps } from "../../../types/components/BackgroundCircle";
 
 const Container = styled.View`
   position: relative;
