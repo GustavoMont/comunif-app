@@ -18,7 +18,7 @@ const Input = styled.TextInput.attrs(({ theme, ...props }) => {
   color: ${({ theme }) => theme.input.color};
 `;
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
   label?: string;
 }
 

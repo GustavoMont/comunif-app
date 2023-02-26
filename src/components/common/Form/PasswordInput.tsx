@@ -1,7 +1,6 @@
 import React from "react";
-import { TextInputProps } from "react-native";
-import { TextInput } from "./InputText";
+import { InputProps, TextInput } from "./InputText";
 
-export const PasswordInput: React.FC<TextInputProps> = (props) => {
+export const PasswordInput: React.FC<InputProps> = (props) => {
   return <TextInput {...props} secureTextEntry />;
 };

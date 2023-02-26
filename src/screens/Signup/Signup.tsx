@@ -6,7 +6,8 @@ import { FlexGap } from "../../components/common/Layout/FlexGap";
 import { Title } from "../../components/common/Typograph/Title";
 import styled from "styled-components/native";
 import { CircleProps } from "../../types/components/BackgroundCircle";
-import { UserInfoStep } from "./Steps/UserInfoStep";
+import { PasswordStep } from "./Steps/PasswordStep";
+import { ComunitiesStep } from "./Steps/ComunitiesStep";
 
 interface HandlePositionParams {
   size: number;
@@ -26,7 +27,7 @@ const Signup: React.FC = () => {
               Cadastro
             </Title>
             <FlexGap gap={16} style={{ width: "100%" }}>
-              <UserInfoStep />
+              <ComunitiesStep />
             </FlexGap>
           </FlexGap>
         </Container>

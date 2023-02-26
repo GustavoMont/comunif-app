@@ -2,7 +2,9 @@ import { render, screen } from "@testing-library/react-native";
 import React from "react";
 import { ThemeProvider } from "styled-components/native";
 import { light } from "../../../styles/themes/light";
+import { ComunitiesStep } from "../Steps/ComunitiesStep";
 import { NameStep } from "../Steps/NameStep";
+import { PasswordStep } from "../Steps/PasswordStep";
 import { UserInfoStep } from "../Steps/UserInfoStep";
 
 describe("Test Signup steps", () => {
@@ -40,6 +42,36 @@ describe("Test Signup steps", () => {
       expect(
         screen.getByPlaceholderText(/Digite seu e-mail/)
       ).toBeOnTheScreen();
+    });
+  });
+  describe("Third step", () => {
+    it("should contain all text", () => {
+      render(
+        <ThemeProvider theme={light}>
+          <PasswordStep />
+        </ThemeProvider>
+      );
+      expect(screen.getByText(/Senha:/)).toBeOnTheScreen();
+      expect(screen.getByText(/Confirmar senha:/)).toBeOnTheScreen();
+      expect(
+        screen.getAllByPlaceholderText(/Digite uma senha forte/)
+      ).toHaveLength(2);
+    });
+  });
+  describe("Fourth step", () => {
+    it("should contain all text", () => {
+      render(
+        <ThemeProvider theme={light}>
+          <ComunitiesStep />
+        </ThemeProvider>
+      );
+      expect(
+        screen.getByText(/Quais comunidades você tem interesse:/)
+      ).toBeOnTheScreen();
+      expect(
+        screen.getByText(/Nenhuma comunidade selecionada/)
+      ).toBeOnTheScreen();
+      expect(screen.getByText(/Selecione uma opção/)).toBeOnTheScreen();
     });
   });
 });
