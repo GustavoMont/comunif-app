@@ -6,6 +6,20 @@ import { ComunitiesStep } from "../Steps/ComunitiesStep";
 import { NameStep } from "../Steps/NameStep";
 import { PasswordStep } from "../Steps/PasswordStep";
 import { UserInfoStep } from "../Steps/UserInfoStep";
+import "react-native-dropdown-picker";
+
+jest.mock(
+  "react-native-dropdown-picker",
+  () =>
+    ({ placeholder, ...props }: any) => {
+      const { Text, View } = require("react-native");
+      return (
+        <View>
+          <Text>{placeholder}</Text>
+        </View>
+      );
+    }
+);
 
 describe("Test Signup steps", () => {
   describe("First step", () => {
@@ -66,7 +80,10 @@ describe("Test Signup steps", () => {
         </ThemeProvider>
       );
       expect(
-        screen.getByText(/Quais comunidades você tem interesse:/)
+        screen.getByText(/Quais comunidades você tem interesse?/)
+      ).toBeOnTheScreen();
+      expect(
+        screen.getByText(/Nenhuma comunidade selecionada/)
       ).toBeOnTheScreen();
       expect(
         screen.getByText(/Nenhuma comunidade selecionada/)
