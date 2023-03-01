@@ -24,5 +24,15 @@ declare module "styled-components" {
       borderColor: string;
     };
     fonts: fonts;
+    icons: {
+      size: {
+        small: number;
+        medium: number;
+        large: number;
+      };
+      color: {
+        button: string;
+      };
+    };
   }
 }

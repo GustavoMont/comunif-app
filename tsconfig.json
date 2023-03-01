@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@screens/*": ["./src/screens/*"]
+      "@screens/*": ["./src/screens/*"],
+      "@styles/*": ["./src/styles/*"]
     },
     "types": [
       "styled-components-react-native",

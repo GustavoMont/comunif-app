@@ -1,15 +1,48 @@
-import {} from "react-native";
+import { ControledInput } from "@components/common/Form/ControledInput";
+import { FlexGap } from "@components/common/Layout/FlexGap";
 import React from "react";
+import { Control, Controller } from "react-hook-form";
 import { TextInput } from "../../../components/common/Form/InputText";
+import { RegisterPayload } from "../Signup";
 
-export const NameStep = () => {
+interface Props {
+  control: Control<RegisterPayload>;
+}
+
+export const NameStep: React.FC<Props> = ({ control }) => {
   return (
-    <>
-      <TextInput
-        label="Primeiro nome:"
-        placeholder="Digite aqui seu primeiro nome"
+    <FlexGap gap={16}>
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            label="Nome:"
+          />
+        )}
+        name="name"
       />
-      <TextInput label="Sobrenome:" placeholder="Digite seu sobre nome" />
-    </>
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            label="Sobrenom"
+          />
+        )}
+        name="lastName"
+      />
+    </FlexGap>
   );
 };

@@ -6,10 +6,12 @@
   },
 
   "extends": [
+    "react",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:testing-library/react"
+    "plugin:testing-library/react",
+    "plugin:@typescript-eslint/recommended"
   ],
   "overrides": [
     {
@@ -29,11 +31,12 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["testing-library", "react", "@typescript-eslint"],
+  "plugins": ["testing-library", "@typescript-eslint", "react"],
   "rules": {
     "testing-library/await-async-query": "error",
     "testing-library/no-await-sync-query": "error",
     "testing-library/no-debugging-utils": "warn",
-    "testing-library/no-dom-import": "off"
+    "testing-library/no-dom-import": "off",
+    "react/no-array-index-key": "warn"
   }
 }

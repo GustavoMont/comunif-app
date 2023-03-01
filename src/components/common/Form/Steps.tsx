@@ -1,3 +1,4 @@
+import React from "react";
 import { colorKeyType } from "src/types/colors";
 import styled from "styled-components/native";
 import { FlexGap } from "../Layout/FlexGap";
@@ -10,6 +11,7 @@ interface CircleProps {
 }
 
 type handlStepColorType = (status: statusType) => colorKeyType;
+
 const handleStepColor: handlStepColorType = (status: statusType) => {
   switch (status) {
     case "progress":
@@ -39,18 +41,47 @@ const Pill = styled.View<CircleProps>`
 
 interface Props {
   size: number;
-  steps: { status: statusType }[];
+  stepsQuantity: number;
+  currentStep: number;
 }
 
-export const Steps: React.FC<Props> = ({ size, steps }) => {
+export const Steps: React.FC<Props> = ({
+  size,
+  stepsQuantity,
+  currentStep,
+}) => {
+  type handleStepStatus = (currentStep: number, index: number) => statusType;
+
+  const handleStepStatus: handleStepStatus = (
+    currentStep: number,
+    index: number
+  ) => {
+    if (index === currentStep) {
+      return "progress";
+    } else if (index < currentStep) {
+      return "done";
+    } else {
+      return "todo";
+    }
+  };
   return (
     <FlexGap gap={2} direction="row">
-      {steps.map(({ status }, i, steps) => (
-        <FlexGap gap={2} direction="row" style={{ alignItems: "center" }}>
-          <Circle size={size} status={status} />
-          {i < steps.length - 1 && <Pill size={size} status={status} />}
-        </FlexGap>
-      ))}
+      {Array.from({ length: stepsQuantity }, () => Math.random()).map(
+        (step, i, steps) => {
+          const status = handleStepStatus(currentStep, i);
+          return (
+            <FlexGap
+              key={i}
+              gap={2}
+              direction="row"
+              style={{ alignItems: "center" }}
+            >
+              <Circle size={size} status={status} />
+              {i < steps.length - 1 && <Pill size={size} status={status} />}
+            </FlexGap>
+          );
+        }
+      )}
     </FlexGap>
   );
 };

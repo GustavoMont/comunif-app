@@ -16,6 +16,7 @@ const Input = styled.TextInput.attrs(({ theme, ...props }) => {
   font-family: ${({ theme }) => theme.fonts.text[500]};
   font-size: ${({ theme }) => theme.input.fontSize}px;
   color: ${({ theme }) => theme.input.color};
+  background-color: ${({ theme }) => theme.colors["white"]};
 `;
 
 export interface InputProps extends TextInputProps {

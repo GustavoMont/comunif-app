@@ -13,4 +13,14 @@ export const light: DefaultTheme = {
     placeholderColor: colors.darkWhite,
     borderColor: colors.lightBlack + "bb",
   },
+  icons: {
+    color: {
+      button: colors.white,
+    },
+    size: {
+      small: 16,
+      medium: 24,
+      large: 36,
+    },
+  },
 };
