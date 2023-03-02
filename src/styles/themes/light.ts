@@ -12,6 +12,7 @@ export const light: DefaultTheme = {
     color: colors.lightBlack,
     placeholderColor: colors.darkWhite,
     borderColor: colors.lightBlack + "bb",
+    backgroundColor: colors.white,
   },
   icons: {
     color: {

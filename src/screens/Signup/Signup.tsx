@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import { Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
 import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
@@ -15,6 +15,9 @@ import { UserInfoStep } from "./Steps/UserInfoStep";
 import { Button } from "@components/common/Buttons/Button";
 import { ChevronRightIcon, CheckIcon } from "react-native-heroicons/outline";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import moment from "moment";
 interface HandlePositionParams {
   size: number;
   showPercentage: number;
@@ -24,62 +27,106 @@ export interface RegisterPayload {
   name: string;
   lastName: string;
   email: string;
+  username: string;
   birthday: Date;
   password: string;
   confirmPassword: string;
 }
+
+const userInfoSchema = yup
+  .object({
+    birthday: yup.date().test("Tem que ter no mínimo 15 anos", (value) => {
+      const minDate = moment().subtract(15, "year");
+      return moment(value).isBefore(minDate);
+    }),
+    email: yup
+      .string()
+      .email("Insira um e-mail válido")
+      .required("E-mail é um campo obrigatório")
+      .min(3, "Nome tem que ter no mínimo 3 caracteres"),
+    username: yup
+      .string()
+      .required("Nome de usuário é obrigatório")
+      .matches(/^[a-zA-Z0-9_]+$/, "Nome de usuário inválido")
+      .min(3, "Nome de usuário deve ter pelo menos 3 caracteres")
+      .max(30, "Nome de usuário deve ter no máximo 30 caracteres"),
+  })
+  .required();
+
+const nameSchema = yup
+  .object({
+    name: yup.string().required("Nome é um campo obrigatório"),
+    lastName: yup.string().required().min(3),
+  })
+  .required();
+
+const schemas = [nameSchema, userInfoSchema];
+
 const Signup: React.FC = () => {
-  const { control, handleSubmit } = useForm<RegisterPayload>();
   const { icons } = useTheme();
   const [activeStep, setActiveStep] = useState<number>(0);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterPayload>({
+    resolver: yupResolver(schemas[1]),
+  });
   const steps = [
-    <NameStep control={control} />,
-    <UserInfoStep />,
+    // <NameStep control={control} />,
+    <UserInfoStep control={control} />,
     <PasswordStep />,
     <ComunitiesStep />,
   ];
-  const onSubmit = (data: RegisterPayload) => console.log(data);
+  console.log(errors);
+
+  const onSubmit = (data: RegisterPayload) => {
+    setActiveStep((prev) => (prev + 1) % steps.length);
+    console.log(data);
+  };
   const isLast = steps.length <= activeStep + 1;
   return (
     <FullScreenContainer>
       <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
-        <Container>
-          <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
-            <Title color="primary" size={32}>
-              Cadastro
-            </Title>
-            <FlexGap gap={16} style={{ width: "100%" }}>
-              <StepHandler steps={steps} activeStep={activeStep} />
-              <Button
-                onPress={handleSubmit(onSubmit)}
-                minSize
-                rightIcon={
-                  isLast ? (
-                    <CheckIcon
-                      size={icons.size.medium}
-                      color={icons.color.button}
-                    />
-                  ) : (
-                    <ChevronRightIcon
-                      size={icons.size.medium}
-                      color={icons.color.button}
-                    />
-                  )
-                }
-                style={{ alignSelf: "flex-end" }}
-              >
-                <BodyText color="white">
-                  {isLast ? "Finalizar" : "Avançar"}
-                </BodyText>
-              </Button>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Container>
+            <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
+              <Title color="primary" size={32}>
+                Cadastro
+              </Title>
+              <FlexGap gap={16} style={{ width: "100%" }}>
+                <StepHandler steps={steps} activeStep={activeStep} />
+                <Button
+                  onPress={handleSubmit(onSubmit)}
+                  minSize
+                  rightIcon={
+                    isLast ? (
+                      <CheckIcon
+                        size={icons.size.medium}
+                        color={icons.color.button}
+                      />
+                    ) : (
+                      <ChevronRightIcon
+                        size={icons.size.medium}
+                        color={icons.color.button}
+                      />
+                    )
+                  }
+                  style={{ alignSelf: "flex-end" }}
+                >
+                  <BodyText color="white">
+                    {isLast ? "Finalizar" : "Avançar"}
+                  </BodyText>
+                </Button>
+              </FlexGap>
+              <Steps
+                size={(width * 0.5) / 4}
+                currentStep={activeStep}
+                stepsQuantity={steps.length}
+              />
             </FlexGap>
-            <Steps
-              size={(width * 0.5) / 4}
-              currentStep={activeStep}
-              stepsQuantity={steps.length}
-            />
-          </FlexGap>
-        </Container>
+          </Container>
+        </TouchableWithoutFeedback>
       </BackgroundCircle>
     </FullScreenContainer>
   );

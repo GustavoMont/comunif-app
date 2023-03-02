@@ -1,5 +1,5 @@
 import "styled-components";
-import { colorType } from "../types/colors";
+import { colorKeyType, colorType } from "../types/colors";
 
 type fontWeight = {
   600: string;
@@ -22,6 +22,7 @@ declare module "styled-components" {
       color: string;
       placeholderColor: string;
       borderColor: string;
+      backgroundColor: string;
     };
     fonts: fonts;
     icons: {
