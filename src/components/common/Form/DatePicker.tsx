@@ -38,6 +38,7 @@ interface Props extends BaseProps, ContainerStyleProps {
 }
 
 export const DatePicker: React.FC<Props> = ({
+  testID,
   icon,
   label,
   value,
@@ -48,27 +49,21 @@ export const DatePicker: React.FC<Props> = ({
   const { icons, input } = useTheme();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const handleChange = ({ nativeEvent }: DateTimePickerEvent) => {
+    setShowDatePicker(false);
     const date = moment(nativeEvent.timestamp).toDate();
     onChange && onChange(date);
-    setShowDatePicker(false);
   };
   return (
     <>
-      {showDatePicker && (
-        <RNDateTimePicker
-          {...props}
-          value={value || moment().toDate()}
-          onChange={handleChange}
-        />
-      )}
       <TouchableWithoutFeedback
+        testID={testID || ""}
         onPress={() => {
           setShowDatePicker(true);
         }}
       >
         <Container>
           {label && <BodyText>{label}</BodyText>}
-          <Input>
+          <Input testID="date-picker-input">
             <FlexGap
               gap={4}
               direction="row"
@@ -83,12 +78,20 @@ export const DatePicker: React.FC<Props> = ({
                   color: value ? colors["black"] : input.placeholderColor,
                 }}
               >
-                {value ? moment(value).format("DD/MM/YY") : "Escolha uma data"}
+                {moment(value).format("DD/MM/YY")}
               </BodyText>
             </FlexGap>
           </Input>
         </Container>
       </TouchableWithoutFeedback>
+      {showDatePicker && (
+        <RNDateTimePicker
+          testID="date-picker"
+          {...props}
+          value={value || moment().toDate()}
+          onChange={handleChange}
+        />
+      )}
     </>
   );
 };

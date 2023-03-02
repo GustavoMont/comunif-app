@@ -70,10 +70,10 @@ const Signup: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterPayload>({
-    resolver: yupResolver(schemas[1]),
+    resolver: yupResolver(schemas[activeStep]),
   });
   const steps = [
-    // <NameStep control={control} />,
+    <NameStep control={control} />,
     <UserInfoStep control={control} />,
     <PasswordStep />,
     <ComunitiesStep />,

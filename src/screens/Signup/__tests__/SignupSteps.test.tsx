@@ -1,12 +1,15 @@
-import { render, screen } from "@testing-library/react-native";
 import React from "react";
+import { render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "styled-components/native";
 import { light } from "../../../styles/themes/light";
 import { ComunitiesStep } from "../Steps/ComunitiesStep";
 import { NameStep } from "../Steps/NameStep";
 import { PasswordStep } from "../Steps/PasswordStep";
 import { UserInfoStep } from "../Steps/UserInfoStep";
+import { useForm } from "react-hook-form";
 import "react-native-dropdown-picker";
+import { WrapperControll } from "@mocks/WrapperControll";
+import moment from "moment";
 
 jest.mock(
   "react-native-dropdown-picker",
@@ -21,21 +24,31 @@ jest.mock(
     }
 );
 
+interface RegisterPayload {
+  name: string;
+  lastName: string;
+  email: string;
+  username: string;
+  birthday: Date;
+  password: string;
+  confirmPassword: string;
+}
+
 describe("Test Signup steps", () => {
   describe("First step", () => {
     it("should contain all texts", () => {
       render(
         <ThemeProvider theme={light}>
-          <NameStep />
+          <WrapperControll children={NameStep} />
         </ThemeProvider>
       );
-      expect(screen.getByText(/Primeiro nome:/)).toBeOnTheScreen();
+      expect(screen.getByText(/Nome:/)).toBeOnTheScreen();
       expect(screen.getByText(/Sobrenome:/)).toBeOnTheScreen();
       expect(
-        screen.getByPlaceholderText(/Digite aqui seu primeiro nome/)
+        screen.getByPlaceholderText(/Digite aqui seu primeiro nome:/)
       ).toBeOnTheScreen();
       expect(
-        screen.getByPlaceholderText(/Digite seu sobre nome/)
+        screen.getByPlaceholderText(/Digite aqui seu sobrenome:/)
       ).toBeOnTheScreen();
     });
   });
@@ -43,7 +56,7 @@ describe("Test Signup steps", () => {
     it("should contain all text", () => {
       render(
         <ThemeProvider theme={light}>
-          <UserInfoStep />
+          <WrapperControll children={UserInfoStep} />
         </ThemeProvider>
       );
       expect(screen.getByText(/Username:/)).toBeOnTheScreen();
@@ -52,7 +65,7 @@ describe("Test Signup steps", () => {
       expect(
         screen.getByPlaceholderText(/Digite um nome de usuário/)
       ).toBeOnTheScreen();
-      expect(screen.getByPlaceholderText(/Escolha a data/)).toBeOnTheScreen();
+      expect(screen.getByText(moment().format("DD/MM/YY"))).toBeOnTheScreen();
       expect(
         screen.getByPlaceholderText(/Digite seu e-mail/)
       ).toBeOnTheScreen();

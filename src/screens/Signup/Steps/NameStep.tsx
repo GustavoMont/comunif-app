@@ -19,6 +19,7 @@ export const NameStep: React.FC<Props> = ({ control }) => {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            placeholder="Digite aqui seu primeiro nome:"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -35,10 +36,11 @@ export const NameStep: React.FC<Props> = ({ control }) => {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            placeholder="Digite aqui seu sobrenome:"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            label="Sobrenom"
+            label="Sobrenome:"
           />
         )}
         name="lastName"

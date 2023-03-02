@@ -4,9 +4,6 @@ import { TextInput } from "../../../components/common/Form/InputText";
 import { FlexGap } from "../../../components/common/Layout/FlexGap";
 import { Control, Controller } from "react-hook-form";
 import { RegisterPayload } from "../Signup";
-import { ControledInput } from "@components/common/Form/ControledInput";
-import moment from "moment";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { DatePicker } from "@components/common/Form/DatePicker";
 interface Props {
   control: Control<RegisterPayload>;
@@ -19,12 +16,14 @@ export const UserInfoStep: React.FC<Props> = ({ control }) => {
         <Controller
           control={control}
           name="username"
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={{ width: "50%" }}
-              label="Username:"
-              onChange={onChange}
+              placeholder="Digite aqui seu primeiro nome:"
+              onBlur={onBlur}
+              onChangeText={onChange}
               value={value}
+              label="Nome:"
             />
           )}
         />
@@ -39,13 +38,20 @@ export const UserInfoStep: React.FC<Props> = ({ control }) => {
             />
           )}
         />
-        {/* <TextInput
-          style={{ width: "50%" }}
-          label="Username:"
-          placeholder="Digite um nome de usuário"
-        /> */}
       </FlexGap>
-      <TextInput label="E-mail:" placeholder="Digite seu e-mail" />
+      <Controller
+        control={control}
+        name="email"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            placeholder="Digite aqui seu email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            label="Email:"
+          />
+        )}
+      />
     </FlexGap>
   );
 };

@@ -71,13 +71,16 @@ export const Steps: React.FC<Props> = ({
           const status = handleStepStatus(currentStep, i);
           return (
             <FlexGap
+              testID="step"
               key={i}
               gap={2}
               direction="row"
               style={{ alignItems: "center" }}
             >
-              <Circle size={size} status={status} />
-              {i < steps.length - 1 && <Pill size={size} status={status} />}
+              <Circle testID="step-circle" size={size} status={status} />
+              {i < steps.length - 1 && (
+                <Pill testID="step-conector" size={size} status={status} />
+              )}
             </FlexGap>
           );
         }
