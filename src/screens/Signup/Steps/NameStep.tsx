@@ -30,23 +30,23 @@ export const NameStep: React.FC<Props> = ({ control, error }) => {
         )}
         name="name"
       />
-
-      {/* <Controller
+      <Controller
         control={control}
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({ field: { onChange, onBlur, value, name } }) => (
           <TextInput
             placeholder="Digite aqui seu sobrenome:"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            errorMessage={error?.[name]?.message?.toString()}
             label="Sobrenome:"
           />
         )}
         name="lastName"
-      /> */}
+      />
     </FlexGap>
   );
 };

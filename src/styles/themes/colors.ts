@@ -11,5 +11,5 @@ export default {
   lightWhite: "#FBFBFB",
   white: "#F6F7F8",
   darkWhite: "#C3C4C5",
-  error: "#ff3333	",
+  error: "#ff3333",
 };

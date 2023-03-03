@@ -33,6 +33,19 @@ export interface RegisterPayload {
   confirmPassword: string;
 }
 
+const nameSchema = yup
+  .object({
+    name: yup
+      .string()
+      .required("Nome é um campo obrigatório")
+      .min(3, "Nome tem que ter nom mínimo 3 letras"),
+    lastName: yup
+      .string()
+      .required("Sobrenome é um campo obrigatório")
+      .min(3, "Sobrenome tem que ter nom mínimo 3 letras"),
+  })
+  .required();
+
 const userInfoSchema = yup
   .object({
     birthday: yup.date().test("Tem que ter no mínimo 15 anos", (value) => {
@@ -50,13 +63,6 @@ const userInfoSchema = yup
       .matches(/^[a-zA-Z0-9_]+$/, "Nome de usuário inválido")
       .min(3, "Nome de usuário deve ter pelo menos 3 caracteres")
       .max(30, "Nome de usuário deve ter no máximo 30 caracteres"),
-  })
-  .required();
-
-const nameSchema = yup
-  .object({
-    name: yup.string().required("Nome é um campo obrigatório"),
-    lastName: yup.string().required().min(3),
   })
   .required();
 
