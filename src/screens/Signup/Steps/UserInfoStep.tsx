@@ -19,7 +19,7 @@ export const UserInfoStep: React.FC<Props> = ({ control }) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={{ width: "50%" }}
-              placeholder="Digite aqui seu primeiro nome:"
+              placeholder="Digite o nome de usuário"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -32,6 +32,7 @@ export const UserInfoStep: React.FC<Props> = ({ control }) => {
           name="birthday"
           render={({ field: { onChange, value } }) => (
             <DatePicker
+              width={"50%"}
               value={value}
               label="Data de nascimento:"
               onChange={onChange}
