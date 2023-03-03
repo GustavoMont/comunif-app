@@ -73,12 +73,12 @@ const Signup: React.FC = () => {
     resolver: yupResolver(schemas[activeStep]),
   });
   const steps = [
-    <NameStep control={control} />,
+    <NameStep error={errors} control={control} />,
     <UserInfoStep control={control} />,
     <PasswordStep />,
     <ComunitiesStep />,
   ];
-  console.log(errors);
+  // console.log(errors);
 
   const onSubmit = (data: RegisterPayload) => {
     setActiveStep((prev) => (prev + 1) % steps.length);

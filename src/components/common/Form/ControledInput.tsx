@@ -6,7 +6,7 @@ import {
   FieldValues,
   RegisterOptions,
 } from "react-hook-form";
-import { TextInput, InputProps } from "./InputText";
+import { TextInput, InputProps } from "./TextInput";
 
 interface Props extends InputProps {
   name: string;

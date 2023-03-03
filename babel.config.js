@@ -9,6 +9,7 @@ module.exports = function (api) {
           root: ["./src"],
           extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
           alias: {
+            "@src": "./src",
             "@components": "./src/components",
             "@configs": "./src/configs",
             "@screens": "./src/screens",

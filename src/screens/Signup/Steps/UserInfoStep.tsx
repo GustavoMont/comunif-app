@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import React from "react";
-import { TextInput } from "../../../components/common/Form/InputText";
+import { TextInput } from "../../../components/common/Form/TextInput";
 import { FlexGap } from "../../../components/common/Layout/FlexGap";
 import { Control, Controller } from "react-hook-form";
 import { RegisterPayload } from "../Signup";

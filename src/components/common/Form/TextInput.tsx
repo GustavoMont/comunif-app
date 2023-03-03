@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FieldErrors } from "react-hook-form";
 import { TextInputProps, View } from "react-native";
 import styled from "styled-components/native";
 import { BodyText } from "../Typograph/BodyText";
 
-const Input = styled.TextInput.attrs(({ theme, ...props }) => {
-  return {
-    placeholderTextColor: theme.input.placeholderColor,
-    ...props,
-  };
-})`
+interface InputPropsIncrement {
+  hasError?: boolean;
+}
+const Input = styled.TextInput.attrs<InputPropsIncrement>(
+  ({ theme, hasError, ...props }) => {
+    return {
+      placeholderTextColor: theme.input.placeholderColor,
+      ...props,
+    };
+  }
+)`
   border: 1.5px solid ${({ theme }) => theme.input.borderColor};
   border-radius: 4px;
   width: 100%;
@@ -21,13 +27,20 @@ const Input = styled.TextInput.attrs(({ theme, ...props }) => {
 
 export interface InputProps extends TextInputProps {
   label?: string;
+  errorMessage?: string;
 }
 
-export const TextInput: React.FC<InputProps> = ({ label, style, ...props }) => {
+export const TextInput: React.FC<InputProps> = ({
+  label,
+  style,
+  placeholder,
+  errorMessage,
+  ...props
+}) => {
   return (
     <View style={[{ width: "100%" }, style]}>
       {label && <BodyText style={{ width: "100%" }}>{label}</BodyText>}
-      <Input {...props} />
+      <Input {...props} placeholder={errorMessage || placeholder} />
     </View>
   );
 };

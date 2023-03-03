@@ -3,7 +3,7 @@ import { Dimensions } from "react-native";
 import { CircleProps } from "../../types/components/BackgroundCircle";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
-import { TextInput } from "../../components/common/Form/InputText";
+import { TextInput } from "../../components/common/Form/TextInput";
 import { PasswordInput } from "../../components/common/Form/PasswordInput";
 import { Button } from "../../components/common/Buttons/Button";
 import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
