@@ -48,7 +48,7 @@ const nameSchema = yup
 
 const userInfoSchema = yup
   .object({
-    birthday: yup.date().test("Tem que ter no mínimo 15 anos", (value) => {
+    birthday: yup.date().test("Min age", "No mínimo 15 anos", (value) => {
       const minDate = moment().subtract(15, "year");
       return moment(value).isBefore(minDate);
     }),
@@ -80,12 +80,10 @@ const Signup: React.FC = () => {
   });
   const steps = [
     <NameStep error={errors} control={control} />,
-    <UserInfoStep control={control} />,
+    <UserInfoStep error={errors} control={control} />,
     <PasswordStep />,
     <ComunitiesStep />,
   ];
-  // console.log(errors);
-
   const onSubmit = (data: RegisterPayload) => {
     setActiveStep((prev) => (prev + 1) % steps.length);
     console.log(data);

@@ -5,12 +5,14 @@ import RNDateTimePicker, {
 import colors from "@styles/themes/colors";
 import moment from "moment";
 import { useState } from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
+import { Noop } from "react-hook-form";
+import { TextInputProps, TouchableWithoutFeedback, View } from "react-native";
 import { CalendarIcon } from "react-native-heroicons/outline";
 import { colorKeyType } from "src/types/colors";
 import styled, { useTheme } from "styled-components/native";
 import { FlexGap } from "../Layout/FlexGap";
 import { BodyText } from "../Typograph/BodyText";
+import { ErrorContainer } from "./ErrorContainer";
 import { InputProps } from "./TextInput";
 
 type width = number | `${number}%`;
@@ -44,6 +46,7 @@ interface Props extends BaseProps, ContainerStyleProps {
   label?: string;
   onChange: (...event: any[]) => void;
   errorMessage?: string;
+  onBlur?: Noop;
 }
 
 export const DatePicker: React.FC<Props> = ({
@@ -58,7 +61,7 @@ export const DatePicker: React.FC<Props> = ({
 }) => {
   const { icons, input, colors } = useTheme();
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const hasError = !!errorMessage || true;
+  const hasError = !!errorMessage;
   const handleChange = ({ nativeEvent }: DateTimePickerEvent) => {
     setShowDatePicker(false);
     const date = moment(nativeEvent.timestamp).toDate();
@@ -89,21 +92,27 @@ export const DatePicker: React.FC<Props> = ({
               direction="row"
               style={{ flex: 1, alignItems: "center", padding: 8 }}
             >
-              {!hasError && (
-                <CalendarIcon
-                  size={icon?.size || icons.size.medium}
-                  color={icon?.color || colors["black"]}
-                />
-              )}
+              <CalendarIcon
+                size={icon?.size || icons.size.medium}
+                color={handleInputTextColor(hasError, value)}
+              />
+
               <BodyText
                 style={{
                   color: handleInputTextColor(hasError, value),
                 }}
               >
-                {errorMessage || moment(value).format("DD/MM/YY")}
+                {moment(value).format("DD/MM/YY")}
               </BodyText>
             </FlexGap>
           </Input>
+          <ErrorContainer>
+            {errorMessage && (
+              <BodyText color="error" size={10}>
+                {errorMessage}
+              </BodyText>
+            )}
+          </ErrorContainer>
         </Container>
       </TouchableWithoutFeedback>
       {showDatePicker && (

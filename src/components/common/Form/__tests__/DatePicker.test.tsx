@@ -4,10 +4,17 @@ import moment from "moment";
 import { fireEvent, render, screen } from "@src/test-utils";
 
 describe("DatePicker", () => {
-  describe("Test palceholder", () => {
-    it("should render placeholder", () => {
+  describe("Test error message", () => {
+    it("should render error message", () => {
       const onChange = jest.fn();
-      render(<DatePicker value={moment().toDate()} onChange={onChange} />);
+      render(
+        <DatePicker
+          errorMessage="error message"
+          value={moment().toDate()}
+          onChange={onChange}
+        />
+      );
+      expect(screen.getByText(/error message/)).toBeOnTheScreen();
     });
   });
   describe("Test component children", () => {

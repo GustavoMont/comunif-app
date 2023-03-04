@@ -2,48 +2,19 @@ import { render, screen, waitFor } from "@src/test-utils";
 import { TextInput } from "../TextInput";
 
 describe("TextInput", () => {
-  describe("Testing placeholder", () => {
-    it("should render placeholder correctly", () => {
-      render(<TextInput placeholder="Placeholder padrão" />);
-      expect(
-        screen.getByPlaceholderText(/Placeholder padrão/)
-      ).toBeOnTheScreen();
+  describe("Test Error message", () => {
+    it("should render error message", () => {
+      render(<TextInput errorMessage="error message" />);
+      expect(screen.getByText(/error message/)).toBeOnTheScreen();
     });
-    it("should render error message correctly", async () => {
-      render(
-        <TextInput placeholder="Placeholder padrão" errorMessage="Erro" />
-      );
-      await waitFor(() =>
-        expect(screen.getByPlaceholderText(/Erro/)).toBeOnTheScreen()
-      );
-    });
-    it("should switch error and placeholder", async () => {
-      const { rerender } = render(
-        <TextInput placeholder="Placeholder padrão" />
-      );
-      expect(
-        screen.getByPlaceholderText(/Placeholder padrão/)
-      ).toBeOnTheScreen();
-      expect(screen.queryByPlaceholderText(/Erro/)).not.toBeOnTheScreen();
-      rerender(
-        <TextInput placeholder="Placeholder padrão" errorMessage="Erro" />
-      );
-      await waitFor(() =>
-        expect(screen.getByPlaceholderText(/Erro/)).toBeOnTheScreen()
-      );
-      expect(
-        screen.queryByPlaceholderText(/Placeholder padrão/)
-      ).not.toBeOnTheScreen();
-      rerender(<TextInput placeholder="Placeholder padrão" />);
-      await waitFor(() =>
-        expect(
-          screen.getByPlaceholderText(/Placeholder padrão/)
-        ).toBeOnTheScreen()
-      );
-      expect(screen.queryByPlaceholderText(/Erro/)).not.toBeOnTheScreen();
+    it("should switch render error message", () => {
+      const { rerender } = render(<TextInput />);
+      expect(screen.queryByText(/error message/)).not.toBeOnTheScreen();
+      rerender(<TextInput errorMessage="error message" />);
+      expect(screen.getByText(/error message/)).toBeOnTheScreen();
     });
   });
-  describe("Testing label", () => {
+  describe("Test label", () => {
     it("should render label", () => {
       render(<TextInput label="Label" />);
       expect(screen.getByText(/Label/)).toBeOnTheScreen();

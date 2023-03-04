@@ -2,6 +2,7 @@ import React from "react";
 import { TextInputProps, View } from "react-native";
 import styled from "styled-components/native";
 import { BodyText } from "../Typograph/BodyText";
+import { ErrorContainer } from "./ErrorContainer";
 
 const Input = styled.TextInput.attrs<InputProps>(
   ({ theme, hasError, ...props }) => {
@@ -34,18 +35,21 @@ export interface InputProps extends TextInputProps {
 export const TextInput: React.FC<InputProps> = ({
   label,
   style,
-  placeholder,
   errorMessage,
   ...props
 }) => {
+  const hasErrorMessage = !!errorMessage;
   return (
     <View style={[{ width: "100%" }, style]}>
       {label && <BodyText style={{ width: "100%" }}>{label}</BodyText>}
-      <Input
-        {...props}
-        placeholder={errorMessage || placeholder}
-        hasError={!!errorMessage}
-      />
+      <Input {...props} hasError={hasErrorMessage} />
+      <ErrorContainer>
+        {hasErrorMessage && (
+          <BodyText color="error" size={10}>
+            {errorMessage}
+          </BodyText>
+        )}
+      </ErrorContainer>
     </View>
   );
 };
