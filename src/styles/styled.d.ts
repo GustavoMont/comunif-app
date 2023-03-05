@@ -22,6 +22,7 @@ declare module "styled-components" {
       color: string;
       placeholderColor: string;
       borderColor: string;
+      iconSize: number;
       backgroundColor: string;
     };
     fonts: fonts;

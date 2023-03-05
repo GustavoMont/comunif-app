@@ -8,7 +8,8 @@ export const light: DefaultTheme = {
   backgroundScreen: colors.white,
   fonts,
   input: {
-    fontSize: 12,
+    fontSize: 16,
+    iconSize: 24,
     color: colors.lightBlack,
     placeholderColor: colors.darkWhite,
     borderColor: colors.lightBlack + "bb",

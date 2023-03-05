@@ -1,4 +1,9 @@
-import { Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
+import {
+  Dimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
@@ -13,15 +18,16 @@ import { Steps } from "@components/common/Form/Steps";
 import { NameStep } from "./Steps/NameStep";
 import { UserInfoStep } from "./Steps/UserInfoStep";
 import { Button } from "@components/common/Buttons/Button";
-import { ChevronRightIcon, CheckIcon } from "react-native-heroicons/outline";
+import {
+  ChevronRightIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+} from "react-native-heroicons/outline";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment";
-interface HandlePositionParams {
-  size: number;
-  showPercentage: number;
-}
+import { StyleSheet } from "react-native";
 
 export interface RegisterPayload {
   name: string;
@@ -33,6 +39,20 @@ export interface RegisterPayload {
   confirmPassword: string;
 }
 
+const passwordSchema = yup.object({
+  password: yup
+    .string()
+    .required("Senha é um campo obrigatório")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*?[0-9]).{8,}$/,
+      "Senha precisa ter no mínimo 8 caractéres, uma letra e um número"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), undefined], "Senhas não coincidem")
+    .nullable()
+    .required("Confirm password is required"),
+});
 const nameSchema = yup
   .object({
     name: yup
@@ -66,7 +86,7 @@ const userInfoSchema = yup
   })
   .required();
 
-const schemas = [nameSchema, userInfoSchema];
+const schemas = [nameSchema, userInfoSchema, passwordSchema];
 
 const Signup: React.FC = () => {
   const { icons } = useTheme();
@@ -79,49 +99,69 @@ const Signup: React.FC = () => {
     resolver: yupResolver(schemas[activeStep]),
   });
   const steps = [
-    <NameStep error={errors} control={control} />,
-    <UserInfoStep error={errors} control={control} />,
-    <PasswordStep />,
-    <ComunitiesStep />,
+    <NameStep key={1} error={errors} control={control} />,
+    <UserInfoStep key={2} error={errors} control={control} />,
+    <PasswordStep key={3} control={control} error={errors} />,
+    <ComunitiesStep key={4} />,
   ];
   const onSubmit = (data: RegisterPayload) => {
     setActiveStep((prev) => (prev + 1) % steps.length);
     console.log(data);
   };
+
   const isLast = steps.length <= activeStep + 1;
+  const isFirst = activeStep === 0;
   return (
     <FullScreenContainer>
+      <BodyText>{activeStep}</BodyText>
       <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container>
-            <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
+            <FlexGap gap={16} style={styles.contentContainer}>
               <Title color="primary" size={32}>
                 Cadastro
               </Title>
-              <FlexGap gap={16} style={{ width: "100%" }}>
+              <FlexGap gap={16} style={styles.formContainer}>
                 <StepHandler steps={steps} activeStep={activeStep} />
-                <Button
-                  onPress={handleSubmit(onSubmit)}
-                  minSize
-                  rightIcon={
-                    isLast ? (
-                      <CheckIcon
+                <View style={styles.buttonContainer}>
+                  <Button
+                    disabled={isFirst}
+                    color={isFirst ? "darkWhite" : "lightBlack"}
+                    onPress={() =>
+                      setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
+                    }
+                    minSize
+                    leftIcon={
+                      <ChevronLeftIcon
                         size={icons.size.medium}
                         color={icons.color.button}
                       />
-                    ) : (
-                      <ChevronRightIcon
-                        size={icons.size.medium}
-                        color={icons.color.button}
-                      />
-                    )
-                  }
-                  style={{ alignSelf: "flex-end" }}
-                >
-                  <BodyText color="white">
-                    {isLast ? "Finalizar" : "Avançar"}
-                  </BodyText>
-                </Button>
+                    }
+                  >
+                    <BodyText color="white">Voltar</BodyText>
+                  </Button>
+                  <Button
+                    onPress={handleSubmit(onSubmit)}
+                    minSize
+                    rightIcon={
+                      isLast ? (
+                        <CheckIcon
+                          size={icons.size.medium}
+                          color={icons.color.button}
+                        />
+                      ) : (
+                        <ChevronRightIcon
+                          size={icons.size.medium}
+                          color={icons.color.button}
+                        />
+                      )
+                    }
+                  >
+                    <BodyText color="white">
+                      {isLast ? "Finalizar" : "Avançar"}
+                    </BodyText>
+                  </Button>
+                </View>
               </FlexGap>
               <Steps
                 size={(width * 0.5) / 4}
@@ -135,6 +175,15 @@ const Signup: React.FC = () => {
     </FullScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  contentContainer: { alignItems: "center", width: "100%" },
+  formContainer: { width: "100%" },
+});
 
 interface StepHanlderProps {
   steps: JSX.Element[];

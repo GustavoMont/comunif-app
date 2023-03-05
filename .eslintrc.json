@@ -1,42 +1,30 @@
 {
-  "env": {
-    "es2021": true,
-    "browser": false,
-    "node": true
-  },
-
-  "extends": [
-    "react",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:testing-library/react",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "overrides": [
-    {
-      "files": [
-        "**/*.spec.ts",
-        "**/*.spec.tsx",
-        "**/*.test.ts",
-        "**/*.test.tsx"
-      ],
-      "env": {
-        "jest": true
-      }
-    }
-  ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-native/all"
+  ],
+  "plugins": ["@typescript-eslint", "react", "react-native"],
+  "env": {
+    "jest": true,
+    "react-native/react-native": true
   },
-  "plugins": ["testing-library", "@typescript-eslint", "react"],
   "rules": {
-    "testing-library/await-async-query": "error",
-    "testing-library/no-await-sync-query": "error",
-    "testing-library/no-debugging-utils": "warn",
-    "testing-library/no-dom-import": "off",
-    "react/no-array-index-key": "warn"
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react-native/no-raw-text": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

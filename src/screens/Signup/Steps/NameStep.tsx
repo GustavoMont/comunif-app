@@ -1,4 +1,3 @@
-import { ControledInput } from "@components/common/Form/ControledInput";
 import { FlexGap } from "@components/common/Layout/FlexGap";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
@@ -7,7 +6,7 @@ import { RegisterPayload } from "../Signup";
 
 interface Props {
   control: Control<RegisterPayload>;
-  error?: FieldErrors<any>;
+  error: FieldErrors<any>;
 }
 
 export const NameStep: React.FC<Props> = ({ control, error }) => {
@@ -24,7 +23,7 @@ export const NameStep: React.FC<Props> = ({ control, error }) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            errorMessage={error?.[name]?.message?.toString()}
+            errorMessage={error[name]?.message?.toString()}
             label="Nome:"
           />
         )}
@@ -41,7 +40,7 @@ export const NameStep: React.FC<Props> = ({ control, error }) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            errorMessage={error?.[name]?.message?.toString()}
+            errorMessage={error[name]?.message?.toString()}
             label="Sobrenome:"
           />
         )}

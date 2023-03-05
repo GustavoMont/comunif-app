@@ -1,15 +1,14 @@
 import React from "react";
-import { render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "styled-components/native";
 import { light } from "../../../styles/themes/light";
 import { ComunitiesStep } from "../Steps/ComunitiesStep";
 import { NameStep } from "../Steps/NameStep";
 import { PasswordStep } from "../Steps/PasswordStep";
 import { UserInfoStep } from "../Steps/UserInfoStep";
-import { useForm } from "react-hook-form";
 import "react-native-dropdown-picker";
 import { WrapperControll } from "@mocks/WrapperControll";
 import moment from "moment";
+import { render, screen } from "@src/test-utils";
 
 jest.mock(
   "react-native-dropdown-picker",
@@ -37,11 +36,7 @@ interface RegisterPayload {
 describe("Test Signup steps", () => {
   describe("First step", () => {
     it("should contain all texts", () => {
-      render(
-        <ThemeProvider theme={light}>
-          <WrapperControll children={NameStep} />
-        </ThemeProvider>
-      );
+      render(<WrapperControll children={NameStep} />);
       expect(screen.getByText(/Nome:/)).toBeOnTheScreen();
       expect(screen.getByText(/Sobrenome:/)).toBeOnTheScreen();
       expect(
@@ -54,11 +49,7 @@ describe("Test Signup steps", () => {
   });
   describe("Second step", () => {
     it("should contain all text", () => {
-      render(
-        <ThemeProvider theme={light}>
-          <WrapperControll children={UserInfoStep} />
-        </ThemeProvider>
-      );
+      render(<WrapperControll children={UserInfoStep} />);
       expect(screen.getByText(/Username:/)).toBeOnTheScreen();
       expect(screen.getByText(/Data de nascimento:/)).toBeOnTheScreen();
       expect(screen.getByText(/E-mail:/)).toBeOnTheScreen();
@@ -73,11 +64,7 @@ describe("Test Signup steps", () => {
   });
   describe("Third step", () => {
     it("should contain all text", () => {
-      render(
-        <ThemeProvider theme={light}>
-          <PasswordStep />
-        </ThemeProvider>
-      );
+      render(<WrapperControll children={PasswordStep} />);
       expect(screen.getByText(/Senha:/)).toBeOnTheScreen();
       expect(screen.getByText(/Confirmar senha:/)).toBeOnTheScreen();
       expect(
