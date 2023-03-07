@@ -1,4 +1,5 @@
 import React from "react";
+import { StyleSheet } from "react-native";
 import { colorKeyType } from "src/types/colors";
 import styled from "styled-components/native";
 import { FlexGap } from "../Layout/FlexGap";
@@ -75,7 +76,7 @@ export const Steps: React.FC<Props> = ({
               key={i}
               gap={2}
               direction="row"
-              style={{ alignItems: "center" }}
+              style={styles.stepsContainer}
             >
               <Circle testID="step-circle" size={size} status={status} />
               {i < steps.length - 1 && (
@@ -88,3 +89,7 @@ export const Steps: React.FC<Props> = ({
     </FlexGap>
   );
 };
+
+const styles = StyleSheet.create({
+  stepsContainer: { alignItems: "center" },
+});

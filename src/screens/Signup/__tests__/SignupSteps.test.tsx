@@ -1,42 +1,27 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
-import { ThemeProvider } from "styled-components/native";
-import { light } from "../../../styles/themes/light";
 import { ComunitiesStep } from "../Steps/ComunitiesStep";
 import { NameStep } from "../Steps/NameStep";
-import { PasswordStep } from "../Steps/PasswordStep";
-import { UserInfoStep } from "../Steps/UserInfoStep";
 import "react-native-dropdown-picker";
 import { WrapperControll } from "@mocks/WrapperControll";
 import moment from "moment";
 import { render, screen } from "@src/test-utils";
+import { UserInfoStep } from "../Steps/UserInfoStep";
+import { PasswordStep } from "../Steps/PasswordStep";
 
-jest.mock(
-  "react-native-dropdown-picker",
-  () =>
-    ({ placeholder, ...props }: any) => {
-      const { Text, View } = require("react-native");
-      return (
-        <View>
-          <Text>{placeholder}</Text>
-        </View>
-      );
-    }
-);
-
-interface RegisterPayload {
-  name: string;
-  lastName: string;
-  email: string;
-  username: string;
-  birthday: Date;
-  password: string;
-  confirmPassword: string;
-}
+jest.mock("react-native-dropdown-picker", () => ({ placeholder }: any) => {
+  const { Text, View } = require("react-native");
+  return (
+    <View>
+      <Text>{placeholder}</Text>
+    </View>
+  );
+});
 
 describe("Test Signup steps", () => {
   describe("First step", () => {
     it("should contain all texts", () => {
-      render(<WrapperControll children={NameStep} />);
+      render(<WrapperControll>{NameStep}</WrapperControll>);
       expect(screen.getByText(/Nome:/)).toBeOnTheScreen();
       expect(screen.getByText(/Sobrenome:/)).toBeOnTheScreen();
       expect(
@@ -49,7 +34,7 @@ describe("Test Signup steps", () => {
   });
   describe("Second step", () => {
     it("should contain all text", () => {
-      render(<WrapperControll children={UserInfoStep} />);
+      render(<WrapperControll>{UserInfoStep}</WrapperControll>);
       expect(screen.getByText(/Username:/)).toBeOnTheScreen();
       expect(screen.getByText(/Data de nascimento:/)).toBeOnTheScreen();
       expect(screen.getByText(/E-mail:/)).toBeOnTheScreen();
@@ -64,7 +49,7 @@ describe("Test Signup steps", () => {
   });
   describe("Third step", () => {
     it("should contain all text", () => {
-      render(<WrapperControll children={PasswordStep} />);
+      render(<WrapperControll>{PasswordStep}</WrapperControll>);
       expect(screen.getByText(/Senha:/)).toBeOnTheScreen();
       expect(screen.getByText(/Confirmar senha:/)).toBeOnTheScreen();
       expect(
@@ -74,11 +59,7 @@ describe("Test Signup steps", () => {
   });
   describe("Fourth step", () => {
     it("should contain all text", () => {
-      render(
-        <ThemeProvider theme={light}>
-          <ComunitiesStep />
-        </ThemeProvider>
-      );
+      render(<ComunitiesStep />);
       expect(
         screen.getByText(/Quais comunidades você tem interesse?/)
       ).toBeOnTheScreen();

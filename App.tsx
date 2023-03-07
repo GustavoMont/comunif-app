@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Login from "./src/screens/Login/Login";
+import { Login } from "./src/screens/Login/Login";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -76,9 +76,9 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
+    backgroundColor: colors.white,
+    flex: 1,
     justifyContent: "center",
   },
 });

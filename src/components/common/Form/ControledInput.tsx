@@ -1,4 +1,3 @@
-import { View, Text, Omit } from "react-native";
 import React from "react";
 import {
   Control,
@@ -27,7 +26,7 @@ export const ControledInput: React.FC<Props> = ({
   return (
     <Controller
       name={name}
-      // rules={rules}
+      rules={rules}
       control={control}
       render={({ field: { onChange, value } }) => (
         <TextInput label={label} value={value} onChange={onChange} />

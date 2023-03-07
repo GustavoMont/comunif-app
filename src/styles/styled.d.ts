@@ -1,5 +1,5 @@
 import "styled-components";
-import { colorKeyType, colorType } from "../types/colors";
+import { colorType } from "../types/colors";
 
 type fontWeight = {
   600: string;

@@ -1,4 +1,4 @@
-import { TextProps } from "react-native";
+import { StyleSheet, TextProps } from "react-native";
 import React from "react";
 import { Typograph } from "../../../types/components/Typograph";
 import { BodyText } from "./BodyText";
@@ -19,11 +19,9 @@ interface Props extends LinkStyleProps {
 const LinkStyleHandler = ({ type, ...props }: LinkStyleProps) => {
   switch (type) {
     case "text":
-      return (
-        <BodyText style={{ textDecorationLine: "underline" }} {...props} />
-      );
+      return <BodyText {...(props as any)} style={styles.textStyle} />;
     case "title":
-      return <Title style={{ textDecorationLine: "underline" }} {...props} />;
+      return <Title {...(props as any)} style={styles.textStyle} />;
     default:
       throw new Error("You must pass a text type");
   }
@@ -36,3 +34,9 @@ export const Link: React.FC<Props> = ({ params, screen, align, ...props }) => {
     </Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  textStyle: {
+    textDecorationLine: "underline",
+  },
+});

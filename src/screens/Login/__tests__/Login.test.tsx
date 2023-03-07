@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
 import { render, screen } from "@testing-library/react-native";
-import Login from "../Login";
+import { Login } from "../Login";
 import { ThemeProvider } from "styled-components/native";
 import { light } from "../../../styles/themes/light";
 import "../../../components/common/Typograph/Link";

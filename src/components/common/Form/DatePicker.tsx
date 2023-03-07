@@ -1,19 +1,18 @@
+import React from "react";
 import RNDateTimePicker, {
   BaseProps,
   DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
-import colors from "@styles/themes/colors";
 import moment from "moment";
 import { useState } from "react";
 import { Noop } from "react-hook-form";
-import { TextInputProps, TouchableWithoutFeedback, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { CalendarIcon } from "react-native-heroicons/outline";
 import { colorKeyType } from "src/types/colors";
 import styled, { useTheme } from "styled-components/native";
 import { FlexGap } from "../Layout/FlexGap";
 import { BodyText } from "../Typograph/BodyText";
 import { ErrorContainer } from "./ErrorContainer";
-import { InputProps } from "./TextInput";
 
 type width = number | `${number}%`;
 interface ContainerStyleProps {
@@ -87,11 +86,7 @@ export const DatePicker: React.FC<Props> = ({
         <Container width={width}>
           {label && <BodyText>{label}</BodyText>}
           <Input hasError={hasError} testID="date-picker-input">
-            <FlexGap
-              gap={4}
-              direction="row"
-              style={{ flex: 1, alignItems: "center", padding: 8 }}
-            >
+            <FlexGap gap={4} direction="row" style={styles.input}>
               <CalendarIcon
                 size={icon?.size || icons.size.medium}
                 color={handleInputTextColor(hasError, value)}
@@ -126,3 +121,7 @@ export const DatePicker: React.FC<Props> = ({
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  input: { alignItems: "center", flex: 1, padding: 8 },
+});

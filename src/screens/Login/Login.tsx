@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { CircleProps } from "../../types/components/BackgroundCircle";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
@@ -21,17 +21,17 @@ interface HandlePositionParams {
 const handlePosition = ({ size, showPercentage }: HandlePositionParams) =>
   -size + size * showPercentage;
 
-const Login = () => {
+export const Login = () => {
   return (
     <FullScreenContainer>
       <BackgroundCircle circles={cicles}>
         <Container>
-          <FlexGap gap={16} style={{ width: "100%", alignItems: "center" }}>
+          <FlexGap gap={16} style={styles.screenContainer}>
             <Title color="primary" size={32}>
               Login
             </Title>
             <TextInput placeholder="insira seu username ou email" />
-            <FlexGap style={{ width: "100%" }} gap={8}>
+            <FlexGap style={styles.passwordContainer} gap={8}>
               <PasswordInput placeholder="insira sua senha" />
               <Link
                 screen="Forgot password"
@@ -126,4 +126,7 @@ const cicles: CircleProps[] = [
   },
 ];
 
-export default Login;
+const styles = StyleSheet.create({
+  passwordContainer: { width: "100%" },
+  screenContainer: { alignItems: "center", width: "100%" },
+});

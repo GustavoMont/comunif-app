@@ -1,8 +1,13 @@
 import React from "react";
-import { TextInputProps, View } from "react-native";
+import { StyleSheet, TextInputProps, View } from "react-native";
 import styled from "styled-components/native";
 import { BodyText } from "../Typograph/BodyText";
 import { ErrorContainer } from "./ErrorContainer";
+
+interface StylePropIncrement extends TextInputProps {
+  hasError?: boolean;
+  hasIcon: hasIconType;
+}
 
 const Input = styled.TextInput.attrs<StylePropIncrement>(
   ({ theme, hasError, ...props }) => {
@@ -44,12 +49,7 @@ const IconPlace = styled.View<{ position: "right" | "left" }>`
 
 type hasIconType = "none" | "left" | "right";
 
-interface StylePropIncrement extends TextInputProps {
-  hasError?: boolean;
-  hasIcon: hasIconType;
-}
-
-export interface InputProps extends TextInputProps {
+export interface InputProps extends Partial<TextInputProps> {
   label?: string;
   errorMessage?: string;
   leftIcon?: JSX.Element;
@@ -58,10 +58,10 @@ export interface InputProps extends TextInputProps {
 
 export const TextInput: React.FC<InputProps> = ({
   label,
-  style,
   errorMessage,
   leftIcon,
   rightIcon,
+  style,
   ...props
 }) => {
   const hasIcon = (
@@ -70,9 +70,9 @@ export const TextInput: React.FC<InputProps> = ({
   ): hasIconType => {
     if (hasLeftIcon && hasRightIcon) {
       throw new Error("Can use only one icon");
-    } else if (leftIcon) {
+    } else if (hasLeftIcon) {
       return "left";
-    } else if (rightIcon) {
+    } else if (hasRightIcon) {
       return "right";
     } else {
       return "none";
@@ -82,14 +82,14 @@ export const TextInput: React.FC<InputProps> = ({
   const hasRightIcon = !!rightIcon;
   const hasErrorMessage = !!errorMessage;
   return (
-    <View style={[{ width: "100%" }, style || {}]}>
-      {label && <BodyText style={{ width: "100%" }}>{label}</BodyText>}
+    <View style={[styles.inputSize, style || {}]}>
+      {label && <BodyText style={styles.inputSize}>{label}</BodyText>}
       <Container>
         {hasLeftIcon && <IconPlace position="left">{leftIcon}</IconPlace>}
         <Input
-          {...props}
           hasError={hasErrorMessage}
           hasIcon={hasIcon(hasLeftIcon, hasRightIcon)}
+          {...(props as unknown as any)}
         />
         {hasRightIcon && <IconPlace position="right">{rightIcon}</IconPlace>}
       </Container>
@@ -103,3 +103,7 @@ export const TextInput: React.FC<InputProps> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  inputSize: { width: "100%" },
+});

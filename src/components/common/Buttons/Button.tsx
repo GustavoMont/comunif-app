@@ -1,5 +1,9 @@
 import React from "react";
-import { TouchableOpacityProps } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 import { colorKeyType } from "src/types/colors";
 import styled from "styled-components/native";
 import { FlexGap } from "../Layout/FlexGap";
@@ -7,8 +11,6 @@ import { FlexGap } from "../Layout/FlexGap";
 interface ButtonProps {
   minSize?: boolean;
   color?: colorKeyType;
-  rightIcon?: JSX.Element;
-  leftIcon?: JSX.Element;
 }
 
 const TouchableButton = styled.TouchableOpacity<ButtonProps>`
@@ -22,22 +24,31 @@ const TouchableButton = styled.TouchableOpacity<ButtonProps>`
 `;
 
 interface Props extends ButtonProps, TouchableOpacityProps {
-  children: React.ReactNode;
+  rightIcon?: JSX.Element;
+  leftIcon?: JSX.Element;
 }
 
 export const Button: React.FC<Props> = ({
   children,
   leftIcon,
   rightIcon,
+  color,
+  minSize,
   ...props
 }) => {
   return (
-    <TouchableButton {...props}>
-      <FlexGap gap={16} direction="row" style={{ alignItems: "center" }}>
-        {leftIcon || <></>}
-        {children}
-        {rightIcon || <></>}
-      </FlexGap>
+    <TouchableButton color={color} minSize={minSize}>
+      <TouchableOpacity {...props}>
+        <FlexGap gap={16} direction="row" style={styles.textContainer}>
+          {leftIcon || <></>}
+          {children}
+          {rightIcon || <></>}
+        </FlexGap>
+      </TouchableOpacity>
     </TouchableButton>
   );
 };
+
+const styles = StyleSheet.create({
+  textContainer: { alignItems: "center" },
+});

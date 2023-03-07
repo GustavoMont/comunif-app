@@ -1,4 +1,3 @@
-import colors from "@src/styles/themes/colors";
 import React from "react";
 import { EyeIcon } from "react-native-heroicons/outline";
 import { useTheme } from "styled-components/native";

@@ -1,3 +1,4 @@
+import React from "react";
 import { light } from "@styles/themes/light";
 import { render, screen } from "@testing-library/react-native";
 import { ThemeProvider } from "styled-components/native";

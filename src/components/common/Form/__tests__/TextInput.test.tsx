@@ -1,4 +1,5 @@
-import { render, screen, waitFor } from "@src/test-utils";
+import React from "react";
+import { render, screen } from "@src/test-utils";
 import { TextInput } from "../TextInput";
 
 describe("TextInput", () => {
