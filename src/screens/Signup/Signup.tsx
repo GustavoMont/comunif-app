@@ -12,7 +12,6 @@ import { Title } from "../../components/common/Typograph/Title";
 import styled, { useTheme } from "styled-components/native";
 import { CircleProps, Position } from "../../types/components/BackgroundCircle";
 import { PasswordStep } from "./Steps/PasswordStep";
-import { ComunitiesStep } from "./Steps/ComunitiesStep";
 import { BodyText } from "@components/common/Typograph/BodyText";
 import { Steps } from "@components/common/Form/Steps";
 import { NameStep } from "./Steps/NameStep";
@@ -28,16 +27,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment";
 import { StyleSheet } from "react-native";
-
-export interface RegisterPayload {
-  name: string;
-  lastName: string;
-  email: string;
-  username: string;
-  birthday: Date;
-  password: string;
-  confirmPassword: string;
-}
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { AxiosError } from "axios";
+import { RegisterPayload } from "@src/models/User";
+import { useAuth } from "@src/contexts/auth";
 
 const passwordSchema = yup.object({
   password: yup
@@ -90,6 +83,7 @@ const schemas = [nameSchema, userInfoSchema, passwordSchema];
 
 const Signup: React.FC = () => {
   const { icons } = useTheme();
+  const { signUp } = useAuth();
   const [activeStep, setActiveStep] = useState<number>(0);
   const {
     control,
@@ -102,18 +96,30 @@ const Signup: React.FC = () => {
     <NameStep key={1} error={errors} control={control} />,
     <UserInfoStep key={2} error={errors} control={control} />,
     <PasswordStep key={3} control={control} error={errors} />,
-    <ComunitiesStep key={4} />,
   ];
-  const onSubmit = (data: RegisterPayload) => {
+
+  const onSubmit = async (body: RegisterPayload) => {
     setActiveStep((prev) => (prev + 1) % steps.length);
-    console.log(data);
+    if (isLast) {
+      try {
+        await signUp(body);
+      } catch (err: any) {
+        const { response } = err as AxiosError<{ message: string }>;
+        Toast.show({
+          type: "error",
+          text1: "Ocorreu um erro",
+          text2: response?.data.message,
+          topOffset: 50,
+          visibilityTime: 10 * 1000,
+        });
+      }
+    }
   };
 
   const isLast = steps.length <= activeStep + 1;
   const isFirst = activeStep === 0;
   return (
     <FullScreenContainer>
-      <BodyText>{activeStep}</BodyText>
       <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Container>
@@ -172,6 +178,7 @@ const Signup: React.FC = () => {
           </Container>
         </TouchableWithoutFeedback>
       </BackgroundCircle>
+      <Toast />
     </FullScreenContainer>
   );
 };

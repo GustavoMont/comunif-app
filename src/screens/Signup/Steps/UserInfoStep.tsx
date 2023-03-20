@@ -2,9 +2,9 @@ import React from "react";
 import { TextInput } from "../../../components/common/Form/TextInput";
 import { FlexGap } from "../../../components/common/Layout/FlexGap";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { RegisterPayload } from "../Signup";
 import { DatePicker } from "@components/common/Form/DatePicker";
 import { StyleSheet } from "react-native";
+import { RegisterPayload } from "@src/models/User";
 interface Props {
   control: Control<RegisterPayload>;
   error: FieldErrors<any>;

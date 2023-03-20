@@ -1,12 +1,10 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, Text, UIManager, View } from "react-native";
+import { Platform, UIManager } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Login } from "./src/screens/Login/Login";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -21,17 +19,9 @@ import {
   Poppins_600SemiBold,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
-import Signup from "./src/screens/Signup/Signup";
 
-function Placeholder() {
-  return (
-    <View style={styles.container}>
-      <Text>Essa tela ainda não existe</Text>
-    </View>
-  );
-}
-
-const Stack = createNativeStackNavigator();
+import { Routes } from "@src/routes/Routes";
+import { AuthProvider } from "@src/contexts/auth";
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -59,12 +49,9 @@ function App() {
       <ThemeProvider theme={light}>
         <SafeAreaProvider>
           <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Sign up" component={Signup} />
-              <Stack.Screen name="Forgot password" component={Placeholder} />
-              <Stack.Screen name="Home" component={Placeholder} />
-            </Stack.Navigator>
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
           </NavigationContainer>
         </SafeAreaProvider>
       </ThemeProvider>
@@ -73,12 +60,3 @@ function App() {
 }
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: colors.white,
-    flex: 1,
-    justifyContent: "center",
-  },
-});

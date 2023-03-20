@@ -1,8 +1,8 @@
 import { FlexGap } from "@components/common/Layout/FlexGap";
+import { RegisterPayload } from "@src/models/User";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { TextInput } from "../../../components/common/Form/TextInput";
-import { RegisterPayload } from "../Signup";
 
 interface Props {
   control: Control<RegisterPayload>;

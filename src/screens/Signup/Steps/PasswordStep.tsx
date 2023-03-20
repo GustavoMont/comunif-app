@@ -2,7 +2,7 @@ import React from "react";
 import { PasswordInput } from "@components/common/Form/PasswordInput";
 import { FlexGap } from "@components/common/Layout/FlexGap";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { RegisterPayload } from "../Signup";
+import { RegisterPayload } from "@src/models/User";
 
 interface Props {
   control: Control<RegisterPayload>;
