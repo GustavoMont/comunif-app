@@ -4,7 +4,7 @@ import { Platform, UIManager } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -22,6 +22,7 @@ import {
 
 import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/contexts/auth";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -44,7 +45,7 @@ function App() {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   return (
-    <>
+    <SafeAreaView>
       <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
       <ThemeProvider theme={light}>
         <SafeAreaProvider>
@@ -53,9 +54,10 @@ function App() {
               <Routes />
             </AuthProvider>
           </NavigationContainer>
+          <Toast />
         </SafeAreaProvider>
       </ThemeProvider>
-    </>
+    </SafeAreaView>
   );
 }
 

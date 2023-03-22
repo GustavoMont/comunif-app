@@ -2,7 +2,6 @@ import { AuthStorage, RegisterPayload, User } from "@src/models/User";
 import React, {
   createContext,
   PropsWithChildren,
-  useContext,
   useEffect,
   useState,
 } from "react";
@@ -15,7 +14,7 @@ interface Context {
   signUp(body: RegisterPayload): Promise<void>;
 }
 
-const AuthContext = createContext<Context>({} as Context);
+export const AuthContext = createContext<Context>({} as Context);
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -78,5 +77,3 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

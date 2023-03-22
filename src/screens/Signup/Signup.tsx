@@ -30,8 +30,7 @@ import { StyleSheet } from "react-native";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { AxiosError } from "axios";
 import { RegisterPayload } from "@src/models/User";
-import { useAuth } from "@src/contexts/auth";
-
+import { useAuth } from "@hooks/useAuth";
 const passwordSchema = yup.object({
   password: yup
     .string()
@@ -178,7 +177,6 @@ const Signup: React.FC = () => {
           </Container>
         </TouchableWithoutFeedback>
       </BackgroundCircle>
-      <Toast />
     </FullScreenContainer>
   );
 };

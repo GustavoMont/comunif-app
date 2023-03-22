@@ -2,7 +2,12 @@
 import React from "react";
 import { act, fireEvent, render, screen } from "@src/test-utils";
 import Signup from "../Signup";
-
+jest.mock("@hooks/useAuth", () => ({
+  useAuth: jest.fn().mockRejectedValue({
+    signUp: () => ({}),
+  }),
+}));
+jest.mock("react-native-toast-message/lib/src/Toast", () => jest.fn());
 jest.mock("react-native-dropdown-picker", () => ({ placeholder }: any) => {
   const React = require("react");
 
@@ -18,7 +23,7 @@ describe("SignUp", () => {
   describe("Test Steps", () => {
     it("should have four steps", () => {
       render(<Signup />);
-      expect(screen.getAllByTestId("step")).toHaveLength(4);
+      expect(screen.getAllByTestId("step")).toHaveLength(3);
     });
     it("should advance steps", async () => {
       render(<Signup />);

@@ -15,6 +15,7 @@ module.exports = function (api) {
             "@screens": "./src/screens",
             "@styles": "./src/styles",
             "@mocks": "./src/__mocks__",
+            "@hooks": "./src/hooks",
           },
         },
       ],
