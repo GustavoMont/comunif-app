@@ -22,6 +22,8 @@ const handlePosition = ({ size, showPercentage }: HandlePositionParams) =>
   -size + size * showPercentage;
 
 export const Login = () => {
+  console.log("Login");
+
   return (
     <FullScreenContainer>
       <BackgroundCircle circles={cicles}>

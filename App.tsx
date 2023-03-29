@@ -1,10 +1,10 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Platform, UIManager } from "react-native";
+import { Platform, StyleSheet, UIManager } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -45,20 +45,25 @@ function App() {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
       <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
+
       <ThemeProvider theme={light}>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <AuthProvider>
-              <Routes />
-            </AuthProvider>
-          </NavigationContainer>
-          <Toast />
-        </SafeAreaProvider>
+        <NavigationContainer>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </NavigationContainer>
+        <Toast />
       </ThemeProvider>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
+});
 
 export default App;
