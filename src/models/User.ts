@@ -16,6 +16,11 @@ export interface RegisterPayload {
   confirmPassword: string;
 }
 
+export interface LoginPayload {
+  username: string;
+  password: string;
+}
+
 export interface AuthStorage {
   access: string;
 }

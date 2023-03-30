@@ -10,7 +10,6 @@ jest.mock("@hooks/useAuth", () => ({
 jest.mock("react-native-toast-message/lib/src/Toast", () => jest.fn());
 jest.mock("react-native-dropdown-picker", () => ({ placeholder }: any) => {
   const React = require("react");
-
   const { Text, View } = require("react-native");
   return (
     <View>

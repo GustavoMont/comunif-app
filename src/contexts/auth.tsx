@@ -1,4 +1,9 @@
-import { AuthStorage, RegisterPayload, User } from "@src/models/User";
+import {
+  AuthStorage,
+  LoginPayload,
+  RegisterPayload,
+  User,
+} from "@src/models/User";
 import React, {
   createContext,
   PropsWithChildren,
@@ -8,10 +13,16 @@ import React, {
 import * as Store from "expo-secure-store";
 import { api } from "@src/config/axios";
 import jwtDecode from "jwt-decode";
-import { accessKey, getToken } from "@src/utils/token";
+import { accessKey, deleteToken, getToken } from "@src/utils/token";
+
+type signUp = (body: RegisterPayload) => Promise<void>;
+type login = (body: LoginPayload) => Promise<void>;
+
 interface Context {
   signedIn: boolean;
-  signUp(body: RegisterPayload): Promise<void>;
+  signUp: signUp;
+  login: login;
+  logout(): Promise<void>;
 }
 
 export const AuthContext = createContext<Context>({} as Context);
@@ -31,14 +42,29 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       return null;
     }
   };
+
+  const logout = async () => {
+    await deleteToken();
+    setUser(null);
+  };
+
   const decodeToken = (token: string) =>
     jwtDecode<{ sub: number; username: string }>(token);
 
-  const signUp = async (body: RegisterPayload) => {
-    const { data } = await api.post<AuthStorage>(`/auth/signup`, body);
-    await storeAccess(data);
-    const { sub } = decodeToken(data.access);
+  const setUserByToken = async (token: AuthStorage) => {
+    await storeAccess(token);
+    const { sub } = decodeToken(token.access);
     setUser(await getUser(sub));
+  };
+
+  const signUp: signUp = async (body) => {
+    const { data } = await api.post<AuthStorage>(`/auth/signup`, body);
+    await setUserByToken(data);
+  };
+
+  const login: login = async (body) => {
+    const { data } = await api.post<AuthStorage>(`/auth/login`, body);
+    await setUserByToken(data);
   };
 
   useEffect(() => {
@@ -61,9 +87,8 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     let mounted = true;
 
-    if (mounted && user) {
-      setSignedIn(true);
-      // navigate.navigate("Home");
+    if (mounted) {
+      setSignedIn(!!user);
     }
 
     return () => {
@@ -72,7 +97,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ signedIn, signUp }}>
+    <AuthContext.Provider value={{ signedIn, signUp, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

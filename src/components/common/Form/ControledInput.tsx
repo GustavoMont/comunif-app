@@ -5,6 +5,7 @@ import {
   FieldValues,
   RegisterOptions,
 } from "react-hook-form";
+import { PasswordInput } from "./PasswordInput";
 import { TextInput, InputProps } from "./TextInput";
 
 interface Props extends InputProps {
@@ -21,6 +22,8 @@ export const ControledInput: React.FC<Props> = ({
   name,
   rules,
   control,
+  placeholder,
+  secureTextEntry,
   label,
 }) => {
   return (
@@ -28,9 +31,14 @@ export const ControledInput: React.FC<Props> = ({
       name={name}
       rules={rules}
       control={control}
-      render={({ field: { onChange, value } }) => (
-        <TextInput label={label} value={value} onChange={onChange} />
-      )}
+      render={({ field: { onChange, value } }) => {
+        const props = { value, label, placeholder };
+        return secureTextEntry ? (
+          <PasswordInput {...props} onChangeText={onChange} />
+        ) : (
+          <TextInput {...props} onChangeText={onChange} />
+        );
+      }}
     />
   );
 };

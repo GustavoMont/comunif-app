@@ -3,6 +3,8 @@ import * as Store from "expo-secure-store";
 
 export const accessKey = "access";
 
+export const deleteToken = async () => await Store.deleteItemAsync(accessKey);
+
 export const getToken = async () => {
   const json = await Store.getItemAsync(accessKey);
 
