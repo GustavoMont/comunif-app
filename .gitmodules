@@ -1,0 +1,3 @@
+[submodule "comunif-api"]
+	path = comunif-api
+	url = git@github.com:GustavoMont/comunif-api.git
