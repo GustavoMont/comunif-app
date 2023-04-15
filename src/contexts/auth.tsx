@@ -23,6 +23,7 @@ interface Context {
   signUp: signUp;
   login: login;
   logout(): Promise<void>;
+  user: User | null;
 }
 
 export const AuthContext = createContext<Context>({} as Context);
@@ -97,7 +98,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ signedIn, signUp, login, logout }}>
+    <AuthContext.Provider value={{ user, signedIn, signUp, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

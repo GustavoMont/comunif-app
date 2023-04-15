@@ -5,7 +5,5 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 
 export const Routes = () => {
   const { signedIn } = useAuth();
-  console.log(signedIn);
-
   return signedIn ? <ProtectedRoutes /> : <FreeRoutes />;
 };

@@ -1,7 +1,21 @@
 import { getToken } from "@src/utils/token";
 import axios from "axios";
+import { io } from "socket.io-client";
 
-const baseURL = "http://10.0.2.2:3000/api";
+const url = "http://10.0.2.2:3000";
+
+export const socket = io(url, {
+  auth: (cb) => {
+    getToken().then((token) => {
+      if (token) {
+        cb({ authorization: `Bearer ${token}` });
+      }
+    });
+  },
+  withCredentials: true,
+});
+
+const baseURL = `${url}/api`;
 
 export const api = axios.create({
   baseURL,
