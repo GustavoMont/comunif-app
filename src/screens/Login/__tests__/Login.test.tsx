@@ -55,7 +55,7 @@ describe("Login screen", () => {
       const signupLink = screen.getByText(/Cadastre-se/gi);
       const resetPassword = screen.getByText(/Esqueceu sua senha?/gi);
       expect(signupLink.props.screen).toBe("Signup");
-      expect(resetPassword.props.screen).toBe("Forgot password");
+      expect(resetPassword.props.screen).toBe("ForgotPassword");
     });
   });
   describe("Login func", () => {

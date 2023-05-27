@@ -9,7 +9,7 @@ import { FullScreenContainer } from "../../components/common/Layout/FullScreenCo
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import { FlexGap } from "../../components/common/Layout/FlexGap";
 import { Title } from "../../components/common/Typograph/Title";
-import styled, { useTheme } from "styled-components/native";
+import { useTheme } from "styled-components/native";
 import { CircleProps, Position } from "../../types/components/BackgroundCircle";
 import { PasswordStep } from "./Steps/PasswordStep";
 import { BodyText } from "@components/common/Typograph/BodyText";
@@ -118,66 +118,66 @@ const Signup: React.FC = () => {
   const isLast = steps.length <= activeStep + 1;
   const isFirst = activeStep === 0;
   return (
-    <FullScreenContainer>
-      <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
+    <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
+      <FullScreenContainer>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Container>
-            <FlexGap gap={16} style={styles.contentContainer}>
-              <Title color="primary" size={32}>
-                Cadastro
-              </Title>
-              <FlexGap gap={16} style={styles.formContainer}>
-                <StepHandler steps={steps} activeStep={activeStep} />
-                <View style={styles.buttonContainer}>
-                  <Button
-                    disabled={isFirst}
-                    color={isFirst ? "darkWhite" : "lightBlack"}
-                    onPress={() =>
-                      setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
-                    }
-                    minSize
-                    leftIcon={
-                      <ChevronLeftIcon
+          {/* <Container> */}
+          <FlexGap gap={16} style={styles.contentContainer}>
+            <Title color="primary" size={32}>
+              Cadastro
+            </Title>
+            <FlexGap gap={16} style={styles.formContainer}>
+              <StepHandler steps={steps} activeStep={activeStep} />
+              <View style={styles.buttonContainer}>
+                <Button
+                  disabled={isFirst}
+                  color={isFirst ? "darkWhite" : "lightBlack"}
+                  onPress={() =>
+                    setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
+                  }
+                  minSize
+                  leftIcon={
+                    <ChevronLeftIcon
+                      size={icons.size.medium}
+                      color={icons.color.button}
+                    />
+                  }
+                >
+                  <BodyText color="white">Voltar</BodyText>
+                </Button>
+                <Button
+                  onPress={handleSubmit(onSubmit)}
+                  minSize
+                  rightIcon={
+                    isLast ? (
+                      <CheckIcon
                         size={icons.size.medium}
                         color={icons.color.button}
                       />
-                    }
-                  >
-                    <BodyText color="white">Voltar</BodyText>
-                  </Button>
-                  <Button
-                    onPress={handleSubmit(onSubmit)}
-                    minSize
-                    rightIcon={
-                      isLast ? (
-                        <CheckIcon
-                          size={icons.size.medium}
-                          color={icons.color.button}
-                        />
-                      ) : (
-                        <ChevronRightIcon
-                          size={icons.size.medium}
-                          color={icons.color.button}
-                        />
-                      )
-                    }
-                  >
-                    <BodyText color="white">
-                      {isLast ? "Finalizar" : "Avançar"}
-                    </BodyText>
-                  </Button>
-                </View>
-              </FlexGap>
-              <Steps
-                size={(width * 0.5) / 4}
-                currentStep={activeStep}
-                stepsQuantity={steps.length}
-              />
+                    ) : (
+                      <ChevronRightIcon
+                        size={icons.size.medium}
+                        color={icons.color.button}
+                      />
+                    )
+                  }
+                >
+                  <BodyText color="white">
+                    {isLast ? "Finalizar" : "Avançar"}
+                  </BodyText>
+                </Button>
+              </View>
             </FlexGap>
-          </Container>
+            <Steps
+              size={(width * 0.5) / 4}
+              currentStep={activeStep}
+              stepsQuantity={steps.length}
+            />
+          </FlexGap>
+          {/* </Container> */}
         </TouchableWithoutFeedback>
-      </BackgroundCircle>
-    </FullScreenContainer>
+      </FullScreenContainer>
+    </BackgroundCircle>
   );
 };
 
@@ -186,7 +186,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  contentContainer: { alignItems: "center", width: "100%" },
+  contentContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    width: "100%",
+  },
   formContainer: { width: "100%" },
 });
 
@@ -199,13 +204,6 @@ const StepHandler: React.FC<StepHanlderProps> = ({ activeStep, steps }) => {
 };
 
 const width = Dimensions.get("window").width;
-
-const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-`;
 
 const size = width * 0.32;
 

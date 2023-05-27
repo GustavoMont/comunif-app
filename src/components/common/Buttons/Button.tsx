@@ -1,17 +1,29 @@
 import React from "react";
 import {
-  StyleSheet,
+  FlexAlignType,
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
 import { colorKeyType } from "src/types/colors";
 import styled from "styled-components/native";
-import { FlexGap } from "../Layout/FlexGap";
+
+type buttonType = "rounded" | "main";
 
 interface ButtonProps {
   minSize?: boolean;
   color?: colorKeyType;
+  alignSelf?: FlexAlignType;
+  type?: buttonType;
 }
+
+interface ButtonStyleProps {
+  radius: number;
+}
+
+const buttonStyle: Record<buttonType, ButtonStyleProps> = {
+  main: { radius: 8 },
+  rounded: { radius: 800 },
+};
 
 const TouchableButton = styled.TouchableOpacity<ButtonProps>`
   font-size: 16px;
@@ -20,7 +32,11 @@ const TouchableButton = styled.TouchableOpacity<ButtonProps>`
   ${({ minSize }) => (!!minSize ? "" : "width: 100%;")}
   padding: 12px 32px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: ${({ type = "main" }) => buttonStyle[type].radius}px;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  align-self: ${({ alignSelf = "stretch" }) => alignSelf};
 `;
 
 interface Props extends ButtonProps, TouchableOpacityProps {
@@ -34,21 +50,22 @@ export const Button: React.FC<Props> = ({
   rightIcon,
   color,
   minSize,
+  alignSelf,
+  type,
   ...props
 }) => {
   return (
-    <TouchableButton color={color} minSize={minSize}>
-      <TouchableOpacity {...props}>
-        <FlexGap gap={16} direction="row" style={styles.textContainer}>
-          {leftIcon || <></>}
-          {children}
-          {rightIcon || <></>}
-        </FlexGap>
-      </TouchableOpacity>
-    </TouchableButton>
+    <TouchableOpacity {...props}>
+      <TouchableButton
+        type={type}
+        alignSelf={alignSelf}
+        color={color}
+        minSize={minSize}
+      >
+        {leftIcon || <></>}
+        {children}
+        {rightIcon || <></>}
+      </TouchableButton>
+    </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  textContainer: { alignItems: "center" },
-});

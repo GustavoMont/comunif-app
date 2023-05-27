@@ -2,6 +2,7 @@
 import React from "react";
 import { act, fireEvent, render, screen } from "@src/test-utils";
 import Signup from "../Signup";
+
 jest.mock("@hooks/useAuth", () => ({
   useAuth: jest.fn().mockRejectedValue({
     signUp: () => ({}),

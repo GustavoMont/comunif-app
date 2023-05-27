@@ -51,8 +51,8 @@ export const Login = () => {
   };
 
   return (
-    <FullScreenContainer>
-      <BackgroundCircle circles={cicles}>
+    <BackgroundCircle circles={cicles}>
+      <FullScreenContainer>
         <Container>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <FlexGap gap={16} style={styles.screenContainer}>
@@ -73,7 +73,7 @@ export const Login = () => {
                 />
 
                 <Link
-                  screen="Forgot password"
+                  screen="ForgotPassword"
                   type="text"
                   size={14}
                   color="secondary"
@@ -99,8 +99,8 @@ export const Login = () => {
             </FlexGap>
           </TouchableWithoutFeedback>
         </Container>
-      </BackgroundCircle>
-    </FullScreenContainer>
+      </FullScreenContainer>
+    </BackgroundCircle>
   );
 };
 
