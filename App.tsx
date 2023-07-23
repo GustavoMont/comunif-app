@@ -23,8 +23,12 @@ import {
 import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/contexts/auth";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { NativeBaseProvider, extendTheme } from "native-base";
+import { SSRProvider } from "@react-aria/ssr";
+import { nativeTheme } from "@src/styles/themes/native-theme";
 
 function App() {
+  const theme = extendTheme(nativeTheme);
   const [fontsLoaded] = useFonts({
     Poppins_300: Poppins_300Light,
     Poppins_400: Poppins_400Regular,
@@ -45,18 +49,21 @@ function App() {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
-
-      <ThemeProvider theme={light}>
-        <NavigationContainer>
-          <AuthProvider>
-            <Routes />
-          </AuthProvider>
-        </NavigationContainer>
-        <Toast />
-      </ThemeProvider>
-    </SafeAreaView>
+    <NativeBaseProvider theme={theme}>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
+        <SSRProvider>
+          <ThemeProvider theme={light}>
+            <NavigationContainer>
+              <AuthProvider>
+                <Routes />
+              </AuthProvider>
+            </NavigationContainer>
+            <Toast />
+          </ThemeProvider>
+        </SSRProvider>
+      </SafeAreaView>
+    </NativeBaseProvider>
   );
 }
 

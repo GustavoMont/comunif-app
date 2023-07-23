@@ -83,6 +83,7 @@ const schemas = [nameSchema, userInfoSchema, passwordSchema];
 const Signup: React.FC = () => {
   const { icons } = useTheme();
   const { signUp } = useAuth();
+
   const [activeStep, setActiveStep] = useState<number>(0);
   const {
     control,

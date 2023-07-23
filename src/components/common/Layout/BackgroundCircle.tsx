@@ -33,14 +33,18 @@ interface Props {
   children: React.ReactNode;
   circles: CircleProps[];
   positions?: Position[];
+  useAnimation?: boolean;
 }
 
 const BackgroundCircle: React.FC<Props> = ({
   children,
   circles,
   positions,
+  useAnimation = true,
 }) => {
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  if (useAnimation) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  }
 
   return (
     <Container>

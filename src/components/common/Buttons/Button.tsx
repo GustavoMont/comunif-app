@@ -1,3 +1,4 @@
+import { Spinner } from "native-base";
 import React from "react";
 import {
   FlexAlignType,
@@ -25,7 +26,7 @@ const buttonStyle: Record<buttonType, ButtonStyleProps> = {
   rounded: { radius: 800 },
 };
 
-const TouchableButton = styled.TouchableOpacity<ButtonProps>`
+const TouchableButton = styled(TouchableOpacity)<ButtonProps>`
   font-size: 16px;
   font-weight: 500;
   background-color: ${({ theme, color }) => theme.colors[color || "primary"]};
@@ -42,6 +43,7 @@ const TouchableButton = styled.TouchableOpacity<ButtonProps>`
 interface Props extends ButtonProps, TouchableOpacityProps {
   rightIcon?: JSX.Element;
   leftIcon?: JSX.Element;
+  isLoading?: boolean;
 }
 
 export const Button: React.FC<Props> = ({
@@ -52,20 +54,23 @@ export const Button: React.FC<Props> = ({
   minSize,
   alignSelf,
   type,
+  isLoading,
   ...props
 }) => {
+  const handleIcon = (icon: JSX.Element) => {
+    return isLoading ? <Spinner accessibilityLabel="Carregando" /> : icon;
+  };
   return (
-    <TouchableOpacity {...props}>
-      <TouchableButton
-        type={type}
-        alignSelf={alignSelf}
-        color={color}
-        minSize={minSize}
-      >
-        {leftIcon || <></>}
-        {children}
-        {rightIcon || <></>}
-      </TouchableButton>
-    </TouchableOpacity>
+    <TouchableButton
+      {...props}
+      type={type}
+      alignSelf={alignSelf}
+      color={color}
+      minSize={minSize}
+    >
+      {leftIcon ? handleIcon(leftIcon) : <></>}
+      {children}
+      {rightIcon ? handleIcon(rightIcon) : <></>}
+    </TouchableButton>
   );
 };

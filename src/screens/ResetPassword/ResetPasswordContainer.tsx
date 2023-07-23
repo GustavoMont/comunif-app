@@ -10,6 +10,7 @@ export const ResetPasswordContainer: React.FC<PropsWithChildren> = ({
 
   return (
     <BackgroundCircle
+      useAnimation={false}
       circles={[
         {
           color: "primary",

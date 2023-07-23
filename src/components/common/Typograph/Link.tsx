@@ -13,7 +13,7 @@ interface LinkStyleProps extends TextProps, Typograph {
 
 interface Props extends LinkStyleProps {
   screen: string;
-  params?: any;
+  params?: never;
   icon?: JSX.Element;
 }
 
@@ -37,8 +37,14 @@ export const Link: React.FC<Props> = ({
 }) => {
   return (
     <View style={styles.container}>
-      {icon && icon}
-      <Navigator style={{ textAlign: align || "left" }} to={{ screen, params }}>
+      {icon || null}
+      <Navigator
+        style={{ textAlign: align || "left" }}
+        to={{
+          params: params || ({} as never),
+          screen: screen as never,
+        }}
+      >
         <LinkStyleHandler {...props} />
       </Navigator>
     </View>

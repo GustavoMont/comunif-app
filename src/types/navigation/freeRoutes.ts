@@ -1,9 +1,6 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-export type RootStackRoutes = {
+export type FreeStackRoutes = {
   Signup: undefined;
   Login: undefined;
   ForgotPassword: undefined;
+  ConfirmCode: undefined;
 };
-
-export type FreeRoutesStack = NativeStackNavigationProp<RootStackRoutes>;

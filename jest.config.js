@@ -3,7 +3,7 @@ module.exports = {
     "@testing-library/jest-native/extend-expect",
     "jest-styled-components",
     "jest-styled-components/native",
-    "./setupTest.ts",
+    "./setupTest.tsx",
   ],
   preset: "react-native",
 };

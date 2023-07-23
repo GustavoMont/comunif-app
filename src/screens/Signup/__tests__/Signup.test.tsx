@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from "react";
-import { act, fireEvent, render, screen } from "@src/test-utils";
 import Signup from "../Signup";
+import { act, fireEvent, render, screen } from "@src/test-utils";
 
 jest.mock("@hooks/useAuth", () => ({
-  useAuth: jest.fn().mockRejectedValue({
+  useAuth: jest.fn().mockReturnValue({
     signUp: () => ({}),
   }),
 }));
