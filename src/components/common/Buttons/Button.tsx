@@ -6,6 +6,7 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 import { colorKeyType } from "src/types/colors";
+import { useTheme } from "styled-components/native";
 import styled from "styled-components/native";
 
 type buttonType = "rounded" | "main";
@@ -57,8 +58,13 @@ export const Button: React.FC<Props> = ({
   isLoading,
   ...props
 }) => {
+  const { colors } = useTheme();
   const handleIcon = (icon: JSX.Element) => {
-    return isLoading ? <Spinner accessibilityLabel="Carregando" /> : icon;
+    return isLoading ? (
+      <Spinner color={colors.white} accessibilityLabel="Carregando" />
+    ) : (
+      icon
+    );
   };
   return (
     <TouchableButton
@@ -67,6 +73,7 @@ export const Button: React.FC<Props> = ({
       alignSelf={alignSelf}
       color={color}
       minSize={minSize}
+      accessibilityRole="button"
     >
       {leftIcon ? handleIcon(leftIcon) : <></>}
       {children}

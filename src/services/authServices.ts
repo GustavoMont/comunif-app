@@ -1,3 +1,4 @@
+import { AuthStorage } from "@src/models/User";
 import api from "../config/axios";
 
 export interface ResetPasswordDto {
@@ -13,4 +14,17 @@ export const resetPassword = async ({ email }: ResetPasswordDto) => {
     email,
   });
   return hashedEmail;
+};
+
+export interface ConfirmCodeBody {
+  code: string;
+  email: string;
+}
+
+export const confirmCode = async (data: ConfirmCodeBody) => {
+  const { data: access } = await api.post<AuthStorage>(
+    `/auth/reset-password/confirm-code`,
+    data
+  );
+  return access;
 };

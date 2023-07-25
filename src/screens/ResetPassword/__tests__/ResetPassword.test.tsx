@@ -21,12 +21,6 @@ jest.mock("expo-secure-store", () => ({
   setItemAsync: jest.fn(),
 }));
 
-jest.mock("react-native-toast-message/lib/src/Toast", () => ({
-  Toast: {
-    show: jest.fn(),
-  },
-}));
-
 const navigate = jest.fn();
 
 type Props = NativeStackScreenProps<FreeStackRoutes, "ForgotPassword">;

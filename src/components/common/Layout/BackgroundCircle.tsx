@@ -12,6 +12,7 @@ const Container = styled.View`
   left: 0;
   flex: 1;
   overflow: hidden;
+  background-color: ${({ theme: { backgroundScreen } }) => backgroundScreen};
 `;
 
 const Circle = styled.View<CircleProps>`
