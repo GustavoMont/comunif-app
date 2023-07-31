@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { useAppToast } from "@src/hooks/useAppToast";
 
 interface HandlePositionParams {
   size: number;
@@ -32,6 +32,7 @@ const handlePosition = ({ size, showPercentage }: HandlePositionParams) =>
 
 export const Login = () => {
   const { login } = useAuth();
+  const { showToast } = useAppToast();
   const { control, handleSubmit } = useForm<LoginPayload>();
 
   const onSubmit = async (body: LoginPayload) => {
@@ -40,12 +41,10 @@ export const Login = () => {
       Keyboard.dismiss();
     } catch (error) {
       const { response } = error as AxiosError<{ message: string }>;
-      Toast.show({
+      showToast({
+        message: response?.data.message || "Não foi possível realizar login",
+        title: "Ocorreu um erro",
         type: "error",
-        text1: "Ocorreu um erro",
-        text2: response?.data.message,
-        topOffset: 50,
-        visibilityTime: 10 * 1000,
       });
     }
   };

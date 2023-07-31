@@ -11,9 +11,6 @@ jest.mock("@hooks/useAuth", () => ({
     login: jest.fn(),
   }),
 }));
-jest.mock("react-native-toast-message/lib/src/Toast", () =>
-  jest.fn().mockRejectedValue({})
-);
 
 describe("Login screen", () => {
   describe("Content", () => {

@@ -22,13 +22,11 @@ import {
 
 import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/contexts/auth";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { NativeBaseProvider, extendTheme } from "native-base";
 import { SSRProvider } from "@react-aria/ssr";
 import { nativeTheme } from "@src/styles/themes/native-theme";
 
 function App() {
-  const theme = extendTheme(nativeTheme);
   const [fontsLoaded] = useFonts({
     Poppins_300: Poppins_300Light,
     Poppins_400: Poppins_400Regular,
@@ -42,6 +40,7 @@ function App() {
   if (!fontsLoaded) {
     return <></>;
   }
+  const theme = extendTheme(nativeTheme);
   if (
     Platform.OS === "android" &&
     UIManager.setLayoutAnimationEnabledExperimental
@@ -59,7 +58,6 @@ function App() {
                 <Routes />
               </AuthProvider>
             </NavigationContainer>
-            <Toast />
           </ThemeProvider>
         </SSRProvider>
       </SafeAreaView>

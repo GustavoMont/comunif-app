@@ -21,12 +21,13 @@ import {
   hashedEmailKey,
 } from "@src/services/authServices";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { accessKey } from "@src/utils/token";
+import { useAppToast } from "@src/hooks/useAppToast";
 
 export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
   navigation,
 }) => {
+  const { showToast } = useAppToast();
   const [code, setCode] = useState("");
   const CELL_COUNT = 6;
   const ref = useBlurOnFulfill({ value: code, cellCount: CELL_COUNT });
@@ -52,17 +53,17 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
         await setItemAsync(accessKey, JSON.stringify(accessResponse));
         navigation.navigate("ChangePassword");
       } catch (error) {
-        Toast.show({
+        showToast({
           type: "error",
-          text1: "Ocorreu um erro",
-          text2: "Ocorreu um erro ao validar seu código tente mais uma vez",
+          title: "Ocorreu um erro",
+          message: "Ocorreu um erro ao validar seu código tente mais uma vez",
         });
       }
     } else {
-      Toast.show({
+      showToast({
         type: "error",
-        text1: "Ocorreu um erro",
-        text2: "Ocorreu um erro ao validar seu código tente mais uma vez",
+        title: "Ocorreu um erro",
+        message: "Ocorreu um erro ao validar seu código tente mais uma vez",
       });
     }
   };

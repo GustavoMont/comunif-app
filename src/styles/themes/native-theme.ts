@@ -25,4 +25,39 @@ export const nativeTheme = {
       "900": "#33000D",
     },
   },
+  fontConfig: {
+    Poppins: {
+      300: {
+        normal: "Poppins_300",
+      },
+      400: {
+        normal: "Poppins_400",
+      },
+      500: {
+        normal: "Poppins_500",
+      },
+      600: {
+        normal: "Poppins_600",
+      },
+    },
+    Montserrat: {
+      300: {
+        normal: "Montserrat_300",
+      },
+      400: {
+        normal: "Montserrat_400",
+      },
+      500: {
+        normal: "Montserrat_500",
+      },
+      600: {
+        normal: "Montserrat_600",
+      },
+    },
+  },
+
+  fonts: {
+    heading: "Poppins",
+    body: "Montserrat",
+  },
 };

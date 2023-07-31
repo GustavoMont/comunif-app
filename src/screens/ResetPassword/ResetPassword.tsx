@@ -15,7 +15,6 @@ import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import * as Storage from "expo-secure-store";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 import { ResetPasswordModal } from "@src/components/reset-password/ResetPasswordModal";
@@ -27,6 +26,7 @@ import {
   hashedEmailKey,
   resetPassword,
 } from "@src/services/authServices";
+import { useAppToast } from "@src/hooks/useAppToast";
 
 const resetPasswordValidation = yup
   .object<ResetPasswordDto>({
@@ -49,6 +49,7 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showToast } = useAppToast();
 
   const onSubmit = async (data: ResetPasswordDto) => {
     try {
@@ -59,12 +60,10 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
     } catch (error) {
       const { response } = error as AxiosError<{ message: string }>;
 
-      Toast.show({
+      showToast({
         type: "error",
-        text1: "Ocorreu um erro",
-        text2: response?.data.message,
-        topOffset: 50,
-        visibilityTime: 10 * 1000,
+        title: "Ocorreu um erro",
+        message: response?.data.message || "Não foi possível completar a ação",
       });
     } finally {
       setIsLoading(false);

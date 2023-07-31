@@ -27,10 +27,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import moment from "moment";
 import { StyleSheet } from "react-native";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { AxiosError } from "axios";
 import { RegisterPayload } from "@src/models/User";
 import { useAuth } from "@hooks/useAuth";
+import { useAppToast } from "@src/hooks/useAppToast";
 const passwordSchema = yup.object({
   password: yup
     .string()
@@ -83,6 +83,7 @@ const schemas = [nameSchema, userInfoSchema, passwordSchema];
 const Signup: React.FC = () => {
   const { icons } = useTheme();
   const { signUp } = useAuth();
+  const { showToast } = useAppToast();
 
   const [activeStep, setActiveStep] = useState<number>(0);
   const {
@@ -105,12 +106,10 @@ const Signup: React.FC = () => {
         await signUp(body);
       } catch (err: any) {
         const { response } = err as AxiosError<{ message: string }>;
-        Toast.show({
+        showToast({
           type: "error",
-          text1: "Ocorreu um erro",
-          text2: response?.data.message,
-          topOffset: 50,
-          visibilityTime: 10 * 1000,
+          title: "Ocorreu um erro",
+          message: response?.data.message || "Ocorreu um erro ao criar a conta",
         });
       }
     }

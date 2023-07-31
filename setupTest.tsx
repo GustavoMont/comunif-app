@@ -10,9 +10,3 @@ jest.mock("@src/components/common/Typograph/Link", () => ({
     return <Text {...props}>{children}</Text>;
   },
 }));
-
-jest.mock("react-native-toast-message/lib/src/Toast", () => ({
-  Toast: {
-    show: jest.fn(),
-  },
-}));
