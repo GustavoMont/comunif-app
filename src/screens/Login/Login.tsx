@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Keyboard,
@@ -21,6 +21,7 @@ import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
 import { useAppToast } from "@src/hooks/useAppToast";
+import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 
 interface HandlePositionParams {
   size: number;
@@ -32,11 +33,13 @@ const handlePosition = ({ size, showPercentage }: HandlePositionParams) =>
 
 export const Login = () => {
   const { login } = useAuth();
+  const [isLogging, setIsLogging] = useState(false);
   const { showToast } = useAppToast();
   const { control, handleSubmit } = useForm<LoginPayload>();
 
   const onSubmit = async (body: LoginPayload) => {
     try {
+      setIsLogging(true);
       await login(body);
       Keyboard.dismiss();
     } catch (error) {
@@ -46,59 +49,67 @@ export const Login = () => {
         title: "Ocorreu um erro",
         type: "error",
       });
+    } finally {
+      setIsLogging(false);
     }
   };
 
   return (
-    <BackgroundCircle circles={cicles}>
-      <FullScreenContainer>
-        <Container>
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <FlexGap gap={16} style={styles.screenContainer}>
-              <Title color="primary" size={32}>
-                Login
-              </Title>
-              <ControledInput
-                control={control}
-                name="username"
-                placeholder="insira seu username ou email"
-              />
-              <FlexGap style={styles.passwordContainer} gap={8}>
+    <BackgroundCircle useAnimation={false} circles={cicles}>
+      <KeyboardCloser>
+        <FullScreenContainer>
+          <Container>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <FlexGap gap={16} style={styles.screenContainer}>
+                <Title color="primary" size={32}>
+                  Login
+                </Title>
                 <ControledInput
                   control={control}
-                  name="password"
-                  secureTextEntry
-                  placeholder="insira sua senha"
+                  name="username"
+                  placeholder="insira seu username ou email"
                 />
+                <FlexGap style={styles.passwordContainer} gap={8}>
+                  <ControledInput
+                    control={control}
+                    name="password"
+                    secureTextEntry
+                    placeholder="insira sua senha"
+                  />
 
-                <Link
-                  screen="ForgotPassword"
-                  type="text"
-                  size={14}
-                  color="secondary"
-                  align="right"
+                  <Link
+                    screen="ForgotPassword"
+                    type="text"
+                    size={14}
+                    color="secondary"
+                    align="right"
+                  >
+                    Esqueceu sua senha?
+                  </Link>
+                </FlexGap>
+
+                <Button
+                  isLoading={isLogging}
+                  testID="loginBtn"
+                  onPress={handleSubmit(onSubmit)}
                 >
-                  Esqueceu sua senha?
-                </Link>
+                  <ButtonText size={20} color="white">
+                    Login
+                  </ButtonText>
+                </Button>
+                <FlexGap direction="row" gap={4}>
+                  <BodyText size={14} color="darkWhite">
+                    Ainda não possui conta?
+                  </BodyText>
+                  <Link screen="Signup" type="text" size={14} color="secondary">
+                    Cadastre-se
+                  </Link>
+                </FlexGap>
               </FlexGap>
-
-              <Button testID="loginBtn" onPress={handleSubmit(onSubmit)}>
-                <ButtonText size={20} color="white">
-                  Login
-                </ButtonText>
-              </Button>
-              <FlexGap direction="row" gap={4}>
-                <BodyText size={14} color="darkWhite">
-                  Ainda não possui conta?
-                </BodyText>
-                <Link screen="Signup" type="text" size={14} color="secondary">
-                  Cadastre-se
-                </Link>
-              </FlexGap>
-            </FlexGap>
-          </TouchableWithoutFeedback>
-        </Container>
-      </FullScreenContainer>
+            </TouchableWithoutFeedback>
+          </Container>
+        </FullScreenContainer>
+      </KeyboardCloser>
     </BackgroundCircle>
   );
 };
