@@ -35,7 +35,7 @@ describe("ConfirmCode screen", () => {
   it("should redirect to reset-password screen", () => {
     render(<ConfirmCode {...({} as ConfirmCodeScreenProps)} />);
     const link = screen.getByText(/Voltar/g);
-    expect(link.props.screen).toBe("ChangePassword");
+    expect(link.props.screen).toBe("ForgotPassword");
   });
   describe("Confirming code", () => {
     it("should not redirect to change password", async () => {

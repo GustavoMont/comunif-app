@@ -108,7 +108,7 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
               <ButtonText color="white">Confirmar</ButtonText>
             </Button>
             <Link
-              screen="ChangePassword"
+              screen="ForgotPassword"
               type="text"
               color="secondary"
               size={18}
