@@ -5,15 +5,10 @@ import Signup from "@src/screens/Signup/Signup";
 import { ResetPassword } from "@src/screens/ResetPassword/ResetPassword";
 import { FreeStackRoutes } from "@src/types/navigation/freeRoutes";
 import { ConfirmCode } from "@src/screens/ConfirmCode/ConfirmCode";
-import { Text, View } from "native-base";
+import { ChangePasswordScreen } from "@src/screens/ChangePassword/ChangePasswordScreen";
 
 const Stack = createNativeStackNavigator<FreeStackRoutes>();
 
-const PlaceHolder = () => (
-  <View>
-    <Text>PLACEHOLDER</Text>
-  </View>
-);
 const FreeRoutes = () => {
   return (
     <Stack.Navigator
@@ -24,7 +19,7 @@ const FreeRoutes = () => {
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="ForgotPassword" component={ResetPassword} />
       <Stack.Screen name="ConfirmCode" component={ConfirmCode} />
-      <Stack.Screen name="ChangePassword" component={PlaceHolder} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
     </Stack.Navigator>
   );
 };

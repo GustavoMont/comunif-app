@@ -4,7 +4,7 @@ import { ResetPassword } from "../ResetPassword";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FreeStackRoutes } from "@src/types/navigation/freeRoutes";
-import { hashedEmailKey, resetPassword } from "@src/services/authServices";
+import { hashedEmailKey, resetPassword } from "@src/services/auth-services";
 import { setItemAsync } from "expo-secure-store";
 
 jest.mock("@react-navigation/native", () => ({
@@ -12,8 +12,8 @@ jest.mock("@react-navigation/native", () => ({
   useNavigation: jest.fn(),
 }));
 
-jest.mock("@src/services/authServices", () => ({
-  ...jest.requireActual("@src/services/authServices"),
+jest.mock("@src/services/auth-services", () => ({
+  ...jest.requireActual("@src/services/auth-services"),
   resetPassword: jest.fn(),
 }));
 

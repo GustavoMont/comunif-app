@@ -4,6 +4,7 @@ import {
   Controller,
   FieldValues,
   RegisterOptions,
+  useFormState,
 } from "react-hook-form";
 import { PasswordInput } from "./PasswordInput";
 import { TextInput, InputProps } from "./TextInput";
@@ -26,6 +27,9 @@ export const ControledInput: React.FC<Props> = ({
   secureTextEntry,
   label,
 }) => {
+  const { errors } = useFormState({
+    control,
+  });
   return (
     <Controller
       name={name}
@@ -34,7 +38,11 @@ export const ControledInput: React.FC<Props> = ({
       render={({ field: { onChange, value } }) => {
         const props = { value, label, placeholder };
         return secureTextEntry ? (
-          <PasswordInput {...props} onChangeText={onChange} />
+          <PasswordInput
+            {...props}
+            errorMessage={errors[name]?.message?.toString()}
+            onChangeText={onChange}
+          />
         ) : (
           <TextInput {...props} onChangeText={onChange} />
         );

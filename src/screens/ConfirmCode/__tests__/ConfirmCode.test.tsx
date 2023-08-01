@@ -1,19 +1,13 @@
 import React from "react";
-/**
- * Todo conteúdo da página
- * Inserir código e confirmar
- * ao confirmar redirecionar para o mudar senha
- */
-
 import { fireEvent, render, screen, waitFor } from "@src/test-utils";
 import { ConfirmCode } from "../ConfirmCode";
 import { ConfirmCodeScreenProps } from "@src/types/navigation/freeRoutes";
-import { confirmCode } from "@src/services/authServices";
+import { confirmCode } from "@src/services/auth-services";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { accessKey } from "@src/utils/token";
 
-jest.mock("@src/services/authServices", () => ({
-  ...jest.requireActual("@src/services/authServices"),
+jest.mock("@src/services/auth-services", () => ({
+  ...jest.requireActual("@src/services/auth-services"),
   confirmCode: jest.fn(),
 }));
 

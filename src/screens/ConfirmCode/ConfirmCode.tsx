@@ -19,7 +19,7 @@ import {
   ConfirmCodeBody,
   confirmCode,
   hashedEmailKey,
-} from "@src/services/authServices";
+} from "@src/services/auth-services";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { accessKey } from "@src/utils/token";
 import { useAppToast } from "@src/hooks/useAppToast";

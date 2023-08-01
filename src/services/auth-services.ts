@@ -28,3 +28,11 @@ export const confirmCode = async (data: ConfirmCodeBody) => {
   );
   return access;
 };
+
+export interface ChangePassword {
+  password: string;
+  confirmPassword: string;
+}
+export const changePassword = async (body: ChangePassword) => {
+  await api.patch("/auth/change-password", body);
+};

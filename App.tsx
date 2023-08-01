@@ -25,7 +25,9 @@ import { AuthProvider } from "@src/contexts/auth";
 import { NativeBaseProvider, extendTheme } from "native-base";
 import { SSRProvider } from "@react-aria/ssr";
 import { nativeTheme } from "@src/styles/themes/native-theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const client = new QueryClient();
 function App() {
   const [fontsLoaded] = useFonts({
     Poppins_300: Poppins_300Light,
@@ -48,20 +50,22 @@ function App() {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   return (
-    <NativeBaseProvider theme={theme}>
-      <SafeAreaView style={styles.safeArea}>
-        <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
-        <SSRProvider>
-          <ThemeProvider theme={light}>
-            <NavigationContainer>
-              <AuthProvider>
-                <Routes />
-              </AuthProvider>
-            </NavigationContainer>
-          </ThemeProvider>
-        </SSRProvider>
-      </SafeAreaView>
-    </NativeBaseProvider>
+    <QueryClientProvider client={client}>
+      <NativeBaseProvider theme={theme}>
+        <SafeAreaView style={styles.safeArea}>
+          <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
+          <SSRProvider>
+            <ThemeProvider theme={light}>
+              <NavigationContainer>
+                <AuthProvider>
+                  <Routes />
+                </AuthProvider>
+              </NavigationContainer>
+            </ThemeProvider>
+          </SSRProvider>
+        </SafeAreaView>
+      </NativeBaseProvider>
+    </QueryClientProvider>
   );
 }
 

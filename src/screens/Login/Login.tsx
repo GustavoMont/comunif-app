@@ -22,6 +22,7 @@ import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
 import { useAppToast } from "@src/hooks/useAppToast";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
+import { Stack } from "native-base";
 
 interface HandlePositionParams {
   size: number;
@@ -69,14 +70,17 @@ export const Login = () => {
                   name="username"
                   placeholder="insira seu username ou email"
                 />
-                <FlexGap style={styles.passwordContainer} gap={8}>
+                <Stack
+                  alignItems={"flex-end"}
+                  style={styles.passwordContainer}
+                  space={2}
+                >
                   <ControledInput
                     control={control}
                     name="password"
                     secureTextEntry
                     placeholder="insira sua senha"
                   />
-
                   <Link
                     screen="ForgotPassword"
                     type="text"
@@ -86,7 +90,7 @@ export const Login = () => {
                   >
                     Esqueceu sua senha?
                   </Link>
-                </FlexGap>
+                </Stack>
 
                 <Button
                   isLoading={isLogging}

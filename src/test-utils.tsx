@@ -3,6 +3,7 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 import { light } from "@styles/themes/light";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, RenderOptions } from "@testing-library/react-native";
 import { NativeBaseProvider } from "native-base";
 import React, { ReactElement } from "react";
@@ -14,15 +15,19 @@ const inset = {
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 };
 
+const client = new QueryClient();
+
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const navigationRef = createNavigationContainerRef();
   return (
     <SafeAreaView>
       <ThemeProvider theme={light}>
         <NativeBaseProvider initialWindowMetrics={inset}>
-          <NavigationContainer ref={navigationRef}>
-            {children}
-          </NavigationContainer>
+          <QueryClientProvider client={client}>
+            <NavigationContainer ref={navigationRef}>
+              {children}
+            </NavigationContainer>
+          </QueryClientProvider>
         </NativeBaseProvider>
       </ThemeProvider>
     </SafeAreaView>

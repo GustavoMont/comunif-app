@@ -25,7 +25,7 @@ import {
   ResetPasswordDto,
   hashedEmailKey,
   resetPassword,
-} from "@src/services/authServices";
+} from "@src/services/auth-services";
 import { useAppToast } from "@src/hooks/useAppToast";
 
 const resetPasswordValidation = yup
