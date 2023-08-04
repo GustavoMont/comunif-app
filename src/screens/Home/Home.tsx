@@ -1,45 +1,23 @@
-import { Button, FlatList, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "@src/hooks/useAuth";
-import { socket } from "@src/config/axios";
+import { View } from "react-native";
+import React from "react";
+
 import { BodyText } from "@src/components/common/Typograph/BodyText";
+import { HomeScreenProps } from "@src/types/navigation/protectedRoutes";
+import { useQuery } from "@tanstack/react-query";
+import { listCommunities } from "@src/services/communities-services";
+import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
+import { useAuth } from "@src/hooks/useAuth";
+import { Header } from "@src/components/home/Header";
 
-export const Home = () => {
-  const { logout, user } = useAuth();
-  const [messages, setMessages] = useState<string[]>([]);
-
-  useEffect(() => {
-    socket.connect();
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (socket.connected) {
-      console.log("AAAAAAAAAAAAa");
-      socket.emit("joinRooms", {
-        userId: user?.id,
-      });
-    }
-  }, []);
-
+export const Home: React.FC<HomeScreenProps> = ({}) => {
+  const { user } = useAuth();
+  const { data: communities, isLoading } = useQuery(
+    ["my-communities"],
+    listCommunities
+  );
   return (
-    <View>
-      <Text>Home</Text>
-      <FlatList
-        data={messages}
-        renderItem={({ item }) => (
-          <>
-            <BodyText>{item}</BodyText>
-          </>
-        )}
-      />
-      <Button
-        title="Message"
-        onPress={() => socket.emit("messageToServer", "é jhonsonkkkk")}
-      />
-      <Button title="Logout" onPress={logout} />
-    </View>
+    <FullScreenContainer>
+      {user ? <Header user={user} /> : <></>}
+    </FullScreenContainer>
   );
 };
