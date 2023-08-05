@@ -8,7 +8,7 @@ module.exports = function (api) {
       [
         "module-resolver",
         {
-          root: ["./src"],
+          root: ["src"],
           extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
           alias: {
             "@src": "./src",
@@ -18,6 +18,8 @@ module.exports = function (api) {
             "@styles": "./src/styles",
             "@mocks": "./src/__mocks__",
             "@hooks": "./src/hooks",
+            "@types": "./src/types",
+            "@services": "./src/services",
           },
         },
       ],

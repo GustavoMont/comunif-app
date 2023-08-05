@@ -10,23 +10,23 @@ import {
 } from "react-native-heroicons/outline";
 import colors from "@src/styles/themes/colors";
 import { ResetPasswordContainer } from "./ResetPasswordContainer";
-import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
+import { FullScreenContainer } from "@components/common/Layout/FullScreenContainer";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
 import * as Storage from "expo-secure-store";
-import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
-import { ResetPasswordModal } from "@src/components/reset-password/ResetPasswordModal";
-import { Button } from "@src/components/common/Buttons/Button";
+import { KeyboardCloser } from "@components/common/Layout/KeyboardCloser";
+import { ResetPasswordModal } from "@components/reset-password/ResetPasswordModal";
+import { Button } from "@components/common/Buttons/Button";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FreeStackRoutes } from "@src/types/navigation/freeRoutes";
+import { useAppToast } from "@hooks/useAppToast";
 import {
   ResetPasswordDto,
   hashedEmailKey,
   resetPassword,
 } from "@src/services/auth-services";
-import { useAppToast } from "@src/hooks/useAppToast";
+import { FreeStackRoutes } from "@src/types/navigation/freeRoutes";
 
 const resetPasswordValidation = yup
   .object<ResetPasswordDto>({
@@ -48,7 +48,7 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
     resolver: yupResolver(resetPasswordValidation),
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const { showToast } = useAppToast();
 
   const onSubmit = async (data: ResetPasswordDto) => {

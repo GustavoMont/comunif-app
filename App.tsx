@@ -26,6 +26,8 @@ import config from "./tamagui.config";
 import { Login } from "@src/screens/Login/Login";
 import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
+import Signup from "@src/screens/Signup/Signup";
+import { ResetPassword } from "@src/screens/ResetPassword/ResetPassword";
 
 const client = new QueryClient();
 function App() {
@@ -62,7 +64,7 @@ function App() {
                 />
                 <NavigationContainer>
                   <AuthProvider>
-                    <Login />
+                    <ResetPassword />
                   </AuthProvider>
                 </NavigationContainer>
               </ToastProvider>

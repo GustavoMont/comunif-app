@@ -7,7 +7,6 @@ import {
 import React, { useState } from "react";
 import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
-import { FlexGap } from "../../components/common/Layout/FlexGap";
 import { Title } from "../../components/common/Typograph/Title";
 import { useTheme } from "styled-components/native";
 import { CircleProps, Position } from "../../types/components/BackgroundCircle";
@@ -32,6 +31,7 @@ import { RegisterPayload } from "@src/models/User";
 import { useAuth } from "@hooks/useAuth";
 import { useAppToast } from "@src/hooks/useAppToast";
 import { passwordValidation } from "@src/data/validations/password-validation";
+import { YStack } from "tamagui";
 
 const nameSchema = yup
   .object({
@@ -107,14 +107,13 @@ const Signup: React.FC = () => {
   const isFirst = activeStep === 0;
   return (
     <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
-      <FullScreenContainer>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {/* <Container> */}
-          <FlexGap gap={16} style={styles.contentContainer}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <FullScreenContainer>
+          <YStack f={1} space={"$6"} ai={"center"} jc={"center"}>
             <Title color="primary" size={32}>
               Cadastro
             </Title>
-            <FlexGap gap={16} style={styles.formContainer}>
+            <YStack w={"100%"} gap={16}>
               <StepHandler steps={steps} activeStep={activeStep} />
               <View style={styles.buttonContainer}>
                 <Button
@@ -155,16 +154,16 @@ const Signup: React.FC = () => {
                   </BodyText>
                 </Button>
               </View>
-            </FlexGap>
+            </YStack>
             <Steps
               size={(width * 0.5) / 4}
               currentStep={activeStep}
               stepsQuantity={steps.length}
             />
-          </FlexGap>
+          </YStack>
           {/* </Container> */}
-        </TouchableWithoutFeedback>
-      </FullScreenContainer>
+        </FullScreenContainer>
+      </TouchableWithoutFeedback>
     </BackgroundCircle>
   );
 };
@@ -174,13 +173,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  contentContainer: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-  },
-  formContainer: { width: "100%" },
 });
 
 interface StepHanlderProps {

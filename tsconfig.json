@@ -9,7 +9,8 @@
       "@screens/*": ["./src/screens/*"],
       "@styles/*": ["./src/styles/*"],
       "@mocks/*": ["./src/__mocks__/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@types/*": ["./src/types/*"]
     },
     "types": [
       "styled-components-react-native",
