@@ -23,11 +23,8 @@ import { AuthProvider } from "@src/contexts/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TamaguiProvider } from "tamagui";
 import config from "./tamagui.config";
-import { Login } from "@src/screens/Login/Login";
 import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
-import Signup from "@src/screens/Signup/Signup";
-import { ResetPassword } from "@src/screens/ResetPassword/ResetPassword";
 
 const client = new QueryClient();
 function App() {
@@ -63,9 +60,7 @@ function App() {
                   backgroundColor={colors["lightBlack"]}
                 />
                 <NavigationContainer>
-                  <AuthProvider>
-                    <ResetPassword />
-                  </AuthProvider>
+                  <AuthProvider></AuthProvider>
                 </NavigationContainer>
               </ToastProvider>
             </TamaguiProvider>
