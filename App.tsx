@@ -27,6 +27,7 @@ import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
 
 const client = new QueryClient();
+
 function App() {
   const [fontsLoaded] = useFonts({
     Poppins_300: Poppins_300Light,

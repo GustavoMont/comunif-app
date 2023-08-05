@@ -2,7 +2,6 @@ import { FullScreenContainer } from "@src/components/common/Layout/FullScreenCon
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 import { Title } from "@src/components/common/Typograph/Title";
 import { ChangePasswordScreenProps } from "@src/types/navigation/freeRoutes";
-import { Center, Stack } from "native-base";
 import React, { useState } from "react";
 import { ResetPasswordContainer } from "../ResetPassword/ResetPasswordContainer";
 import { ControledInput } from "@src/components/common/Form/ControledInput";
@@ -18,6 +17,7 @@ import { useAppToast } from "@src/hooks/useAppToast";
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { PasswordChangedModal } from "@src/components/change-password/PasswordChangedModal";
+import { YStack } from "tamagui";
 
 export const ChangePasswordScreen: React.FC<ChangePasswordScreenProps> = ({
   navigation,
@@ -55,11 +55,11 @@ export const ChangePasswordScreen: React.FC<ChangePasswordScreenProps> = ({
       <PasswordChangedModal isVisible={isModalOpen} onClose={onCloseModal} />
       <FullScreenContainer>
         <KeyboardCloser>
-          <Center flex={1}>
+          <YStack ai={"center"} jc={"center"} space={"$6"} flex={1}>
             <Title weight={600} size={24} color="secondary">
               Mudar a senha
             </Title>
-            <Stack w={"full"} space={"6"}>
+            <YStack w={"100%"} space={"$4"}>
               <ControledInput
                 secureTextEntry
                 label="Nova senha:"
@@ -74,26 +74,26 @@ export const ChangePasswordScreen: React.FC<ChangePasswordScreenProps> = ({
                 control={control}
                 name="confirmPassword"
               />
-              <Button
-                type="rounded"
-                minSize
-                isLoading={isLoading}
-                alignSelf="flex-end"
-                onPress={handleSubmit(onSubmit)}
-                rightIcon={
-                  <CheckIcon
-                    width={icons.size.medium}
-                    height={icons.size.medium}
-                    color={colors.white}
-                  />
-                }
-              >
-                <ButtonText size={20} color="white">
-                  Alterar senha
-                </ButtonText>
-              </Button>
-            </Stack>
-          </Center>
+            </YStack>
+            <Button
+              type="rounded"
+              minSize
+              isLoading={isLoading}
+              alignSelf="flex-end"
+              onPress={handleSubmit(onSubmit)}
+              rightIcon={
+                <CheckIcon
+                  width={icons.size.medium}
+                  height={icons.size.medium}
+                  color={colors.white}
+                />
+              }
+            >
+              <ButtonText size={20} color="white">
+                Alterar senha
+              </ButtonText>
+            </Button>
+          </YStack>
         </KeyboardCloser>
       </FullScreenContainer>
     </ResetPasswordContainer>
