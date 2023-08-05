@@ -3,7 +3,6 @@ import { Title } from "@src/components/common/Typograph/Title";
 import { ConfirmCodeScreenProps } from "@src/types/navigation/freeRoutes";
 import React, { useState } from "react";
 import { ResetPasswordContainer } from "../ResetPassword/ResetPasswordContainer";
-import { Center, Stack } from "native-base";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { Button } from "@src/components/common/Buttons/Button";
 import { ButtonText } from "@src/components/common/Buttons/ButtonText";
@@ -23,6 +22,7 @@ import {
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { accessKey } from "@src/utils/token";
 import { useAppToast } from "@src/hooks/useAppToast";
+import { YStack } from "tamagui";
 
 export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
   navigation,
@@ -71,10 +71,12 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
   return (
     <ResetPasswordContainer>
       <FullScreenContainer>
-        <Center flex={1}>
-          <Title color="secondary">Recuperar senha</Title>
-          <Stack mt={"8"} space={"6"} w={"full"}>
-            <Stack space={4}>
+        <YStack jc={"center"} space={"$6"} flex={1}>
+          <Title align="center" color="secondary">
+            Recuperar senha
+          </Title>
+          <YStack space={"$6"}>
+            <YStack space={"$4"}>
               <BodyText>Insira o código enviado</BodyText>
               <CodeField
                 ref={ref}
@@ -94,7 +96,7 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
                   />
                 )}
               />
-            </Stack>
+            </YStack>
             <Button
               minSize
               color="secondary"
@@ -116,8 +118,8 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
             >
               Voltar
             </Link>
-          </Stack>
-        </Center>
+          </YStack>
+        </YStack>
       </FullScreenContainer>
     </ResetPasswordContainer>
   );

@@ -6,7 +6,7 @@ import { BodyText } from "../Typograph/BodyText";
 
 const TextCell = styled.View`
   border: 2px ${({ theme }) => theme.colors.darkWhite};
-  border-radius: 4;
+  border-radius: 4px;
   padding: 2px;
   width: 48px;
   height: 48px;
@@ -19,7 +19,7 @@ const Circle = styled.View`
   width: 12px;
   height: 12px;
   border: 2px ${({ theme }) => theme.colors.darkWhite};
-  border-radius: 800px;
+  border-radius: 80px;
 `;
 
 interface Props extends Omit<TextProps, "children"> {

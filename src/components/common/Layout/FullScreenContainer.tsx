@@ -8,7 +8,7 @@ export const FullScreenContainer: React.FC<{ children: any }> = ({
   return (
     <SafeAreaView style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        {children}
+        <>{children}</>
       </TouchableWithoutFeedback>
     </SafeAreaView>
   );
