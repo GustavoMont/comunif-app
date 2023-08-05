@@ -1,4 +1,3 @@
-import { Spinner } from "native-base";
 import React from "react";
 import {
   FlexAlignType,
@@ -8,6 +7,7 @@ import {
 import { colorKeyType } from "src/types/colors";
 import { useTheme } from "styled-components/native";
 import styled from "styled-components/native";
+import { Spinner } from "tamagui";
 
 type buttonType = "rounded" | "main";
 

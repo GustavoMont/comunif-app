@@ -4,7 +4,7 @@ import { Platform, StyleSheet, UIManager } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import colors from "./src/styles/themes/colors";
 import { useFonts } from "expo-font";
 import {
@@ -19,13 +19,13 @@ import {
   Poppins_600SemiBold,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
-
-import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/contexts/auth";
-import { NativeBaseProvider, extendTheme } from "native-base";
-import { SSRProvider } from "@react-aria/ssr";
-import { nativeTheme } from "@src/styles/themes/native-theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TamaguiProvider } from "tamagui";
+import config from "./tamagui.config";
+import { Login } from "@src/screens/Login/Login";
+import { ToastProvider } from "@tamagui/toast";
+import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
 
 const client = new QueryClient();
 function App() {
@@ -42,7 +42,6 @@ function App() {
   if (!fontsLoaded) {
     return <></>;
   }
-  const theme = extendTheme(nativeTheme);
   if (
     Platform.OS === "android" &&
     UIManager.setLayoutAnimationEnabledExperimental
@@ -50,22 +49,28 @@ function App() {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   return (
-    <QueryClientProvider client={client}>
-      <NativeBaseProvider theme={theme}>
-        <SafeAreaView style={styles.safeArea}>
-          <StatusBar style="light" backgroundColor={colors["lightBlack"]} />
-          <SSRProvider>
-            <ThemeProvider theme={light}>
-              <NavigationContainer>
-                <AuthProvider>
-                  <Routes />
-                </AuthProvider>
-              </NavigationContainer>
-            </ThemeProvider>
-          </SSRProvider>
-        </SafeAreaView>
-      </NativeBaseProvider>
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <QueryClientProvider client={client}>
+          <ThemeProvider theme={light}>
+            <TamaguiProvider config={config}>
+              <ToastProvider>
+                <CurrentToast />
+                <StatusBar
+                  style="light"
+                  backgroundColor={colors["lightBlack"]}
+                />
+                <NavigationContainer>
+                  <AuthProvider>
+                    <Login />
+                  </AuthProvider>
+                </NavigationContainer>
+              </ToastProvider>
+            </TamaguiProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

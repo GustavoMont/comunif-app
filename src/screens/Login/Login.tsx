@@ -22,8 +22,7 @@ import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
 import { useAppToast } from "@src/hooks/useAppToast";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
-import { Stack } from "native-base";
-
+import { Stack } from "tamagui";
 interface HandlePositionParams {
   size: number;
   showPercentage: number;
