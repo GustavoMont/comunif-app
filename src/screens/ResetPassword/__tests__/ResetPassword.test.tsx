@@ -40,7 +40,7 @@ describe("ResetPassword Screen", () => {
       expect(
         screen.getByPlaceholderText(/insira seu e-mail/gi)
       ).toBeOnTheScreen();
-      expect(screen.getByRole("button")).toBeOnTheScreen();
+      expect(screen.getByRole("button", { name: /Enviar/g })).toBeOnTheScreen();
       expect(screen.getByText(/Já possuo o código/gi)).toBeOnTheScreen();
     });
   });
@@ -48,7 +48,7 @@ describe("ResetPassword Screen", () => {
     describe("By Form", () => {
       it("should not redirect", async () => {
         render(<ResetPassword {...({} as Props)} />);
-        const submitButton = screen.getByRole("button");
+        const submitButton = screen.getByRole("button", { name: /Enviar/g });
         fireEvent.press(submitButton);
         await waitFor(() => {
           expect(
@@ -70,7 +70,7 @@ describe("ResetPassword Screen", () => {
             } as any)}
           />
         );
-        const submitButton = screen.getByRole("button");
+        const submitButton = screen.getByRole("button", { name: /Enviar/g });
         const input = screen.getByPlaceholderText(/insira seu e-mail/gi);
         const email = "email@email.com";
         fireEvent.changeText(input, email);
@@ -88,7 +88,7 @@ describe("ResetPassword Screen", () => {
             /Foi enviado um código de segurança para seu e-mail. Cheque agora seu e-mail/
           )
         ).toBeOnTheScreen();
-        fireEvent.press(screen.getByTestId("modal-close-button"));
+        fireEvent.press(screen.getByTestId("close-modal-button"));
         await waitFor(() => {
           expect(navigate).toBeCalledWith("ConfirmCode");
         });

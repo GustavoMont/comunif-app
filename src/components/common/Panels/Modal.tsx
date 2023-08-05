@@ -51,7 +51,7 @@ export const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
           space
         >
           <Unspaced>
-            <Dialog.Close asChild>
+            <Dialog.Close testID="close-modal-button" asChild>
               <View top={"$3"} right={"$3"} position="absolute" asChild>
                 <ButtonText>
                   <XMarkIcon width={24} height={24} color={colors.lightBlack} />
