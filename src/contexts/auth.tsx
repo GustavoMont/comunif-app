@@ -20,10 +20,11 @@ type login = (body: LoginPayload) => Promise<void>;
 
 interface Context {
   signedIn: boolean;
+  user: User | null;
+  isCheckingToken: boolean;
   signUp: signUp;
   login: login;
   logout(): Promise<void>;
-  user: User | null;
 }
 
 export const AuthContext = createContext<Context>({} as Context);
@@ -31,6 +32,7 @@ export const AuthContext = createContext<Context>({} as Context);
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [signedIn, setSignedIn] = useState(false);
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
   const storeAccess = async (token: AuthStorage) => {
     await Store.setItemAsync(accessKey, JSON.stringify(token));
   };
@@ -72,12 +74,13 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     let mounted = true;
     if (mounted) {
       (async () => {
+        setIsCheckingToken(true);
         const token = await getToken();
         if (token) {
           const { sub } = decodeToken(token);
-
           setUser(await getUser(sub));
         }
+        setIsCheckingToken(false);
       })();
     }
     return () => {
@@ -98,7 +101,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, signedIn, signUp, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, signedIn, isCheckingToken, signUp, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
