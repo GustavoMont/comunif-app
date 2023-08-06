@@ -25,6 +25,7 @@ import { TamaguiProvider } from "tamagui";
 import config from "./tamagui.config";
 import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
+import { Routes } from "@src/routes/Routes";
 
 const client = new QueryClient();
 
@@ -61,7 +62,9 @@ function App() {
                   backgroundColor={colors["lightBlack"]}
                 />
                 <NavigationContainer>
-                  <AuthProvider></AuthProvider>
+                  <AuthProvider>
+                    <Routes />
+                  </AuthProvider>
                 </NavigationContainer>
               </ToastProvider>
             </TamaguiProvider>

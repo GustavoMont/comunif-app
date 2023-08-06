@@ -8,5 +8,4 @@ export const Title = styled.Text<Typograph>`
   font-family: ${({ theme, weight }) => theme.fonts.title[weight ?? 500]};
   color: ${({ theme, color }) => theme.colors[color || "black"]};
   text-align: ${({ align }) => align || "left"};
-  height: ${({ size = DEFAULT_SIZE }) => size + 6}px;
 `;

@@ -5,9 +5,14 @@ import {
 
 export type RootStackParamList = {
   Home: undefined;
+  Profile: undefined;
+  AllCommunities: undefined;
+  Community: {
+    id: number;
+  };
 };
 
-export type NavigationType = NativeStackNavigationProp<RootStackParamList>;
+export type ProtectedRoute = NativeStackNavigationProp<RootStackParamList>;
 
 export type HomeScreenProps = NativeStackScreenProps<
   RootStackParamList,

@@ -7,7 +7,7 @@ import {
 import { colorKeyType } from "src/types/colors";
 import { useTheme } from "styled-components/native";
 import styled from "styled-components/native";
-import { Spinner } from "tamagui";
+import { Spinner, View } from "tamagui";
 
 type buttonType = "rounded" | "main";
 
@@ -16,6 +16,7 @@ interface ButtonProps {
   color?: colorKeyType;
   alignSelf?: FlexAlignType;
   type?: buttonType;
+  centerContent?: boolean;
 }
 
 interface ButtonStyleProps {
@@ -38,6 +39,8 @@ const TouchableButton = styled(TouchableOpacity)<ButtonProps>`
   flex-direction: row;
   gap: 8px;
   align-items: center;
+  justify-content: ${({ centerContent }) =>
+    centerContent ? "center" : "flex-start"};
   align-self: ${({ alignSelf = "stretch" }) => alignSelf};
 `;
 
