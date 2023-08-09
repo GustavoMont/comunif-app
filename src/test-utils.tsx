@@ -19,13 +19,15 @@ const inset = {
 
 const client = new QueryClient();
 
+jest.useFakeTimers();
+
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const navigationRef = createNavigationContainerRef();
   return (
     <SafeAreaProvider initialMetrics={inset}>
       <SafeAreaView>
-        <ThemeProvider theme={light}>
-          <QueryClientProvider client={client}>
+        <QueryClientProvider client={client}>
+          <ThemeProvider theme={light}>
             <TamaguiProvider config={config}>
               <ToastProvider>
                 <CurrentToast />
@@ -34,8 +36,8 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
                 </NavigationContainer>
               </ToastProvider>
             </TamaguiProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
       </SafeAreaView>
     </SafeAreaProvider>
   );

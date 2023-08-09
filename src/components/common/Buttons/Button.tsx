@@ -7,7 +7,7 @@ import {
 import { colorKeyType } from "src/types/colors";
 import { useTheme } from "styled-components/native";
 import styled from "styled-components/native";
-import { Spinner, View } from "tamagui";
+import { Spinner } from "tamagui";
 
 type buttonType = "rounded" | "main";
 
@@ -33,7 +33,7 @@ const TouchableButton = styled(TouchableOpacity)<ButtonProps>`
   font-weight: 500;
   background-color: ${({ theme, color }) => theme.colors[color || "primary"]};
   ${({ minSize }) => (!!minSize ? "" : "width: 100%;")}
-  padding: 12px 32px;
+  padding: 12px;
   text-align: center;
   border-radius: ${({ type = "main" }) => buttonStyle[type].radius}px;
   flex-direction: row;

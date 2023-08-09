@@ -1,7 +1,7 @@
 import { Community } from "@src/models/Community";
 import { User } from "@src/models/User";
 
-type Generator<T> = (costumInfo: Partial<T>) => T;
+type Generator<T> = (costumInfo?: Partial<T>) => T;
 
 type ArrayGenerator = <T>(legnth: number, generator: Generator<T>) => T[];
 
@@ -30,5 +30,6 @@ export const communityGenerator: Generator<Community> = (change) => ({
   subject: "subject",
   banner: "banner",
   isActive: true,
+  isMember: false,
   ...change,
 });

@@ -20,7 +20,6 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { data: communities, isLoading } = useQuery(
     ["my-communities", user?.id],
     async () => await listUserCommunities(user?.id ?? 0),
-    // () => arrayGenerator<Community>(5, communityGenerator),
     {
       enabled: !!user,
     }

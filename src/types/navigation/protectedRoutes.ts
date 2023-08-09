@@ -18,3 +18,8 @@ export type HomeScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "Home"
 >;
+
+export type AllCommunitiesScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "AllCommunities"
+>;

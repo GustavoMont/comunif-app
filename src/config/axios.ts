@@ -1,10 +1,9 @@
-import { getToken } from "@src/utils/token";
+import { apiUrl } from "@src/constants/api-constants";
+import { deleteToken, getToken } from "@src/utils/token";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const url = "http://10.0.2.2:3000";
-
-export const socket = io(url, {
+export const socket = io(apiUrl, {
   auth: (cb) => {
     getToken().then((token) => {
       if (token) {
@@ -15,7 +14,7 @@ export const socket = io(url, {
   withCredentials: true,
 });
 
-const baseURL = `${url}/api`;
+const baseURL = `${apiUrl}/api`;
 
 export const api = axios.create({
   baseURL,
@@ -33,5 +32,12 @@ api.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+api.interceptors.response.use(async (config) => {
+  if (config.status === 401) {
+    await deleteToken();
+  }
+  return config;
+});
 
 export default api;

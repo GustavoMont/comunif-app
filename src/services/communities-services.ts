@@ -1,9 +1,29 @@
 import api from "@src/config/axios";
+import { ListResponse } from "@src/models/ApiResponse";
 import { Community } from "@src/models/Community";
 
-export const listCommunities = async () => {
-  const { data: communities } = await api.get<Community[]>(`/communities`);
+export interface ListCommunitiesFilters {
+  name?: string;
+}
+
+export const listCommunities = async (filters: ListCommunitiesFilters = {}) => {
+  const { data: communities } = await api.get<ListResponse<Community>>(
+    `/communities`,
+    { params: filters }
+  );
   return communities;
+};
+
+interface AddUserCommunity {
+  communityId: number;
+}
+
+export const addUserToCommunity = async (body: AddUserCommunity) => {
+  const { data: community } = await api.post<Community>(
+    `/communities/add-user`,
+    body
+  );
+  return community;
 };
 
 export const listUserCommunities = async (userId: number) => {

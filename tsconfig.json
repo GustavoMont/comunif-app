@@ -10,7 +10,8 @@
       "@styles/*": ["./src/styles/*"],
       "@mocks/*": ["./src/__mocks__/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"]
+      "@types/*": ["./src/types/*"],
+      "@services/*": ["./src/services/*"]
     },
     "types": [
       "styled-components-react-native",
