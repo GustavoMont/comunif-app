@@ -4,6 +4,7 @@ import { UserGroupIcon } from "react-native-heroicons/outline";
 import { useTheme } from "styled-components/native";
 import { Avatar, YStack } from "tamagui";
 import { BodyText } from "@components/common/Typograph/BodyText";
+import { apiUrl } from "@src/constants/api-constants";
 
 interface Props {
   community: Community;
@@ -23,7 +24,7 @@ export const CommunityStory: React.FC<Props> = ({ community, onPress }) => {
         <Avatar.Image
           accessibilityLabel="Cam"
           source={{
-            uri: null ?? "https://anana.nanan",
+            uri: `${apiUrl}/${community.banner}` ?? "https://anana.nanan",
           }}
         />
         <Avatar.Fallback

@@ -37,25 +37,27 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
             Você não está em nenhuma comunidade
           </BodyText>
         ) : (
-          <Title>Minhas comunidades:</Title>
+          <Title weight={300}>Minhas comunidades:</Title>
         )}
         {!isNewUser ? (
-          <FlatList
-            data={communities}
-            renderItem={({ item }) => (
-              <CommunityStory
-                community={item}
-                onPress={({ id }) =>
-                  navigation.navigate("Community", {
-                    id,
-                  })
-                }
-              />
-            )}
-            horizontal
-            keyExtractor={({ id }) => id.toString()}
-            ItemSeparatorComponent={() => <View ml={"$4"} />}
-          />
+          <View>
+            <FlatList
+              data={communities}
+              renderItem={({ item }) => (
+                <CommunityStory
+                  community={item}
+                  onPress={({ id }) =>
+                    navigation.navigate("Community", {
+                      id,
+                    })
+                  }
+                />
+              )}
+              horizontal
+              keyExtractor={({ id }) => id.toString()}
+              ItemSeparatorComponent={() => <View ml={"$4"} />}
+            />
+          </View>
         ) : (
           <></>
         )}
