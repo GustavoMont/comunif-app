@@ -1,3 +1,5 @@
+import { CommunityChannel } from "./CommunityChannel";
+
 export interface Community {
   id: number;
   name: string;
@@ -5,4 +7,5 @@ export interface Community {
   banner: string | null;
   isActive: boolean;
   isMember: boolean;
+  communityChannels: CommunityChannel[];
 }

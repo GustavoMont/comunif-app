@@ -1,4 +1,6 @@
+import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
+import { CommunityChannel } from "@src/models/CommunityChannel";
 import { User } from "@src/models/User";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
@@ -31,5 +33,23 @@ export const communityGenerator: Generator<Community> = (change) => ({
   banner: "banner",
   isActive: true,
   isMember: false,
+  communityChannels: [],
   ...change,
+});
+
+export const communityChannelGenerator: Generator<CommunityChannel> = (
+  communityChannel
+) => ({
+  communityId: 1,
+  id: 1,
+  channelTypeId: 1,
+  channelType: channelTypeGenerator(),
+  ...communityChannel,
+});
+
+export const channelTypeGenerator: Generator<ChannelType> = (channelType) => ({
+  description: "description",
+  id: 1,
+  name: "other",
+  ...channelType,
 });

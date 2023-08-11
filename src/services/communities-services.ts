@@ -14,6 +14,13 @@ export const listCommunities = async (filters: ListCommunitiesFilters = {}) => {
   return communities;
 };
 
+export const getCommunity = async (communityId: number) => {
+  const { data: community } = await api.get<Community>(
+    `/communities/${communityId}`
+  );
+  return community;
+};
+
 interface AddUserCommunity {
   communityId: number;
 }

@@ -6,4 +6,5 @@ export const BodyText = styled.Text<Typograph>`
   font-family: ${({ theme, weight }) => theme.fonts.text[weight ?? 500]};
   color: ${({ theme, color = "lightBlack" }) => theme.colors[color]};
   text-align: ${({ align }) => align || "left"};
+  text-decoration: ${({ underlined }) => (underlined ? "underline" : "none")};
 `;

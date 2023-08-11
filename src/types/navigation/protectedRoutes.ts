@@ -10,6 +10,10 @@ export type RootStackParamList = {
   Community: {
     id: number;
   };
+  CommunityChannel: {
+    communityId: number;
+    channelId: number;
+  };
 };
 
 export type ProtectedRoute = NativeStackNavigationProp<RootStackParamList>;
@@ -22,4 +26,9 @@ export type HomeScreenProps = NativeStackScreenProps<
 export type AllCommunitiesScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "AllCommunities"
+>;
+
+export type CommunityScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "Community"
 >;

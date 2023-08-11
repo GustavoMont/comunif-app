@@ -17,7 +17,19 @@ const inset = {
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 };
 
-const client = new QueryClient();
+const client = new QueryClient({
+  logger: {
+    error() {
+      return;
+    },
+    log() {
+      return;
+    },
+    warn() {
+      return;
+    },
+  },
+});
 
 jest.useFakeTimers();
 

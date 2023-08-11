@@ -6,4 +6,5 @@ export interface Typograph {
   color?: colorKeyType;
   weight?: keyof fontWeight;
   align?: "right" | "left" | "center";
+  underlined?: boolean;
 }
