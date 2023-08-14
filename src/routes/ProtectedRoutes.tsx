@@ -4,6 +4,7 @@ import { Home } from "@src/screens/Home/Home";
 import { RootStackParamList } from "@src/types/navigation/protectedRoutes";
 import { AllCommunitiesScreen } from "@screens/AllCommunities/AllCommunitiesScreen";
 import { CommunityScreen } from "@src/screens/Community/CommunityScreen";
+import { ProfileScreen } from "@src/screens/Profile/ProfileScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -13,6 +14,7 @@ export const ProtectedRoutes = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="AllCommunities" component={AllCommunitiesScreen} />
       <Stack.Screen name="Community" component={CommunityScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );
 };

@@ -1,11 +1,18 @@
 import { AuthStorage } from "@src/models/User";
 import api from "../config/axios";
 
+export const validateRefreshToken = async (refreshToken: string) => {
+  const { data } = await api.post<AuthStorage>("/auth/refresh-token", {
+    refreshToken,
+  });
+  return data;
+};
+
+export const hashedEmailKey = "hashedEmail";
+
 export interface ResetPasswordDto {
   email: string;
 }
-
-export const hashedEmailKey = "hashedEmail";
 
 export const resetPassword = async ({ email }: ResetPasswordDto) => {
   const {

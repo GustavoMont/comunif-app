@@ -24,4 +24,5 @@ export interface LoginPayload {
 
 export interface AuthStorage {
   access: string;
+  refreshToken: string;
 }

@@ -1,15 +1,32 @@
 import { AuthStorage } from "@src/models/User";
 import * as Store from "expo-secure-store";
 
-export const accessKey = "access";
+export const tokenKeys = {
+  access: "access",
+  refreshToken: "rf_token",
+};
 
-export const deleteToken = async () => await Store.deleteItemAsync(accessKey);
+export const deleteToken = async () =>
+  await Promise.all([
+    Store.deleteItemAsync(tokenKeys.access),
+    Store.deleteItemAsync(tokenKeys.refreshToken),
+  ]);
 
-export const getToken = async () => {
-  const json = await Store.getItemAsync(accessKey);
+export const getAccessToken = async () => {
+  const accessToken = await Store.getItemAsync(tokenKeys.access);
 
-  if (json) {
-    return (JSON.parse(json) as AuthStorage).access;
-  }
-  return json;
+  return accessToken;
+};
+
+export const getRefreshToken = async () => {
+  const refreshToken = await Store.getItemAsync(tokenKeys.refreshToken);
+
+  return refreshToken;
+};
+
+export const storeTokens = async (token: AuthStorage) => {
+  await Promise.all([
+    Store.setItemAsync(tokenKeys.access, token.access),
+    Store.setItemAsync(tokenKeys.refreshToken, token.refreshToken),
+  ]);
 };

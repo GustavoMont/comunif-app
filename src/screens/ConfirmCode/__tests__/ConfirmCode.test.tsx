@@ -4,7 +4,7 @@ import { ConfirmCode } from "../ConfirmCode";
 import { ConfirmCodeScreenProps } from "@src/types/navigation/freeRoutes";
 import { confirmCode } from "@src/services/auth-services";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
-import { accessKey } from "@src/utils/token";
+import { tokenKeys } from "@src/utils/token";
 
 jest.mock("@src/services/auth-services", () => ({
   ...jest.requireActual("@src/services/auth-services"),
@@ -82,7 +82,7 @@ describe("ConfirmCode screen", () => {
       });
       await waitFor(() => {
         expect(setItemAsync).toBeCalledWith(
-          accessKey,
+          tokenKeys.access,
           JSON.stringify(confirmCodeResponse)
         );
       });

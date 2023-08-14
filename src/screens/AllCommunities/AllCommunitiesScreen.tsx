@@ -38,6 +38,7 @@ export const AllCommunitiesScreen: React.FC<AllCommunitiesScreenProps> = ({
       name,
     }));
   };
+
   const onAccess = ({ id }: Community) => {
     navigation.navigate("Community", {
       id,

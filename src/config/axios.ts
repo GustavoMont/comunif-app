@@ -1,17 +1,16 @@
 import { apiUrl } from "@src/constants/api-constants";
-import { deleteToken, getToken } from "@src/utils/token";
-import axios from "axios";
+import { AuthStorage } from "@src/models/User";
+import {
+  deleteToken,
+  getRefreshToken,
+  getAccessToken,
+  storeTokens,
+} from "@src/utils/token";
+import axios, { AxiosError } from "axios";
 import { io } from "socket.io-client";
 
 export const socket = io(apiUrl, {
-  auth: (cb) => {
-    getToken().then((token) => {
-      if (token) {
-        cb({ authorization: `Bearer ${token}` });
-      }
-    });
-  },
-  withCredentials: true,
+  autoConnect: false,
 });
 
 const baseURL = `${apiUrl}/api`;
@@ -20,9 +19,25 @@ export const api = axios.create({
   baseURL,
 });
 
+const validateRefreshToken = async (refreshToken: string) => {
+  const token = await getAccessToken();
+  const { data } = await axios.post<AuthStorage>(
+    `${baseURL}/auth/refresh-token`,
+    {
+      refreshToken,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data;
+};
+
 api.interceptors.request.use(
   async (config) => {
-    const token = await getToken();
+    const token = await getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -33,11 +48,20 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(async (config) => {
-  if (config.status === 401) {
-    await deleteToken();
+api.interceptors.response.use(
+  (config) => config,
+  async (err: AxiosError) => {
+    if (err.response?.status === 401) {
+      try {
+        const refreshToken = await getRefreshToken();
+        const credentials = await validateRefreshToken(refreshToken ?? "");
+        await storeTokens(credentials);
+      } catch (error) {
+        await deleteToken();
+      }
+    }
+    return Promise.reject(err);
   }
-  return config;
-});
+);
 
 export default api;

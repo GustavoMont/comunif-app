@@ -10,10 +10,16 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import * as Store from "expo-secure-store";
+
 import { api } from "@src/config/axios";
 import jwtDecode from "jwt-decode";
-import { accessKey, deleteToken, getToken } from "@src/utils/token";
+import {
+  deleteToken,
+  getAccessToken,
+  getRefreshToken,
+  storeTokens,
+} from "@src/utils/token";
+import { validateRefreshToken } from "@src/services/auth-services";
 
 type signUp = (body: RegisterPayload) => Promise<void>;
 type login = (body: LoginPayload) => Promise<void>;
@@ -33,9 +39,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [signedIn, setSignedIn] = useState(false);
   const [isCheckingToken, setIsCheckingToken] = useState(true);
-  const storeAccess = async (token: AuthStorage) => {
-    await Store.setItemAsync(accessKey, JSON.stringify(token));
-  };
 
   const getUser = async (id: number) => {
     try {
@@ -55,13 +58,14 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     jwtDecode<{ sub: number; username: string }>(token);
 
   const setUserByToken = async (token: AuthStorage) => {
-    await storeAccess(token);
+    await storeTokens(token);
     const { sub } = decodeToken(token.access);
     setUser(await getUser(sub));
   };
 
   const signUp: signUp = async (body) => {
     const { data } = await api.post<AuthStorage>(`/auth/signup`, body);
+
     await setUserByToken(data);
   };
 
@@ -73,15 +77,23 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      (async () => {
+      const setAuthInfo = async () => {
         setIsCheckingToken(true);
-        const token = await getToken();
-        if (token) {
-          const { sub } = decodeToken(token);
-          setUser(await getUser(sub));
+        const [token, refreshToken] = await Promise.all([
+          getAccessToken(),
+          getRefreshToken(),
+        ]);
+        if (token && refreshToken) {
+          try {
+            const credentials = await validateRefreshToken(refreshToken);
+            await setUserByToken(credentials);
+          } catch (error) {
+            await deleteToken();
+          }
         }
         setIsCheckingToken(false);
-      })();
+      };
+      setAuthInfo();
     }
     return () => {
       mounted = false;
