@@ -19,13 +19,13 @@ import {
   Poppins_600SemiBold,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
-import { AuthProvider } from "@src/contexts/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TamaguiProvider } from "tamagui";
 import config from "./tamagui.config";
 import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
 import { Routes } from "@src/routes/Routes";
+import { AuthProvider } from "@src/Providers/AuthProviders";
 
 const client = new QueryClient();
 

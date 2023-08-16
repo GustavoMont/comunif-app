@@ -1,6 +1,7 @@
 import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
+import { Message } from "@src/models/Model";
 import { User } from "@src/models/User";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
@@ -52,4 +53,14 @@ export const channelTypeGenerator: Generator<ChannelType> = (channelType) => ({
   id: 1,
   name: "other",
   ...channelType,
+});
+
+export const messageGenerator: Generator<Message> = (message) => ({
+  communityChannel: communityChannelGenerator(),
+  communityChannelId: 1,
+  content: "mensagem",
+  id: 1,
+  user: userGenarator(),
+  userId: 1,
+  ...message,
 });

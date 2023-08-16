@@ -3,30 +3,48 @@ import { colorKeyType } from "@src/types/colors";
 import React from "react";
 import { SvgProps } from "react-native-svg";
 import { useTheme } from "styled-components/native";
-import { Avatar as TAvatar, AvatarProps } from "tamagui";
+import { Avatar as TAvatar, AvatarProps, SizeTokens } from "tamagui";
 
-interface Props extends Omit<AvatarProps, "src"> {
+type Size = "small" | "medium";
+
+interface Props extends Omit<AvatarProps, "src" | "size"> {
   src?: string;
   fallback: {
     icon(props: SvgProps): JSX.Element;
     backgroundColor: colorKeyType;
   };
+  size: Size;
 }
 
 export const Avatar: React.FC<Props> = ({
   src,
   fallback,
   testID,
+  size = "medium",
   ...props
 }) => {
+  interface SizeHandler {
+    icon: number;
+    avatarSize: SizeTokens;
+  }
+  const sizeHandler: Record<Size, SizeHandler> = {
+    medium: {
+      avatarSize: "$5",
+      icon: 24,
+    },
+    small: {
+      avatarSize: "$2",
+      icon: 12,
+    },
+  };
   const { colors } = useTheme();
   const { backgroundColor, icon: Icon } = fallback;
   return (
-    <TAvatar {...props} circular size={"$5"}>
+    <TAvatar {...props} circular size={sizeHandler[size].avatarSize}>
       <TAvatar.Image
         testID={testID}
         source={{
-          uri: src ? `${apiUrl}/${src}` : undefined,
+          uri: src ? `${apiUrl}/${src}` : "http://aja",
         }}
       />
 
@@ -36,7 +54,11 @@ export const Avatar: React.FC<Props> = ({
         delayMs={600}
         backgroundColor={colors[backgroundColor]}
       >
-        <Icon width={24} height={24} color={colors.white} />
+        <Icon
+          width={sizeHandler[size].icon}
+          height={sizeHandler[size].icon}
+          color={colors.white}
+        />
       </TAvatar.Fallback>
     </TAvatar>
   );

@@ -10,6 +10,7 @@ import { useTheme } from "styled-components/native";
 import { useForm } from "react-hook-form";
 import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
+
 export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
   route,
   navigation,
@@ -22,6 +23,7 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
   const {
     params: { communityId, channelId },
   } = route;
+
   const { data: community } = useQuery(["community", communityId], () =>
     getCommunity(communityId)
   );
@@ -40,7 +42,7 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
 
   return (
     <KeyboardCloser>
-      <YStack flex={1}>
+      <YStack flex={1} pb={"$2"}>
         <CommunityChannelHeader
           onPressBack={() =>
             navigation.navigate("Community", {
@@ -50,8 +52,8 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
           community={community}
           channelName={communityChannel?.channelType.name ?? ""}
         />
-        <View flex={1} borderColor={"$blue1"} />
-        <XStack space={"$1"} ai={"center"} pb={"$0"}>
+        <View space={"$3"} py={"$4"} flex={1} borderColor={"$blue1"}></View>
+        <XStack space={"$2"} ai={"center"} pb={"$0"}>
           <View flex={1}>
             <ControledInput
               placeholder="Digite sua mensgaem...."
