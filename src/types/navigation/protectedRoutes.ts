@@ -32,3 +32,8 @@ export type CommunityScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "Community"
 >;
+
+export type CommunityChannelProps = NativeStackScreenProps<
+  RootStackParamList,
+  "CommunityChannel"
+>;

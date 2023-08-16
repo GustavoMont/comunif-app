@@ -29,7 +29,6 @@ const buttonStyle: Record<buttonType, ButtonStyleProps> = {
 };
 
 const TouchableButton = styled(TouchableOpacity)<ButtonProps>`
-  font-size: 16px;
   font-weight: 500;
   background-color: ${({ theme, color }) => theme.colors[color || "primary"]};
   ${({ minSize }) => (!!minSize ? "" : "width: 100%;")}
@@ -69,6 +68,7 @@ export const Button: React.FC<Props> = ({
       icon
     );
   };
+
   return (
     <TouchableButton
       {...props}

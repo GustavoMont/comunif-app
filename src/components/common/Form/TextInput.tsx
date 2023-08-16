@@ -93,13 +93,15 @@ export const TextInput: React.FC<InputProps> = ({
         />
         {hasRightIcon && <IconPlace position="right">{rightIcon}</IconPlace>}
       </Container>
-      <ErrorContainer>
-        {hasErrorMessage && (
+      {hasErrorMessage ? (
+        <ErrorContainer>
           <BodyText color="error" size={10}>
             {errorMessage}
           </BodyText>
-        )}
-      </ErrorContainer>
+        </ErrorContainer>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
