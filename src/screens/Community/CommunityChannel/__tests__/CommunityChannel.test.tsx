@@ -7,14 +7,25 @@ import {
   arrayGenerator,
   communityChannelGenerator,
   communityGenerator,
+  userGenarator,
 } from "@src/utils/generators";
 import { apiUrl } from "@src/constants/api-constants";
+import { useAuth } from "@src/hooks/useAuth";
 
 jest.mock("@services/communities-services", () => ({
   getCommunity: jest.fn(),
 }));
 
+jest.mock("@src/hooks/useAuth", () => ({
+  useAuth: jest.fn(),
+}));
+
 describe("CommunityChannel Screen", () => {
+  beforeEach(() => {
+    (useAuth as jest.Mock).mockReturnValue({
+      user: userGenarator(),
+    });
+  });
   afterEach(cleanup);
   describe("user is not member", () => {
     afterEach(cleanup);
@@ -122,7 +133,7 @@ describe("CommunityChannel Screen", () => {
       });
       const message = "olá, mundo";
       const messageInput = screen.getByPlaceholderText(
-        /Digite sua mensgaem\.\.\.\./
+        /Digite sua mensagem\.\.\.\./
       );
       const sendButton = screen.getByLabelText(/Enviar mensage/);
       expect(sendButton).toBeDisabled();

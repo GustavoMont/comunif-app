@@ -1,6 +1,8 @@
 import React from "react";
 import "jest-styled-components/native";
+
 jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper");
+jest.mock("expo-secure-store", () => ({}));
 
 jest.mock("@src/components/common/Typograph/Link", () => ({
   ...jest.requireActual("@src/components/common/Typograph/Link"),

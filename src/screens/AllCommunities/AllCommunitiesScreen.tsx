@@ -7,7 +7,7 @@ import {
   listCommunities,
 } from "@services/communities-services";
 import { AllCommunitiesScreenProps } from "@src/types/navigation/protectedRoutes";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FlatList } from "react-native";
 import {
   ChevronLeftIcon,
@@ -30,6 +30,7 @@ export const AllCommunitiesScreen: React.FC<AllCommunitiesScreenProps> = ({
   const { data: response } = useQuery(["communities", communitiesFilters], () =>
     listCommunities(communitiesFilters)
   );
+  const queryClient = useQueryClient();
   const { showToast } = useAppToast();
   const { icons, colors } = useTheme();
   const onChangeSearch = (name: string) => {
@@ -48,6 +49,7 @@ export const AllCommunitiesScreen: React.FC<AllCommunitiesScreenProps> = ({
     addUserToCommunity,
     {
       onSuccess({ id }) {
+        queryClient.invalidateQueries();
         navigation.navigate("Community", {
           id,
         });
