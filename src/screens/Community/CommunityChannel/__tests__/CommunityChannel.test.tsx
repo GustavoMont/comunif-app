@@ -9,7 +9,6 @@ import {
   communityGenerator,
   userGenarator,
 } from "@src/utils/generators";
-import { apiUrl } from "@src/constants/api-constants";
 import { useAuth } from "@src/hooks/useAuth";
 
 jest.mock("@services/communities-services", () => ({
@@ -106,7 +105,7 @@ describe("CommunityChannel Screen", () => {
       const image = screen.getByTestId("community-pic");
       expect(image).toBeOnTheScreen();
       const bannerUrl = image.props.source.uri;
-      expect(bannerUrl).toBe(`${apiUrl}/${community.banner}`);
+      expect(bannerUrl).toBe(community.banner);
     });
     it("should back to community screen", () => {
       render(

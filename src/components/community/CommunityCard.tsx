@@ -6,7 +6,6 @@ import styled, { useTheme } from "styled-components/native";
 import { BodyText } from "../common/Typograph/BodyText";
 import { Button } from "@components/common/Buttons/Button";
 import { UserGroupIcon } from "react-native-heroicons/outline";
-import { apiUrl } from "@src/constants/api-constants";
 
 interface Props {
   community: Community;
@@ -29,7 +28,7 @@ export const CommunityCard: React.FC<Props> = ({
         <Avatar.Image
           borderRadius={"$2"}
           source={{
-            uri: `${apiUrl}/${community.banner}` ?? "https://amala.naio",
+            uri: community.banner ?? "http://local",
           }}
         />
         <Avatar.Fallback ai={"center"} jc={"center"}>

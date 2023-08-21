@@ -1,4 +1,3 @@
-import { apiUrl } from "@src/constants/api-constants";
 import { colorKeyType } from "@src/types/colors";
 import React from "react";
 import { SvgProps } from "react-native-svg";
@@ -44,7 +43,7 @@ export const Avatar: React.FC<Props> = ({
       <TAvatar.Image
         testID={testID}
         source={{
-          uri: src ? `${apiUrl}/${src}` : "http://aja",
+          uri: src ?? "http://aja",
         }}
       />
 

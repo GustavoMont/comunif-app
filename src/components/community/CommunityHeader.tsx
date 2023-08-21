@@ -3,7 +3,6 @@ import { Community } from "@src/models/Community";
 import styled, { useTheme } from "styled-components/native";
 import { Title } from "../common/Typograph/Title";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
-import { apiUrl } from "@src/constants/api-constants";
 import { Dimensions } from "react-native";
 import { Image } from "tamagui";
 import { IconButton } from "../common/Buttons/IconButton";
@@ -41,7 +40,7 @@ export const CommunityHeader: React.FC<Props> = ({
         source={{
           width: 200,
           height: 200,
-          uri: `${apiUrl}/${community.banner}`,
+          uri: community.banner ?? "http://la.com",
         }}
         w={Dimensions.get("screen").width}
       />
