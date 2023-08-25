@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { XStack } from "tamagui";
 import { Avatar } from "@components/common/Content/Avatar";
 import { UserIcon } from "react-native-heroicons/outline";
-import { Message as IMessage } from "@src/models/Model";
+import { Message as IMessage } from "@src/models/Message";
 import { useAuth } from "@src/hooks/useAuth";
 
 interface Props {

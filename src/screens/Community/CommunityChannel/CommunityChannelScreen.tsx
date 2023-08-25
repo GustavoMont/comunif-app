@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 import { socket } from "@src/config/axios";
-import { Message as IMessage } from "@src/models/Model";
+import { Message as IMessage } from "@src/models/Message";
 import { useAuth } from "@src/hooks/useAuth";
 import { FlatList } from "react-native";
 import { Message } from "@src/components/Chat/Message";

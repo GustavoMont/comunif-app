@@ -1,7 +1,7 @@
 import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
-import { Message } from "@src/models/Model";
+import { Message } from "@src/models/Message";
 import { User } from "@src/models/User";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
