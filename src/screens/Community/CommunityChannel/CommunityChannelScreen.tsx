@@ -100,7 +100,7 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
             ItemSeparatorComponent={() => <View my={"$2"} />}
           />
         </YStack>
-        <XStack space={"$2"} ai={"center"} pb={"$0"}>
+        <XStack px={"$2"} space={"$2"} ai={"center"} pb={"$0"}>
           <View flex={1}>
             <ControledInput
               placeholder="Digite sua mensagem...."
