@@ -98,6 +98,7 @@ export const AllCommunitiesScreen: React.FC<AllCommunitiesScreenProps> = ({
           }
           onChangeText={debounce(onChangeSearch, 400)}
         />
+
         <FlatList
           data={response?.results}
           renderItem={({ item }) => (

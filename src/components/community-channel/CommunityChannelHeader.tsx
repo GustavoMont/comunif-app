@@ -30,6 +30,7 @@ export const CommunityChannelHeader: React.FC<Props> = ({
         icon={ChevronLeftIcon}
       />
       <Avatar
+        size="medium"
         testID="community-pic"
         fallback={{
           backgroundColor: "secondary",

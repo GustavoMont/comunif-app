@@ -110,7 +110,7 @@ const ErrorDisplay: React.FC = () => (
   </Center>
 );
 
-const circleSize = Dimensions.get("screen").width * 0.66;
+const circleSize = Dimensions.get("screen").width * 0.5;
 
 const circles: CircleProps[] = [
   {

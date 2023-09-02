@@ -5,16 +5,14 @@ import { XStack } from "tamagui";
 import { Avatar } from "@components/common/Content/Avatar";
 import { UserIcon } from "react-native-heroicons/outline";
 import { Message as IMessage } from "@src/models/Message";
-import { useAuth } from "@src/hooks/useAuth";
 
 interface Props {
   message: IMessage;
+  isCurrentUser?: boolean;
 }
 
-export const Message: React.FC<Props> = ({ message }) => {
-  const { user, userId } = message;
-  const { user: currentUser } = useAuth();
-  const isCurrentUser = userId === currentUser?.id;
+export const Message: React.FC<Props> = ({ message, isCurrentUser }) => {
+  const user = message.user;
   return (
     <MessageContainer testID="message" isCurrentUser={isCurrentUser}>
       <XStack

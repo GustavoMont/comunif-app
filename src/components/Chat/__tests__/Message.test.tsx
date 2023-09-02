@@ -20,6 +20,7 @@ describe("Message component", () => {
     render(
       <Message
         message={messageGenerator({ userId: currentUser.id, content })}
+        isCurrentUser
       />
     );
     const component = screen.getByTestId("message");

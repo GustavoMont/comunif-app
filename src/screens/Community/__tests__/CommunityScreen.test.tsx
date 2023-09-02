@@ -23,6 +23,10 @@ jest.mock("@services/communities-services", () => ({
   getCommunity: jest.fn(),
 }));
 
+jest.mock("@services/messages-services", () => ({
+  listChannelMessages: jest.fn(),
+}));
+
 describe("Community Screen", () => {
   describe("Error on get community", () => {
     beforeEach(() => {
@@ -112,6 +116,7 @@ describe("Community Screen", () => {
       });
     });
   });
+
   describe("Is not a member", () => {
     beforeEach(() => {
       (getCommunity as jest.Mock).mockResolvedValue(
