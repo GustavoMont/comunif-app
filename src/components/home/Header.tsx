@@ -20,9 +20,12 @@ export const Header: React.FC<Props> = ({ user }) => {
       </Title>
 
       <Avatar
+        size="medium"
         testID="profile-button"
         onPress={() => {
-          navigation.navigate("Profile");
+          navigation.navigate("Profile", {
+            userId: user.id,
+          });
         }}
         fallback={{
           backgroundColor: "darkPrimary",

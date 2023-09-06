@@ -1,5 +1,4 @@
 import BackgroundCircle from "@src/components/common/Layout/BackgroundCircle";
-import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { Title } from "@src/components/common/Typograph/Title";
 import { ChannelItem } from "@src/components/community-channel/ChannelItem";
@@ -40,60 +39,54 @@ export const CommunityScreen: React.FC<CommunityScreenProps> = ({
 
   return (
     <BackgroundCircle circles={circles}>
-      <FullScreenContainer>
-        {isError ? <ErrorDisplay /> : <></>}
-        {isLoading ? (
-          <Center>
-            <Spinner accessibilityLabel="Carregando" size="large" />
-          </Center>
-        ) : (
-          <></>
-        )}
-        {community ? (
-          <>
-            <CommunityHeader
-              onPressBack={navigation.goBack}
-              community={community}
-            />
-            <View pt={176}>
-              <BodyText color="primary">
-                <BodyText color="primary" weight={600}>
-                  Assunto:{" "}
-                </BodyText>
-                {community.subject}
+      {isError ? <ErrorDisplay /> : <></>}
+      {isLoading ? (
+        <Center>
+          <Spinner accessibilityLabel="Carregando" size="large" />
+        </Center>
+      ) : (
+        <></>
+      )}
+      {community ? (
+        <>
+          <CommunityHeader
+            onPressBack={navigation.goBack}
+            community={community}
+          />
+          <View pt={176}>
+            <BodyText color="primary">
+              <BodyText color="primary" weight={600}>
+                Assunto:{" "}
               </BodyText>
-              <Separator
-                mt={"$2"}
-                mb={"$4"}
-                borderColor={colors.lightPrimary}
+              {community.subject}
+            </BodyText>
+            <Separator mt={"$2"} mb={"$4"} borderColor={colors.lightPrimary} />
+            <YStack space={"$4"}>
+              <Title size={20} color="secondary">
+                Chats
+              </Title>
+              <FlatList
+                data={community.communityChannels}
+                renderItem={({ item }) => (
+                  <ChannelItem
+                    onPress={({ communityId, id }) => {
+                      navigation.navigate("CommunityChannel", {
+                        channelId: id,
+                        communityId,
+                      });
+                    }}
+                    channel={item}
+                  />
+                )}
+                ItemSeparatorComponent={() => <View mb="$5" />}
+                keyExtractor={({ id }) => id.toString()}
               />
-              <YStack space={"$4"}>
-                <Title size={20} color="secondary">
-                  Chats
-                </Title>
-                <FlatList
-                  data={community.communityChannels}
-                  renderItem={({ item }) => (
-                    <ChannelItem
-                      onPress={({ communityId, id }) => {
-                        navigation.navigate("CommunityChannel", {
-                          channelId: id,
-                          communityId,
-                        });
-                      }}
-                      channel={item}
-                    />
-                  )}
-                  ItemSeparatorComponent={() => <View mb="$5" />}
-                  keyExtractor={({ id }) => id.toString()}
-                />
-              </YStack>
-            </View>
-          </>
-        ) : (
-          <></>
-        )}
-      </FullScreenContainer>
+            </YStack>
+          </View>
+        </>
+      ) : (
+        <></>
+      )}
     </BackgroundCircle>
   );
 };

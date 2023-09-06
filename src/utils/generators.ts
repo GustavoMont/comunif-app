@@ -3,6 +3,7 @@ import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
 import { Message } from "@src/models/Message";
 import { User } from "@src/models/User";
+import { ImageFile } from "@src/types/RN";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
 
@@ -63,4 +64,11 @@ export const messageGenerator: Generator<Message> = (message) => ({
   user: userGenarator(),
   userId: 1,
   ...message,
+});
+
+export const imageFileGenerator: Generator<ImageFile> = (imageFile) => ({
+  name: "foto.png",
+  type: "image/png",
+  uri: "file://folder/subfolder/foto.png",
+  ...imageFile,
 });

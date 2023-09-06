@@ -12,13 +12,12 @@ import { Button } from "@components/common/Buttons/Button";
 import { ButtonText } from "@components/common/Buttons/ButtonText";
 import { GlobeAltIcon, PlusIcon } from "react-native-heroicons/outline";
 import { Title } from "@src/components/common/Typograph/Title";
-import { FlatList } from "react-native";
-import { CommunityStory } from "@src/components/community/CommunityStory";
+import { XCommunitiesList } from "../Community/XCommunitiesList";
 
 export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { user } = useAuth();
   const { data: communities, isLoading } = useQuery(
-    ["my-communities", user?.id],
+    ["user-communities", user?.id],
     async () => await listUserCommunities(user?.id ?? 0),
     {
       enabled: !!user,
@@ -41,21 +40,13 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         )}
         {!isNewUser ? (
           <View>
-            <FlatList
-              data={communities}
-              renderItem={({ item }) => (
-                <CommunityStory
-                  community={item}
-                  onPress={({ id }) =>
-                    navigation.navigate("Community", {
-                      id,
-                    })
-                  }
-                />
-              )}
-              horizontal
-              keyExtractor={({ id }) => id.toString()}
-              ItemSeparatorComponent={() => <View ml={"$4"} />}
+            <XCommunitiesList
+              communities={communities ?? []}
+              onSelectCommunity={({ id }) =>
+                navigation.navigate("Community", {
+                  id,
+                })
+              }
             />
           </View>
         ) : (

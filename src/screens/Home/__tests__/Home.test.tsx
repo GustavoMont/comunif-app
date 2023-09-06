@@ -66,7 +66,9 @@ describe("Home screen", () => {
       expect(props.navigation.navigate).toBeCalledWith("AllCommunities");
       const profileButton = screen.getByTestId("profile-button");
       fireEvent.press(profileButton);
-      expect(props.navigation.navigate).toBeCalledWith("Profile");
+      expect(props.navigation.navigate).toBeCalledWith("Profile", {
+        userId: 1,
+      });
     });
   });
   describe("Regular user", () => {

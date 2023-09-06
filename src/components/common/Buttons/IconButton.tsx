@@ -15,7 +15,7 @@ const Button = styled(TouchableOpacity)<ButtonProps>`
     color ? colors[color] : "transparent"};
   width: ${({ iconSize }) => iconSize}px;
   height: ${({ iconSize }) => iconSize}px;
-  padding: 16px;
+  padding: ${({ color }) => (color ? "20px" : "0px")};
   border-radius: ${({ rounded }) => (rounded ? 5000 : 8)}px;
   align-items: center;
   justify-content: center;
@@ -24,6 +24,7 @@ const Button = styled(TouchableOpacity)<ButtonProps>`
 interface Props extends ButtonProps, Omit<TouchableOpacityProps, "children"> {
   icon: (props: SvgProps) => JSX.Element;
   iconColor: colorKeyType;
+  accessibilityLabel: string;
 }
 
 export const IconButton: React.FC<Props> = ({

@@ -18,6 +18,13 @@ const inset = {
 };
 
 const client = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      cacheTime: Infinity,
+      refetchOnMount: "always",
+    },
+  },
   logger: {
     error() {
       return;

@@ -108,61 +108,58 @@ const Signup: React.FC = () => {
   return (
     <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <FullScreenContainer>
-          <YStack f={1} space={"$6"} ai={"center"} jc={"center"}>
-            <Title color="primary" size={32}>
-              Cadastro
-            </Title>
-            <YStack w={"100%"} gap={16}>
-              <StepHandler steps={steps} activeStep={activeStep} />
-              <View style={styles.buttonContainer}>
-                <Button
-                  disabled={isFirst}
-                  color={isFirst ? "darkWhite" : "lightBlack"}
-                  onPress={() =>
-                    setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
-                  }
-                  minSize
-                  leftIcon={
-                    <ChevronLeftIcon
+        <YStack f={1} space={"$6"} ai={"center"} jc={"center"}>
+          <Title color="primary" size={32}>
+            Cadastro
+          </Title>
+          <YStack w={"100%"} gap={16}>
+            <StepHandler steps={steps} activeStep={activeStep} />
+            <View style={styles.buttonContainer}>
+              <Button
+                disabled={isFirst}
+                color={isFirst ? "darkWhite" : "lightBlack"}
+                onPress={() =>
+                  setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
+                }
+                minSize
+                leftIcon={
+                  <ChevronLeftIcon
+                    size={icons.size.medium}
+                    color={icons.color.button}
+                  />
+                }
+              >
+                <BodyText color="white">Voltar</BodyText>
+              </Button>
+              <Button
+                onPress={handleSubmit(onSubmit)}
+                minSize
+                rightIcon={
+                  isLast ? (
+                    <CheckIcon
                       size={icons.size.medium}
                       color={icons.color.button}
                     />
-                  }
-                >
-                  <BodyText color="white">Voltar</BodyText>
-                </Button>
-                <Button
-                  onPress={handleSubmit(onSubmit)}
-                  minSize
-                  rightIcon={
-                    isLast ? (
-                      <CheckIcon
-                        size={icons.size.medium}
-                        color={icons.color.button}
-                      />
-                    ) : (
-                      <ChevronRightIcon
-                        size={icons.size.medium}
-                        color={icons.color.button}
-                      />
-                    )
-                  }
-                >
-                  <BodyText color="white">
-                    {isLast ? "Finalizar" : "Avançar"}
-                  </BodyText>
-                </Button>
-              </View>
-            </YStack>
-            <Steps
-              size={(width * 0.5) / 4}
-              currentStep={activeStep}
-              stepsQuantity={steps.length}
-            />
+                  ) : (
+                    <ChevronRightIcon
+                      size={icons.size.medium}
+                      color={icons.color.button}
+                    />
+                  )
+                }
+              >
+                <BodyText color="white">
+                  {isLast ? "Finalizar" : "Avançar"}
+                </BodyText>
+              </Button>
+            </View>
           </YStack>
-          {/* </Container> */}
-        </FullScreenContainer>
+          <Steps
+            size={(width * 0.5) / 4}
+            currentStep={activeStep}
+            stepsQuantity={steps.length}
+          />
+        </YStack>
       </TouchableWithoutFeedback>
     </BackgroundCircle>
   );

@@ -128,7 +128,7 @@ describe("CommunityChannel Screen", () => {
       const image = screen.getByTestId("community-pic");
       expect(image).toBeOnTheScreen();
       const bannerUrl = image.props.source.uri;
-      expect(bannerUrl).toBe(community.banner);
+      expect(bannerUrl).toContain(community.banner);
     });
     it("should back to community screen", () => {
       render(

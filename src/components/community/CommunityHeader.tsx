@@ -57,6 +57,7 @@ const Container = styled.View`
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   overflow: hidden;
+  z-index: 2;
 `;
 
 const HeaderTitleContainer = styled.View`

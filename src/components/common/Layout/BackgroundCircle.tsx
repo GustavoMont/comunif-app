@@ -13,6 +13,7 @@ const Container = styled.View`
   flex: 1;
   overflow: hidden;
   background-color: ${({ theme: { backgroundScreen } }) => backgroundScreen};
+  padding: 16px;
 `;
 
 const Circle = styled.View<CircleProps>`
@@ -25,7 +26,6 @@ const Circle = styled.View<CircleProps>`
     bottom !== undefined ? `bottom: ${bottom}px;` : ""}
   ${({ position: { right } }) =>
     right !== undefined ? `right: ${right}px;` : ""}
-
   border-radius: ${({ size }) => `${size / 2}px`};
   background-color: ${({ theme, color }) => theme.colors[color]};
 `;

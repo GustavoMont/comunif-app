@@ -9,7 +9,6 @@ import { CircleProps } from "../../types/components/BackgroundCircle";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
 import { Button } from "../../components/common/Buttons/Button";
-import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import { FlexGap } from "../../components/common/Layout/FlexGap";
 import { Title } from "../../components/common/Typograph/Title";
 import { BodyText } from "../../components/common/Typograph/BodyText";
@@ -21,7 +20,6 @@ import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
 import { useAppToast } from "@src/hooks/useAppToast";
-import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 import { Stack } from "tamagui";
 interface HandlePositionParams {
   size: number;
@@ -56,63 +54,59 @@ export const Login = () => {
 
   return (
     <BackgroundCircle useAnimation={false} circles={cicles}>
-      <KeyboardCloser>
-        <FullScreenContainer>
-          <Container>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <FlexGap gap={16} style={styles.screenContainer}>
-                <Title color="primary" size={32}>
-                  Login
-                </Title>
-                <ControledInput
-                  control={control}
-                  name="username"
-                  placeholder="insira seu username ou email"
-                />
-                <Stack
-                  alignItems={"flex-end"}
-                  style={styles.passwordContainer}
-                  space={2}
-                >
-                  <ControledInput
-                    control={control}
-                    name="password"
-                    secureTextEntry
-                    placeholder="insira sua senha"
-                  />
-                  <Link
-                    screen="ForgotPassword"
-                    type="text"
-                    size={14}
-                    color="secondary"
-                    align="right"
-                  >
-                    Esqueceu sua senha?
-                  </Link>
-                </Stack>
+      <Container>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <FlexGap gap={16} style={styles.screenContainer}>
+            <Title color="primary" size={32}>
+              Login
+            </Title>
+            <ControledInput
+              control={control}
+              name="username"
+              placeholder="insira seu username ou email"
+            />
+            <Stack
+              alignItems={"flex-end"}
+              style={styles.passwordContainer}
+              space={2}
+            >
+              <ControledInput
+                control={control}
+                name="password"
+                secureTextEntry
+                placeholder="insira sua senha"
+              />
+              <Link
+                screen="ForgotPassword"
+                type="text"
+                size={14}
+                color="secondary"
+                align="right"
+              >
+                Esqueceu sua senha?
+              </Link>
+            </Stack>
 
-                <Button
-                  isLoading={isLogging}
-                  testID="loginBtn"
-                  onPress={handleSubmit(onSubmit)}
-                >
-                  <ButtonText size={20} color="white">
-                    Login
-                  </ButtonText>
-                </Button>
-                <FlexGap direction="row" gap={4}>
-                  <BodyText size={14} color="darkWhite">
-                    Ainda não possui conta?
-                  </BodyText>
-                  <Link screen="Signup" type="text" size={14} color="secondary">
-                    Cadastre-se
-                  </Link>
-                </FlexGap>
-              </FlexGap>
-            </TouchableWithoutFeedback>
-          </Container>
-        </FullScreenContainer>
-      </KeyboardCloser>
+            <Button
+              isLoading={isLogging}
+              testID="loginBtn"
+              onPress={handleSubmit(onSubmit)}
+            >
+              <ButtonText size={20} color="white">
+                Login
+              </ButtonText>
+            </Button>
+            <FlexGap direction="row" gap={4}>
+              <BodyText size={14} color="darkWhite">
+                Ainda não possui conta?
+              </BodyText>
+              <Link screen="Signup" type="text" size={14} color="secondary">
+                Cadastre-se
+              </Link>
+            </FlexGap>
+          </FlexGap>
+        </TouchableWithoutFeedback>
+      </Container>
     </BackgroundCircle>
   );
 };
