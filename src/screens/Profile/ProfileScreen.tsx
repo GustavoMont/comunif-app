@@ -30,7 +30,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   const { icons, colors } = useTheme();
   const {
     data: profile,
-    isInitialLoading: isLoading,
+    isLoading,
     isError,
   } = useQuery(["user", userId], () => getUser(userId));
   const isCurrentUser = profile?.id === currentUser?.id;
@@ -41,6 +41,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
       enabled: !!profile,
     }
   );
+
+  const handleBio = (bio: string | undefined, isCurrentUser: boolean) => {
+    if (bio) {
+      return bio;
+    }
+    return isCurrentUser
+      ? "Adicione uma bio ao seu perfil"
+      : "Usuário misterioso, não adicionou bio (▀̿Ĺ̯▀̿ ̿)";
+  };
+
   if (isLoading) {
     return (
       <FullScreenContainer>
@@ -68,7 +78,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   return (
     <FullScreenContainer>
       <IconButton
-        onPress={() => navigation.push("Home")}
+        onPress={() => {
+          if (navigation.canGoBack()) {
+            return navigation.goBack();
+          }
+          navigation.push("Home");
+        }}
         accessibilityLabel="Voltar"
         icon={ChevronLeftIcon}
         iconColor="primary"
@@ -84,7 +99,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             Bio
           </Title>
           <BodyText color="lightBlack" weight={400}>
-            {profile.bio || "Adicione uma bio ao seu perfil"}
+            {handleBio(profile?.bio, isCurrentUser)}
           </BodyText>
         </YStack>
         <YStack space={"$2"}>

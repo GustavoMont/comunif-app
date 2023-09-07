@@ -27,7 +27,7 @@ interface AddUserCommunity {
 
 export const addUserToCommunity = async (body: AddUserCommunity) => {
   const { data: community } = await api.post<Community>(
-    `/communities/add-user`,
+    `/community-users`,
     body
   );
   return community;

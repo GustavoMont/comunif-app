@@ -125,6 +125,9 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
               <Message
                 message={item}
                 isCurrentUser={user?.id === item.userId}
+                onPressUser={(user) =>
+                  navigation.navigate("Profile", { userId: user.id })
+                }
               />
               {isFetchingNextPage && index === allMessages.length - 1 ? (
                 <Spinner size="large" color={"$green10"} />
