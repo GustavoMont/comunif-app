@@ -30,7 +30,6 @@ module.exports = function (api) {
           include: ["TAMAGUI_TARGET"],
         },
       ],
-      // NOTE: this is optional, you don't *need* the compiler
       [
         "@tamagui/babel-plugin",
         {
@@ -39,7 +38,6 @@ module.exports = function (api) {
           logTimings: true,
         },
       ],
-      // NOTE: this is only necessary if you are using reanimated for animations
       "react-native-reanimated/plugin",
     ],
   };

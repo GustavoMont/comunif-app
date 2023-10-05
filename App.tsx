@@ -27,7 +27,7 @@ import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
 import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/Providers/AuthProviders";
 import { PermissionsProvider } from "@src/Providers/PermissionsProvider";
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const client = new QueryClient();
 
 LogBox.ignoreLogs([
@@ -54,29 +54,32 @@ function App() {
   ) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea}>
-        <QueryClientProvider client={client}>
-          <ThemeProvider theme={light}>
-            <TamaguiProvider config={config}>
-              <ToastProvider>
-                <CurrentToast />
-                <StatusBar
-                  style="light"
-                  backgroundColor={colors["lightBlack"]}
-                />
-                <NavigationContainer>
-                  <AuthProvider>
-                    <PermissionsProvider>
-                      <Routes />
-                    </PermissionsProvider>
-                  </AuthProvider>
-                </NavigationContainer>
-              </ToastProvider>
-            </TamaguiProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
+        <GestureHandlerRootView style={styles.safeArea}>
+          <QueryClientProvider client={client}>
+            <ThemeProvider theme={light}>
+              <TamaguiProvider config={config}>
+                <ToastProvider>
+                  <CurrentToast />
+                  <StatusBar
+                    style="light"
+                    backgroundColor={colors["lightBlack"]}
+                  />
+                  <NavigationContainer>
+                    <AuthProvider>
+                      <PermissionsProvider>
+                        <Routes />
+                      </PermissionsProvider>
+                    </AuthProvider>
+                  </NavigationContainer>
+                </ToastProvider>
+              </TamaguiProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
