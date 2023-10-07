@@ -1,3 +1,4 @@
+import { ListResponse } from "@src/models/ApiResponse";
 import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
@@ -18,6 +19,21 @@ export const arrayGenerator: ArrayGenerator = <T>(
       id: i + 1,
     } as any)
   );
+
+export const listResponseGenerator = <T>(
+  length: number,
+  generator: Generator<T>,
+  response?: Partial<ListResponse<T>>
+): ListResponse<T> => ({
+  meta: {
+    page: 1,
+    pageCount: length,
+    pages: 1,
+    total: length,
+  },
+  results: arrayGenerator(length, generator),
+  ...response,
+});
 
 export const userGenarator: Generator<User> = (user) => ({
   email: "email@email.com",

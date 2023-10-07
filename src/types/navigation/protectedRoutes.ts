@@ -1,3 +1,4 @@
+import { NavigationProp } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -18,6 +19,8 @@ export type RootStackParamList = {
     channelId: number;
   };
 };
+
+export type StackNavigation = NavigationProp<RootStackParamList>;
 
 export type ProtectedRoute = NativeStackNavigationProp<RootStackParamList>;
 

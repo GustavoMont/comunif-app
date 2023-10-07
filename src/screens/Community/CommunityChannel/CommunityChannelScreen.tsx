@@ -16,6 +16,8 @@ import { FlatList } from "react-native";
 import { Message } from "@src/components/Chat/Message";
 import { JoinChannelPayload } from "@src/models/Form/Socket/JoinChannelPayload";
 import { listChannelMessages } from "@src/services/messages-services";
+import { Drawer } from "@src/components/common/Layout/Drawer";
+import { CommunityDrawer } from "@src/components/community/CommunityDrawer";
 
 export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
   route,
@@ -25,6 +27,8 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
     params: { communityId, channelId },
   } = route;
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const closeDrawer = () => setIsDrawerOpen(false);
   const { user } = useAuth();
   type MessagePayload = Pick<
     IMessage,
@@ -105,66 +109,74 @@ export const CommunityChannelScreen: React.FC<CommunityChannelProps> = ({
     };
   }, []);
   return (
-    <YStack flex={1} pb={"$2"} backgroundColor={backgroundScreen}>
-      <CommunityChannelHeader
-        onPressBack={() =>
-          navigation.navigate("Community", {
-            id: communityId,
-          })
-        }
-        community={community}
-        channelName={communityChannel?.channelType.name ?? ""}
-      />
-
-      <View py={"$2"} px={"$1"} flex={1}>
-        <FlatList
-          data={allMessages}
-          inverted
-          renderItem={({ item, index }) => (
-            <>
-              <Message
-                message={item}
-                isCurrentUser={user?.id === item.userId}
-                onPressUser={(user) =>
-                  navigation.navigate("Profile", { userId: user.id })
-                }
-              />
-              {isFetchingNextPage && index === allMessages.length - 1 ? (
-                <Spinner size="large" color={"$green10"} />
-              ) : (
-                <></>
-              )}
-            </>
-          )}
-          keyExtractor={({ id }) => String(id)}
-          ItemSeparatorComponent={() => <View my={"$2"} />}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0.2}
+    <Drawer
+      isOpen={isDrawerOpen}
+      handleDrawerState={(isOpen) => setIsDrawerOpen(isOpen)}
+      drawerContent={
+        <CommunityDrawer closeDrawer={closeDrawer} communityId={communityId} />
+      }
+    >
+      <YStack flex={1} pb={"$2"} backgroundColor={backgroundScreen}>
+        <CommunityChannelHeader
+          onPressBack={() =>
+            navigation.navigate("Community", {
+              id: communityId,
+            })
+          }
+          community={community}
+          channelName={communityChannel?.channelType.name ?? ""}
         />
-      </View>
-      <XStack px={"$2"} space={"$2"} ai={"center"} pb={"$0"}>
-        <View flex={1}>
-          <ControledInput
-            placeholder="Digite sua mensagem...."
-            control={control}
-            name="content"
+
+        <View pt={"$2"} pb={"$5"} px={"$1"} flex={1}>
+          <FlatList
+            data={allMessages}
+            inverted
+            renderItem={({ item, index }) => (
+              <>
+                <Message
+                  message={item}
+                  isCurrentUser={user?.id === item.userId}
+                  onPressUser={(user) =>
+                    navigation.navigate("Profile", { userId: user.id })
+                  }
+                />
+                {isFetchingNextPage && index === allMessages.length - 1 ? (
+                  <Spinner size="large" color={"$green10"} />
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+            keyExtractor={({ id }) => String(id)}
+            ItemSeparatorComponent={() => <View my={"$2"} />}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.2}
           />
         </View>
-        <Button
-          color={hasMessage ? "primary" : "darkWhite"}
-          accessibilityLabel="Enviar mensagem"
-          disabled={!hasMessage}
-          minSize
-          alignSelf="flex-start"
-          onPress={handleSubmit(sendMessage)}
-        >
-          <PaperAirplaneIcon
-            width={size.medium}
-            height={size.medium}
-            color={hasMessage ? colors.white : colors.lightBlack}
-          />
-        </Button>
-      </XStack>
-    </YStack>
+        <XStack px={"$2"} space={"$2"} ai={"center"} pb={"$0"}>
+          <View flex={1}>
+            <ControledInput
+              placeholder="Digite sua mensagem...."
+              control={control}
+              name="content"
+            />
+          </View>
+          <Button
+            color={hasMessage ? "primary" : "darkWhite"}
+            accessibilityLabel="Enviar mensagem"
+            disabled={!hasMessage}
+            minSize
+            alignSelf="flex-start"
+            onPress={handleSubmit(sendMessage)}
+          >
+            <PaperAirplaneIcon
+              width={size.medium}
+              height={size.medium}
+              color={hasMessage ? colors.white : colors.lightBlack}
+            />
+          </Button>
+        </XStack>
+      </YStack>
+    </Drawer>
   );
 };

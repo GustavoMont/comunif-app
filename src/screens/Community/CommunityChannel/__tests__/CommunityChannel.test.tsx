@@ -85,6 +85,7 @@ describe("CommunityChannel Screen", () => {
     const community = communityGenerator({
       isMember: true,
       banner: "banner.com",
+      name: "toper-mans",
       communityChannels: arrayGenerator(2, communityChannelGenerator),
     });
     const navigation = {
@@ -124,7 +125,7 @@ describe("CommunityChannel Screen", () => {
           route.params.communityId
         );
       });
-      expect(await screen.findByText(community.name)).toBeOnTheScreen();
+      expect(await screen.findAllByText(community.name)).toHaveLength(2);
       const image = screen.getByTestId("community-pic");
       expect(image).toBeOnTheScreen();
       const bannerUrl = image.props.source.uri;

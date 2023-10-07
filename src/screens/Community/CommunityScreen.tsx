@@ -1,14 +1,15 @@
 import BackgroundCircle from "@src/components/common/Layout/BackgroundCircle";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { Title } from "@src/components/common/Typograph/Title";
-import { ChannelItem } from "@src/components/community-channel/ChannelItem";
+import { ChannelsList } from "@src/components/community-channel/ChannelsList";
 import { CommunityHeader } from "@src/components/community/CommunityHeader";
+import { CommunityChannel } from "@src/models/CommunityChannel";
 import { getCommunity } from "@src/services/communities-services";
 import { CircleProps } from "@src/types/components/BackgroundCircle";
 import { CommunityScreenProps } from "@src/types/navigation/protectedRoutes";
 import { useQuery } from "@tanstack/react-query";
 import React, { PropsWithChildren, useEffect } from "react";
-import { Dimensions, FlatList } from "react-native";
+import { Dimensions } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Separator, Spinner, View, YStack } from "tamagui";
 
@@ -28,6 +29,13 @@ export const CommunityScreen: React.FC<CommunityScreenProps> = ({
     ["community", communityId],
     async () => await getCommunity(communityId)
   );
+
+  const onSelectChannel = ({ id, communityId }: CommunityChannel) => {
+    navigation.navigate("CommunityChannel", {
+      channelId: id,
+      communityId,
+    });
+  };
 
   useEffect(() => {
     if (community) {
@@ -65,21 +73,9 @@ export const CommunityScreen: React.FC<CommunityScreenProps> = ({
               <Title size={20} color="secondary">
                 Chats
               </Title>
-              <FlatList
-                data={community.communityChannels}
-                renderItem={({ item }) => (
-                  <ChannelItem
-                    onPress={({ communityId, id }) => {
-                      navigation.navigate("CommunityChannel", {
-                        channelId: id,
-                        communityId,
-                      });
-                    }}
-                    channel={item}
-                  />
-                )}
-                ItemSeparatorComponent={() => <View mb="$5" />}
-                keyExtractor={({ id }) => id.toString()}
+              <ChannelsList
+                communityChannels={community.communityChannels ?? []}
+                onSelectChannel={onSelectChannel}
               />
             </YStack>
           </View>

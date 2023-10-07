@@ -6,15 +6,15 @@ import { ChannelItemIcon } from "./ChannelItemIcon";
 
 interface Props {
   channel: CommunityChannel;
-  onPress(channel: CommunityChannel): void;
+  onPress?(channel: CommunityChannel): void;
 }
 
 export const ChannelItem: React.FC<Props> = ({ channel, onPress }) => {
   return (
     <YStack
-      onPress={() => onPress(channel)}
+      onPress={() => onPress?.(channel)}
       accessibilityRole="button"
-      accessibilityLabel="Canal da comunidade"
+      accessibilityLabel={`Canal ${channel.channelType.name}`}
       testID="channel-item"
     >
       <XStack space={"$1"} ai={"center"}>

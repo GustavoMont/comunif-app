@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import {
   Directions,
@@ -16,11 +16,15 @@ import styled from "styled-components/native";
 
 interface Props {
   drawerContent: JSX.Element;
+  isOpen: boolean;
+  handleDrawerState(isOpen: boolean): void;
 }
 
 export const Drawer: React.FC<PropsWithChildren<Props>> = ({
   drawerContent,
   children,
+  handleDrawerState,
+  isOpen,
 }) => {
   const INITIAL_RIGHT_VALUE = -2000;
   const right = useSharedValue(INITIAL_RIGHT_VALUE);
@@ -36,11 +40,18 @@ export const Drawer: React.FC<PropsWithChildren<Props>> = ({
       damping: 18,
     });
   };
+  const openDrawer = () => {
+    handleDrawerState(true);
+  };
   const closeDrawer = () => {
+    handleDrawerState(false);
+  };
+
+  const onCloseDrawer = () => {
     updateOpacity(0);
     updateRight(INITIAL_RIGHT_VALUE);
   };
-  const openDrawer = () => {
+  const onOpenDrawer = () => {
     updateOpacity(0.8);
     updateRight(0);
   };
@@ -53,8 +64,16 @@ export const Drawer: React.FC<PropsWithChildren<Props>> = ({
   }));
   const overlayAnimatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
+    zIndex: opacity.value > 0 ? 99 : 0,
   }));
   const gesture = Gesture.Race(onFlingLeft, onFlingRight);
+
+  useEffect(() => {
+    if (isOpen) {
+      return onOpenDrawer();
+    }
+    onCloseDrawer();
+  }, [isOpen]);
 
   return (
     <GestureDetector gesture={gesture}>
@@ -88,8 +107,6 @@ const Overlay = styled(Animated.View)`
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 99;
-  opacity: 0.9;
   background-color: ${({ theme: { colors } }) => colors.darkblack};
 `;
 
@@ -100,5 +117,5 @@ const DrawerBody = styled(Animated.View)`
   position: absolute;
   top: 0;
   z-index: 99;
-  padding: 16px;
+  padding: 24px;
 `;

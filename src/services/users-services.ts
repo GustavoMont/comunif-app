@@ -1,4 +1,5 @@
 import api from "@src/config/axios";
+import { ListResponse } from "@src/models/ApiResponse";
 import { User } from "@src/models/User";
 import { ImageFile } from "@src/types/RN";
 
@@ -31,4 +32,11 @@ export const updateAvatar = async (id: number, avatar: ImageFile) => {
     }
   );
   return user;
+};
+
+export const listCommunityMembers = async (communityId: number) => {
+  const { data } = await api.get<ListResponse<User>>(
+    `community-users/${communityId}/members`
+  );
+  return data;
 };
