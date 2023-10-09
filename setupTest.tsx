@@ -4,9 +4,14 @@ import "jest-styled-components/native";
 jest.mock("react-native-reanimated", () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const View = require("react-native").View;
-
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const FlatList = require("react-native").FlatList;
+  const delay = () => ({
+    springify: jest.fn(),
+  });
   return {
     View,
+    FlatList,
     useAnimatedStyle: jest.fn(),
     useSharedValue: (arg: unknown) => ({
       value: arg,
@@ -16,6 +21,8 @@ jest.mock("react-native-reanimated", () => {
     Easing: {
       inOut: jest.fn(),
     },
+    FadeInRight: { delay },
+    FadeInDown: { delay },
   };
 });
 

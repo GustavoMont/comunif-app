@@ -1,8 +1,9 @@
 import React from "react";
-import { FlatList } from "react-native";
 import { ChannelItem } from "./ChannelItem";
 import { View } from "tamagui";
 import { CommunityChannel } from "@src/models/CommunityChannel";
+import { AnimatedListItem } from "../common/Content/AnimatedListItem";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 interface Props {
   communityChannels: CommunityChannel[];
@@ -14,15 +15,16 @@ export const ChannelsList: React.FC<Props> = ({
   onSelectChannel,
 }) => {
   return (
-    <>
-      <FlatList
-        data={communityChannels}
-        renderItem={({ item }) => (
+    <Animated.FlatList
+      entering={FadeInDown.delay(200)}
+      data={communityChannels}
+      renderItem={({ item, index }) => (
+        <AnimatedListItem itemIndex={index}>
           <ChannelItem onPress={onSelectChannel} channel={item} />
-        )}
-        ItemSeparatorComponent={() => <View mb="$5" />}
-        keyExtractor={({ id }) => id.toString()}
-      />
-    </>
+        </AnimatedListItem>
+      )}
+      ItemSeparatorComponent={() => <View mb="$5" />}
+      keyExtractor={({ id }) => id.toString()}
+    />
   );
 };
