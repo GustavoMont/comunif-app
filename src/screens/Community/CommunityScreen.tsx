@@ -2,6 +2,7 @@ import BackgroundCircle from "@src/components/common/Layout/BackgroundCircle";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { Title } from "@src/components/common/Typograph/Title";
 import { ChannelsList } from "@src/components/community-channel/ChannelsList";
+import { CommunityOptions } from "@src/components/community/CommunitOptions";
 import { CommunityHeader } from "@src/components/community/CommunityHeader";
 import { CommunityChannel } from "@src/models/CommunityChannel";
 import { getCommunity } from "@src/services/communities-services";
@@ -11,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { PropsWithChildren, useEffect } from "react";
 import { Dimensions } from "react-native";
 import { useTheme } from "styled-components/native";
-import { Separator, Spinner, View, YStack } from "tamagui";
+import { Separator, Spinner, View, XStack, YStack } from "tamagui";
 
 export const CommunityScreen: React.FC<CommunityScreenProps> = ({
   route,
@@ -62,12 +63,15 @@ export const CommunityScreen: React.FC<CommunityScreenProps> = ({
             community={community}
           />
           <View pt={176}>
-            <BodyText color="primary">
-              <BodyText color="primary" weight={600}>
-                Assunto:{" "}
+            <XStack jc={"space-between"}>
+              <BodyText color="primary">
+                <BodyText color="primary" weight={600}>
+                  Assunto:{" "}
+                </BodyText>
+                {community.subject}
               </BodyText>
-              {community.subject}
-            </BodyText>
+              <CommunityOptions community={community} />
+            </XStack>
             <Separator mt={"$2"} mb={"$4"} borderColor={colors.lightPrimary} />
             <YStack space={"$4"}>
               <Title size={20} color="secondary">

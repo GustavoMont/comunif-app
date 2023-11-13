@@ -1,17 +1,20 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { StyleSheet } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Dialog, Unspaced, View } from "tamagui";
 import { ButtonText } from "@components/common/Buttons/ButtonText";
 import { XMarkIcon } from "react-native-heroicons/outline";
 
-interface Props {
+export interface ModalProps {
   isOpen: boolean;
   onClose(): void;
-  children: React.ReactNode;
 }
 
-export const Modal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<PropsWithChildren<ModalProps>> = ({
+  isOpen,
+  onClose,
+  children,
+}) => {
   const { backgroundScreen, colors } = useTheme();
 
   return (

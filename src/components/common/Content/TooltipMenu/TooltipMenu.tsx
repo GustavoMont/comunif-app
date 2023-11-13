@@ -18,7 +18,7 @@ import { Button } from "../../Buttons/Button";
 import { IconButton } from "../../Buttons/IconButton";
 import { XMarkIcon } from "react-native-heroicons/outline";
 
-interface Option {
+export interface TooltipOption {
   name: string;
   action(): void | Promise<void>;
   color: colorKeyType;
@@ -27,7 +27,7 @@ interface Option {
 
 interface Props {
   title: string;
-  options: Option[];
+  options: TooltipOption[];
 }
 
 export const TooltipMenu: React.FC<Props> = ({ title, options }) => {
@@ -72,7 +72,6 @@ export const TooltipMenu: React.FC<Props> = ({ title, options }) => {
                   />
                 </XStack>
                 <Separator borderColor={colors.primary} />
-                close
               </YStack>
               {options.map(({ color, name, icon, action }, i) => (
                 <Button
@@ -84,7 +83,9 @@ export const TooltipMenu: React.FC<Props> = ({ title, options }) => {
                     action();
                   }}
                 >
-                  <BodyText color={color}>{name}</BodyText>
+                  <BodyText underlined color={color}>
+                    {name}
+                  </BodyText>
                 </Button>
               ))}
             </TooltipContent>

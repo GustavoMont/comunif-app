@@ -97,7 +97,12 @@ export const LeaveCommunityModal: React.FC<Props> = ({
             </BodyText>
           </YStack>
           <XStack space={"$4"}>
-            <Button onPress={close} style={styles.button} color="darkWhite">
+            <Button
+              centerContent
+              onPress={close}
+              style={styles.button}
+              color="darkWhite"
+            >
               <ButtonText color="lightBlack">Cancelar</ButtonText>
             </Button>
             <Button
@@ -105,6 +110,7 @@ export const LeaveCommunityModal: React.FC<Props> = ({
               style={styles.button}
               isLoading={isLoading}
               color="secondary"
+              centerContent
             >
               <ButtonText>Confirmar</ButtonText>
             </Button>
