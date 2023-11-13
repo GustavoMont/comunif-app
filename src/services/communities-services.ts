@@ -39,3 +39,7 @@ export const listUserCommunities = async (userId: number) => {
   );
   return communities;
 };
+
+export const leaveCommunity = async (communityId: number, userId: number) => {
+  await api.delete(`/community-users/${communityId}/members/${userId}`);
+};

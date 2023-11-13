@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack } from "tamagui";
+import { Stack, XStack } from "tamagui";
 import { Title } from "../common/Typograph/Title";
 import { useAuth } from "@src/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ import { StackNavigation } from "@src/types/navigation/protectedRoutes";
 import { User } from "@src/models/User";
 import { CommunityChannel } from "@src/models/CommunityChannel";
 import { Community } from "@src/models/Community";
+import { CommunityDrawerOptions } from "./CommunityDrawerOptions";
 
 interface Props {
   communityId: number;
@@ -77,7 +78,10 @@ export const CommunityDrawer: React.FC<Props> = ({
 
   return (
     <Stack space="$4">
-      <Title color="primary">{community?.name}</Title>
+      <XStack ai={"center"} jc={"space-between"}>
+        <Title color="primary">{community?.name}</Title>
+        <CommunityDrawerOptions community={community} />
+      </XStack>
       <Stack space="$4">
         <Box>
           <Title size={20} color="secondary">

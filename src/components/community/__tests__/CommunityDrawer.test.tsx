@@ -3,7 +3,9 @@ import { CommunityDrawer } from "../CommunityDrawer";
 import React from "react";
 import * as communityServices from "@services/communities-services";
 import * as userService from "@services/users-services";
+import * as evasionReportServices from "@services/evasion-reports-services";
 import {
+  evasionReportGenerator,
   arrayGenerator,
   communityChannelGenerator,
   communityGenerator,
@@ -16,6 +18,11 @@ import { useNavigation } from "@react-navigation/native";
 jest.mock("@services/communities-services", () => ({
   getCommunity: jest.fn(),
   listUserCommunities: jest.fn(),
+  leaveCommunity: jest.fn(),
+}));
+
+jest.mock("@services/evasion-reports-services", () => ({
+  createEvasionReport: jest.fn(),
 }));
 
 jest.mock("@services/users-services", () => ({
@@ -44,10 +51,14 @@ describe("Community Drawer", () => {
       name: "Testersons",
       communityChannels,
     });
+    const evasionReport = evasionReportGenerator();
     const currentUser = userGenarator({ id: 7 });
     const communitiesResponse = listResponseGenerator(5, communityGenerator);
     const usersResponse = listResponseGenerator(5, userGenarator);
     beforeEach(() => {
+      jest
+        .spyOn(evasionReportServices, "createEvasionReport")
+        .mockResolvedValue(evasionReport);
       jest
         .spyOn(communityServices, "getCommunity")
         .mockResolvedValue(community);
@@ -153,6 +164,36 @@ describe("Community Drawer", () => {
       expect(navigation.navigate).toBeCalledWith("Community", {
         id: community.id,
       });
+    });
+    it("should leave community", async () => {
+      render(
+        <CommunityDrawer closeDrawer={jest.fn()} communityId={communityId} />
+      );
+      const optionsButton = screen.getByLabelText("Opções");
+      fireEvent.press(optionsButton);
+      const leavButton = screen.getByRole("button", {
+        name: "Sair da comunidade",
+      });
+      fireEvent.press(leavButton);
+      const textArea = await screen.findByLabelText("Motivo");
+      const reason = "Saí pq todo mundo aqui não presta";
+      fireEvent.changeText(textArea, reason);
+      const confirmButton = screen.getByRole("button", { name: /Confirmar/ });
+      fireEvent.press(confirmButton);
+      await waitFor(() => {
+        expect(evasionReportServices.createEvasionReport).toBeCalledWith({
+          userId: currentUser.id,
+          communityId,
+          reason,
+        });
+      });
+      await waitFor(() => {
+        expect(communityServices.leaveCommunity).toBeCalledWith(
+          communityId,
+          currentUser.id
+        );
+      });
+      expect(navigation.navigate).toBeCalledWith("Home");
     });
   });
 });

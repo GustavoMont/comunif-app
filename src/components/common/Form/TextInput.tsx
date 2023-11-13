@@ -97,6 +97,7 @@ export const TextInput: React.FC<InputProps> = ({
       <Container>
         {hasLeftIcon && <IconPlace position="left">{leftIcon}</IconPlace>}
         <Input
+          accessibilityLabel={label}
           hasError={hasErrorMessage}
           hasIcon={hasIcon(hasLeftIcon, hasRightIcon)}
           variant={variant}

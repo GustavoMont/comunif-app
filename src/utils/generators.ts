@@ -2,9 +2,11 @@ import { ListResponse } from "@src/models/ApiResponse";
 import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
+import { EvasionReport } from "@src/models/EvasionReport";
 import { Message } from "@src/models/Message";
 import { User } from "@src/models/User";
 import { ImageFile } from "@src/types/RN";
+import moment from "moment";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
 
@@ -87,4 +89,19 @@ export const imageFileGenerator: Generator<ImageFile> = (imageFile) => ({
   type: "image/png",
   uri: "file://folder/subfolder/foto.png",
   ...imageFile,
+});
+
+export const evasionReportGenerator: Generator<EvasionReport> = (
+  evasionReport
+) => ({
+  community: communityGenerator(),
+  communityId: 1,
+  id: 1,
+  reason: null,
+  removedAt: moment().toString(),
+  remover: null,
+  removerId: null,
+  user: userGenarator(),
+  userId: 1,
+  ...evasionReport,
 });

@@ -69,6 +69,7 @@ export const Button: React.FC<Props> = ({
       icon
     );
   };
+  const hasNoIcon = !leftIcon && !rightIcon;
 
   return (
     <TouchableButton
@@ -80,7 +81,11 @@ export const Button: React.FC<Props> = ({
       accessibilityRole="button"
     >
       {leftIcon ? handleIcon(leftIcon) : <></>}
-      {children}
+      {hasNoIcon && isLoading ? (
+        <Spinner color={colors.white} accessibilityLabel="Carregando" />
+      ) : (
+        children
+      )}
       {rightIcon ? handleIcon(rightIcon) : <></>}
     </TouchableButton>
   );
