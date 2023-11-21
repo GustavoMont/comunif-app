@@ -24,9 +24,16 @@ export const getRefreshToken = async () => {
   return refreshToken;
 };
 
-export const storeTokens = async (token: AuthStorage) => {
+type StoreTokensParams = Pick<AuthStorage, "access"> & {
+  refreshToken?: string;
+};
+
+export const storeTokens = async ({
+  access,
+  refreshToken,
+}: StoreTokensParams) => {
   await Promise.all([
-    Store.setItemAsync(tokenKeys.access, token.access),
-    Store.setItemAsync(tokenKeys.refreshToken, token.refreshToken),
+    Store.setItemAsync(tokenKeys.access, access),
+    refreshToken && Store.setItemAsync(tokenKeys.refreshToken, refreshToken),
   ]);
 };
