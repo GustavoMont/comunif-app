@@ -5,7 +5,6 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import { Title } from "../../components/common/Typograph/Title";
 import { useTheme } from "styled-components/native";
@@ -72,8 +71,8 @@ const Signup: React.FC = () => {
   const { icons } = useTheme();
   const { signUp } = useAuth();
   const { showToast } = useAppToast();
-
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -88,9 +87,9 @@ const Signup: React.FC = () => {
   ];
 
   const onSubmit = async (body: RegisterPayload) => {
-    setActiveStep((prev) => (prev + 1) % steps.length);
     if (isLast) {
       try {
+        setIsLoading(true);
         await signUp(body);
       } catch (err: any) {
         const { response } = err as AxiosError<{ message: string }>;
@@ -99,7 +98,11 @@ const Signup: React.FC = () => {
           title: "Ocorreu um erro",
           message: response?.data.message || "Ocorreu um erro ao criar a conta",
         });
+      } finally {
+        setIsLoading(false);
       }
+    } else {
+      setActiveStep((prev) => (prev + 1) % steps.length);
     }
   };
 
@@ -122,6 +125,7 @@ const Signup: React.FC = () => {
                   setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
                 }
                 minSize
+                isLoading={isLoading}
                 leftIcon={
                   <ChevronLeftIcon
                     size={icons.size.medium}
@@ -134,6 +138,7 @@ const Signup: React.FC = () => {
               <Button
                 onPress={handleSubmit(onSubmit)}
                 minSize
+                isLoading={isLoading}
                 rightIcon={
                   isLast ? (
                     <CheckIcon

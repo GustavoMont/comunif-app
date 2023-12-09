@@ -26,7 +26,7 @@ const Input = styled.TextInput.attrs<StylePropIncrement>(
     variant === "flushed"
       ? `border-bottom-width: 1.5px;`
       : `border: 1.5px solid;`}
-  border-bottom-color: ${({ hasError, theme }) =>
+  border-color: ${({ hasError, theme }) =>
     hasError ? theme.colors.error : theme.input.borderColor};
   border-radius: ${({ variant }) => (variant === "filled" ? "4px" : "0px")};
   width: 100%;
@@ -35,7 +35,8 @@ const Input = styled.TextInput.attrs<StylePropIncrement>(
     hasIcon !== "none" ? `padding-${hasIcon}: ${input.iconSize + 16}px;` : ""}
   font-family: ${({ theme }) => theme.fonts.text[500]};
   font-size: ${({ theme }) => theme.input.fontSize}px;
-  color: ${({ theme }) => theme.input.color};
+  color: ${({ theme, hasError }) =>
+    hasError ? theme.colors.error : theme.input.color};
   background-color: ${({ theme }) => theme.backgroundScreen};
   ${({ multiline }) => (multiline ? "min-height: 150px;" : "")}
   vertical-align: ${({ multiline }) => (multiline ? "top" : "middle")};

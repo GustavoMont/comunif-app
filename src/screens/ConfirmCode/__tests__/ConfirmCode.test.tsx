@@ -83,7 +83,7 @@ describe("ConfirmCode screen", () => {
       await waitFor(() => {
         expect(setItemAsync).toBeCalledWith(
           tokenKeys.access,
-          JSON.stringify(confirmCodeResponse)
+          confirmCodeResponse.access
         );
       });
       await waitFor(() => {

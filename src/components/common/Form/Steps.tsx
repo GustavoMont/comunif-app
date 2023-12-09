@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { colorKeyType } from "src/types/colors";
 import styled from "styled-components/native";
-import { FlexGap } from "../Layout/FlexGap";
+import { XStack } from "tamagui";
 
 type statusType = "todo" | "progress" | "done";
 
@@ -66,27 +66,26 @@ export const Steps: React.FC<Props> = ({
     }
   };
   return (
-    <FlexGap gap={2} direction="row">
+    <XStack gap={"$0.5"}>
       {Array.from({ length: stepsQuantity }, () => Math.random()).map(
         (step, i, steps) => {
           const status = handleStepStatus(currentStep, i);
           return (
-            <FlexGap
+            <XStack
               testID="step"
-              key={i}
+              key={i.toString()}
               gap={2}
-              direction="row"
               style={styles.stepsContainer}
             >
               <Circle testID="step-circle" size={size} status={status} />
               {i < steps.length - 1 && (
                 <Pill testID="step-conector" size={size} status={status} />
               )}
-            </FlexGap>
+            </XStack>
           );
         }
       )}
-    </FlexGap>
+    </XStack>
   );
 };
 

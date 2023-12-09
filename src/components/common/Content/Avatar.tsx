@@ -55,9 +55,7 @@ export const Avatar: React.FC<Props> = ({
       <TAvatar.Image
         testID={testID}
         source={{
-          uri: src
-            ? `${handleAvatarUrl(src)}?${new Date().getTime()}`
-            : "http://aja",
+          uri: src ? `${handleAvatarUrl(src)}` : "http://aja",
         }}
       />
 

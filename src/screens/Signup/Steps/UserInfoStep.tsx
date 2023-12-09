@@ -1,10 +1,10 @@
 import React from "react";
 import { TextInput } from "../../../components/common/Form/TextInput";
-import { FlexGap } from "../../../components/common/Layout/FlexGap";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { DatePicker } from "@components/common/Form/DatePicker";
 import { StyleSheet } from "react-native";
 import { RegisterPayload } from "@src/models/User";
+import { XStack, YStack } from "tamagui";
 interface Props {
   control: Control<RegisterPayload>;
   error: FieldErrors<any>;
@@ -12,8 +12,8 @@ interface Props {
 
 export const UserInfoStep: React.FC<Props> = ({ control, error }) => {
   return (
-    <FlexGap gap={16} style={styles.container}>
-      <FlexGap gap={6} direction="row">
+    <YStack gap={"$4"} style={styles.container}>
+      <XStack gap={6}>
         <Controller
           control={control}
           name="username"
@@ -43,7 +43,7 @@ export const UserInfoStep: React.FC<Props> = ({ control, error }) => {
             />
           )}
         />
-      </FlexGap>
+      </XStack>
       <Controller
         control={control}
         name="email"
@@ -58,7 +58,7 @@ export const UserInfoStep: React.FC<Props> = ({ control, error }) => {
           />
         )}
       />
-    </FlexGap>
+    </YStack>
   );
 };
 

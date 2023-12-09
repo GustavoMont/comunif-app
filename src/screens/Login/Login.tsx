@@ -9,7 +9,6 @@ import { CircleProps } from "../../types/components/BackgroundCircle";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import styled from "styled-components/native";
 import { Button } from "../../components/common/Buttons/Button";
-import { FlexGap } from "../../components/common/Layout/FlexGap";
 import { Title } from "../../components/common/Typograph/Title";
 import { BodyText } from "../../components/common/Typograph/BodyText";
 import { ButtonText } from "../../components/common/Buttons/ButtonText";
@@ -20,7 +19,7 @@ import { ControledInput } from "@src/components/common/Form/ControledInput";
 import { LoginPayload } from "@src/models/User";
 import { AxiosError } from "axios";
 import { useAppToast } from "@src/hooks/useAppToast";
-import { Stack } from "tamagui";
+import { Stack, XStack, YStack } from "tamagui";
 interface HandlePositionParams {
   size: number;
   showPercentage: number;
@@ -56,8 +55,8 @@ export const Login = () => {
     <BackgroundCircle useAnimation={false} circles={cicles}>
       <Container>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <FlexGap gap={16} style={styles.screenContainer}>
-            <Title color="primary" size={32}>
+          <YStack w={"100%"} gap={"$4"} style={styles.screenContainer}>
+            <Title align="center" color="primary" size={32}>
               Login
             </Title>
             <ControledInput
@@ -90,21 +89,22 @@ export const Login = () => {
             <Button
               isLoading={isLogging}
               testID="loginBtn"
+              centerContent
               onPress={handleSubmit(onSubmit)}
             >
               <ButtonText size={20} color="white">
                 Login
               </ButtonText>
             </Button>
-            <FlexGap direction="row" gap={4}>
+            <XStack jc={"center"} gap={"$2"}>
               <BodyText size={14} color="darkWhite">
                 Ainda não possui conta?
               </BodyText>
               <Link screen="Signup" type="text" size={14} color="secondary">
                 Cadastre-se
               </Link>
-            </FlexGap>
-          </FlexGap>
+            </XStack>
+          </YStack>
         </TouchableWithoutFeedback>
       </Container>
     </BackgroundCircle>
