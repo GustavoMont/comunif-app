@@ -42,7 +42,7 @@ export const CommunityHeader: React.FC<Props> = ({
           height: 200,
           uri: community.banner ?? "http://la.com",
         }}
-        w={Dimensions.get("screen").width}
+        style={{ width: Dimensions.get("window").width }}
       />
     </Container>
   );

@@ -195,6 +195,5 @@ describe("CommunityChannel Screen", () => {
         response.meta.pageCount / 2
       );
     });
-    it.todo("should use socket io to communicate");
   });
 });

@@ -5,7 +5,7 @@ import { listUserCommunities } from "@src/services/communities-services";
 import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
 import { useAuth } from "@src/hooks/useAuth";
 import { Header } from "@src/components/home/Header";
-import { Separator, Spinner, View, YStack } from "tamagui";
+import { Spinner, View, YStack } from "tamagui";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { useTheme } from "styled-components/native";
 import { Button } from "@components/common/Buttons/Button";
@@ -13,6 +13,7 @@ import { ButtonText } from "@components/common/Buttons/ButtonText";
 import { GlobeAltIcon, PlusIcon } from "react-native-heroicons/outline";
 import { Title } from "@src/components/common/Typograph/Title";
 import { XCommunitiesList } from "../Community/XCommunitiesList";
+import { Divider } from "@src/components/common/Layout/Divider";
 
 export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { user } = useAuth();
@@ -69,7 +70,7 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
             </ButtonText>
           </Button>
         </View>
-        <Separator borderColor={colors.secondary} w={"100%"} />
+        <Divider />
       </YStack>
     </FullScreenContainer>
   );
