@@ -1,4 +1,3 @@
-import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
 import { Title } from "@src/components/common/Typograph/Title";
 import { ConfirmCodeScreenProps } from "@src/types/navigation/freeRoutes";
 import React, { useState } from "react";
@@ -19,8 +18,8 @@ import {
   confirmCode,
   hashedEmailKey,
 } from "@src/services/auth-services";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
-import { tokenKeys } from "@src/utils/token";
+import { getItemAsync } from "expo-secure-store";
+import { storeTokens } from "@src/utils/token";
 import { useAppToast } from "@src/hooks/useAppToast";
 import { YStack } from "tamagui";
 
@@ -49,8 +48,8 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
           code,
           email: hashedEmail,
         };
-        const accessResponse = await confirmCode(body);
-        await setItemAsync(tokenKeys.access, JSON.stringify(accessResponse));
+        const { access } = await confirmCode(body);
+        await storeTokens({ access });
         navigation.navigate("ChangePassword");
       } catch (error) {
         showToast({
@@ -70,57 +69,55 @@ export const ConfirmCode: React.FC<ConfirmCodeScreenProps> = ({
 
   return (
     <ResetPasswordContainer>
-      <FullScreenContainer>
-        <YStack jc={"center"} space={"$6"} flex={1}>
-          <Title align="center" color="secondary">
-            Recuperar senha
-          </Title>
-          <YStack space={"$6"}>
-            <YStack space={"$4"}>
-              <BodyText>Insira o código enviado</BodyText>
-              <CodeField
-                ref={ref}
-                {...props}
-                value={code}
-                testID="code-input"
-                onChangeText={onChangeText}
-                cellCount={CELL_COUNT}
-                keyboardType="number-pad"
-                textContentType="oneTimeCode"
-                renderCell={({ index, symbol, isFocused }) => (
-                  <PinCell
-                    symbol={symbol}
-                    isFocused={isFocused}
-                    key={index}
-                    onLayout={getCellOnLayoutHandler(index)}
-                  />
-                )}
-              />
-            </YStack>
-            <Button
-              minSize
-              color="secondary"
-              alignSelf="flex-end"
-              rightIcon={
-                <ChevronRightIcon width={24} height={24} color={"white"} />
-              }
-              type="rounded"
-              onPress={onSubmit}
-            >
-              <ButtonText color="white">Confirmar</ButtonText>
-            </Button>
-            <Link
-              screen="ForgotPassword"
-              type="text"
-              color="secondary"
-              size={18}
-              weight={600}
-            >
-              Voltar
-            </Link>
+      <YStack jc={"center"} space={"$6"} flex={1}>
+        <Title align="center" color="secondary">
+          Recuperar senha
+        </Title>
+        <YStack space={"$6"}>
+          <YStack space={"$4"}>
+            <BodyText>Insira o código enviado</BodyText>
+            <CodeField
+              ref={ref}
+              {...props}
+              value={code}
+              testID="code-input"
+              onChangeText={onChangeText}
+              cellCount={CELL_COUNT}
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              renderCell={({ index, symbol, isFocused }) => (
+                <PinCell
+                  symbol={symbol}
+                  isFocused={isFocused}
+                  key={index}
+                  onLayout={getCellOnLayoutHandler(index)}
+                />
+              )}
+            />
           </YStack>
+          <Button
+            minSize
+            color="secondary"
+            alignSelf="flex-end"
+            rightIcon={
+              <ChevronRightIcon width={24} height={24} color={"white"} />
+            }
+            type="rounded"
+            onPress={onSubmit}
+          >
+            <ButtonText color="white">Confirmar</ButtonText>
+          </Button>
+          <Link
+            screen="ForgotPassword"
+            type="text"
+            color="secondary"
+            size={18}
+            weight={600}
+          >
+            Voltar
+          </Link>
         </YStack>
-      </FullScreenContainer>
+      </YStack>
     </ResetPasswordContainer>
   );
 };

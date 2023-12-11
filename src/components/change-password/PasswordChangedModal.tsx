@@ -17,7 +17,7 @@ export const PasswordChangedModal: React.FC<Props> = ({
 }) => {
   return (
     <Modal isOpen={isVisible} onClose={onClose}>
-      <YStack space={"4"}>
+      <YStack space={"$4"}>
         <Title align="center" color="secondary">
           Senha alterada!
         </Title>

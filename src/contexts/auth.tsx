@@ -8,6 +8,7 @@ interface Context {
   signedIn: boolean;
   user: User | null;
   isCheckingToken: boolean;
+  updateUser(user: User): void;
   signUp: signUp;
   login: login;
   logout(): Promise<void>;

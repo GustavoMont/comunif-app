@@ -12,12 +12,20 @@ import { TamaguiProvider } from "tamagui";
 import config from "../tamagui.config";
 import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "./components/common/Layout/CurrentToast";
+
 const inset = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 };
 
 const client = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      cacheTime: Infinity,
+      refetchOnMount: "always",
+    },
+  },
   logger: {
     error() {
       return;

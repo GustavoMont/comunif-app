@@ -5,13 +5,20 @@ import { XStack } from "tamagui";
 import { Avatar } from "@components/common/Content/Avatar";
 import { UserIcon } from "react-native-heroicons/outline";
 import { Message as IMessage } from "@src/models/Message";
+import { User } from "@src/models/User";
+import { TouchableOpacity } from "react-native";
 
 interface Props {
   message: IMessage;
   isCurrentUser?: boolean;
+  onPressUser?(user: User): void;
 }
 
-export const Message: React.FC<Props> = ({ message, isCurrentUser }) => {
+export const Message: React.FC<Props> = ({
+  message,
+  isCurrentUser,
+  onPressUser,
+}) => {
   const user = message.user;
   return (
     <MessageContainer testID="message" isCurrentUser={isCurrentUser}>
@@ -20,14 +27,16 @@ export const Message: React.FC<Props> = ({ message, isCurrentUser }) => {
         ai={"center"}
         space={"$1"}
       >
-        <Avatar
-          size={"small"}
-          fallback={{
-            backgroundColor: isCurrentUser ? "primary" : "secondary",
-            icon: UserIcon,
-          }}
-          src={user.avatar}
-        />
+        <TouchableOpacity onPress={() => onPressUser?.(user)}>
+          <Avatar
+            size={"small"}
+            fallback={{
+              backgroundColor: isCurrentUser ? "primary" : "secondary",
+              icon: UserIcon,
+            }}
+            src={user.avatar}
+          />
+        </TouchableOpacity>
         <BodyText>
           {isCurrentUser ? "Você" : `${user.name} ${user.lastName[0]}.`}
         </BodyText>

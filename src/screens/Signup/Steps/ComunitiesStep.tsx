@@ -2,7 +2,7 @@ import { View } from "react-native";
 import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import { BodyText } from "@components/common/Typograph/BodyText";
-import { FlexGap } from "@components/common/Layout/FlexGap";
+import { YStack } from "tamagui";
 
 export const ComunitiesStep = () => {
   const [open, setOpen] = useState(false);
@@ -10,7 +10,7 @@ export const ComunitiesStep = () => {
   return (
     <>
       <View>
-        <FlexGap gap={8}>
+        <YStack gap={"$2"}>
           <BodyText>Quais comunidades você tem interesse?</BodyText>
           <DropDownPicker
             items={[
@@ -25,7 +25,7 @@ export const ComunitiesStep = () => {
             placeholder="Selecione uma opção"
           />
           <BodyText color="darkWhite">Nenhuma comunidade selecionada</BodyText>
-        </FlexGap>
+        </YStack>
       </View>
     </>
   );

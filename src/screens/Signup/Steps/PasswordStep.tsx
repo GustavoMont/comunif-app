@@ -1,8 +1,8 @@
 import React from "react";
 import { PasswordInput } from "@components/common/Form/PasswordInput";
-import { FlexGap } from "@components/common/Layout/FlexGap";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { RegisterPayload } from "@src/models/User";
+import { YStack } from "tamagui";
 
 interface Props {
   control: Control<RegisterPayload>;
@@ -11,7 +11,7 @@ interface Props {
 
 export const PasswordStep: React.FC<Props> = ({ control, error }) => {
   return (
-    <FlexGap gap={16}>
+    <YStack gap={"$4"}>
       <Controller
         control={control}
         rules={{
@@ -43,6 +43,6 @@ export const PasswordStep: React.FC<Props> = ({ control, error }) => {
           />
         )}
       />
-    </FlexGap>
+    </YStack>
   );
 };

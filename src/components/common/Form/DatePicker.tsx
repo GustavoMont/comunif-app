@@ -10,9 +10,9 @@ import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { CalendarIcon } from "react-native-heroicons/outline";
 import { colorKeyType } from "src/types/colors";
 import styled, { useTheme } from "styled-components/native";
-import { FlexGap } from "../Layout/FlexGap";
 import { BodyText } from "../Typograph/BodyText";
 import { ErrorContainer } from "./ErrorContainer";
+import { XStack, YStack } from "tamagui";
 
 type width = number | `${number}%`;
 interface ContainerStyleProps {
@@ -35,6 +35,7 @@ const Input = styled.View<{ hasError?: boolean }>`
   background-color: ${({ theme }) => theme.input.backgroundColor};
   border-radius: 4px;
   flex: 1;
+  align-self: stretch;
 `;
 
 interface Props extends BaseProps, ContainerStyleProps {
@@ -83,10 +84,10 @@ export const DatePicker: React.FC<Props> = ({
           setShowDatePicker(true);
         }}
       >
-        <Container width={width}>
-          {label && <BodyText>{label}</BodyText>}
+        <YStack flex={1} position="relative">
+          {label ? <BodyText>{label}</BodyText> : null}
           <Input hasError={hasError} testID="date-picker-input">
-            <FlexGap gap={4} direction="row" style={styles.input}>
+            <XStack gap={"$1"} ai="center" flex={1} px={"$1"}>
               <CalendarIcon
                 size={icon?.size || icons.size.medium}
                 color={handleInputTextColor(hasError, value)}
@@ -99,25 +100,71 @@ export const DatePicker: React.FC<Props> = ({
               >
                 {moment(value).format("DD/MM/YY")}
               </BodyText>
-            </FlexGap>
+            </XStack>
           </Input>
           <ErrorContainer>
-            {errorMessage && (
+            {errorMessage ? (
               <BodyText color="error" size={10}>
                 {errorMessage}
               </BodyText>
-            )}
+            ) : null}
           </ErrorContainer>
-        </Container>
+        </YStack>
       </TouchableWithoutFeedback>
-      {showDatePicker && (
+      {showDatePicker ? (
         <RNDateTimePicker
           testID="date-picker"
           {...props}
           value={value || moment().toDate()}
           onChange={handleChange}
         />
-      )}
+      ) : null}
+    </>
+  );
+
+  return (
+    <>
+      <TouchableWithoutFeedback
+        testID={testID || ""}
+        onPress={() => {
+          setShowDatePicker(true);
+        }}
+      >
+        <Container width={width}>
+          {label ? <BodyText>{label}</BodyText> : null}
+          <Input hasError={hasError} testID="date-picker-input">
+            <XStack gap={4} style={styles.input}>
+              <CalendarIcon
+                size={icon?.size || icons.size.medium}
+                color={handleInputTextColor(hasError, value)}
+              />
+
+              <BodyText
+                style={{
+                  color: handleInputTextColor(hasError, value),
+                }}
+              >
+                {moment(value).format("DD/MM/YY")}
+              </BodyText>
+            </XStack>
+          </Input>
+          <ErrorContainer>
+            {errorMessage ? (
+              <BodyText color="error" size={10}>
+                {errorMessage}
+              </BodyText>
+            ) : null}
+          </ErrorContainer>
+        </Container>
+      </TouchableWithoutFeedback>
+      {showDatePicker ? (
+        <RNDateTimePicker
+          testID="date-picker"
+          {...props}
+          value={value || moment().toDate()}
+          onChange={handleChange}
+        />
+      ) : null}
     </>
   );
 };

@@ -4,7 +4,7 @@ import { SvgProps } from "react-native-svg";
 import { useTheme } from "styled-components/native";
 import { Avatar as TAvatar, AvatarProps, SizeTokens } from "tamagui";
 
-type Size = "small" | "medium";
+type Size = "small" | "medium" | "lg" | "xl";
 
 interface Props extends Omit<AvatarProps, "src" | "size"> {
   src?: string;
@@ -14,6 +14,10 @@ interface Props extends Omit<AvatarProps, "src" | "size"> {
   };
   size: Size;
 }
+
+const handleAvatarUrl = (url: string) => {
+  return url.replace("localhost", "10.0.2.2");
+};
 
 export const Avatar: React.FC<Props> = ({
   src,
@@ -27,13 +31,21 @@ export const Avatar: React.FC<Props> = ({
     avatarSize: SizeTokens;
   }
   const sizeHandler: Record<Size, SizeHandler> = {
+    small: {
+      avatarSize: "$2",
+      icon: 12,
+    },
     medium: {
       avatarSize: "$5",
       icon: 24,
     },
-    small: {
-      avatarSize: "$2",
-      icon: 12,
+    lg: {
+      avatarSize: "$10",
+      icon: 40,
+    },
+    xl: {
+      avatarSize: "$14",
+      icon: 64,
     },
   };
   const { colors } = useTheme();
@@ -43,7 +55,7 @@ export const Avatar: React.FC<Props> = ({
       <TAvatar.Image
         testID={testID}
         source={{
-          uri: src ?? "http://aja",
+          uri: src ? `${handleAvatarUrl(src)}` : "http://aja",
         }}
       />
 

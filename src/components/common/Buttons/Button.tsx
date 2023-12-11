@@ -13,7 +13,7 @@ type buttonType = "rounded" | "main";
 
 interface ButtonProps {
   minSize?: boolean;
-  color?: colorKeyType;
+  color?: colorKeyType | "none";
   alignSelf?: FlexAlignType;
   type?: buttonType;
   centerContent?: boolean;
@@ -30,9 +30,10 @@ const buttonStyle: Record<buttonType, ButtonStyleProps> = {
 
 const TouchableButton = styled(TouchableOpacity)<ButtonProps>`
   font-weight: 500;
-  background-color: ${({ theme, color }) => theme.colors[color || "primary"]};
+  background-color: ${({ theme, color }) =>
+    color === "none" ? "transparent" : theme.colors[color || "primary"]};
   ${({ minSize }) => (!!minSize ? "" : "width: 100%;")}
-  padding: 12px;
+  padding: ${({ color }) => (color === "none" ? "0px" : "12px")};
   text-align: center;
   border-radius: ${({ type = "main" }) => buttonStyle[type].radius}px;
   flex-direction: row;
@@ -68,6 +69,7 @@ export const Button: React.FC<Props> = ({
       icon
     );
   };
+  const hasNoIcon = !leftIcon && !rightIcon;
 
   return (
     <TouchableButton
@@ -79,7 +81,11 @@ export const Button: React.FC<Props> = ({
       accessibilityRole="button"
     >
       {leftIcon ? handleIcon(leftIcon) : <></>}
-      {children}
+      {hasNoIcon && isLoading ? (
+        <Spinner color={colors.white} accessibilityLabel="Carregando" />
+      ) : (
+        children
+      )}
       {rightIcon ? handleIcon(rightIcon) : <></>}
     </TouchableButton>
   );

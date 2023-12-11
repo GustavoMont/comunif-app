@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Platform, StyleSheet, UIManager } from "react-native";
+import { LogBox, Platform, StyleSheet, UIManager } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
 import { light } from "./src/styles/themes/light";
@@ -26,8 +26,13 @@ import { ToastProvider } from "@tamagui/toast";
 import { CurrentToast } from "@src/components/common/Layout/CurrentToast";
 import { Routes } from "@src/routes/Routes";
 import { AuthProvider } from "@src/Providers/AuthProviders";
-
+import { PermissionsProvider } from "@src/Providers/PermissionsProvider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 const client = new QueryClient();
+
+LogBox.ignoreLogs([
+  'Key "cancelled" in the image picker result is deprecated and will be removed in SDK 48, use "canceled" instead',
+]);
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -49,27 +54,32 @@ function App() {
   ) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea}>
-        <QueryClientProvider client={client}>
-          <ThemeProvider theme={light}>
-            <TamaguiProvider config={config}>
-              <ToastProvider>
-                <CurrentToast />
-                <StatusBar
-                  style="light"
-                  backgroundColor={colors["lightBlack"]}
-                />
-                <NavigationContainer>
-                  <AuthProvider>
-                    <Routes />
-                  </AuthProvider>
-                </NavigationContainer>
-              </ToastProvider>
-            </TamaguiProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
+        <GestureHandlerRootView style={styles.safeArea}>
+          <QueryClientProvider client={client}>
+            <ThemeProvider theme={light}>
+              <TamaguiProvider config={config}>
+                <ToastProvider>
+                  <CurrentToast />
+                  <StatusBar
+                    style="light"
+                    backgroundColor={colors["lightBlack"]}
+                  />
+                  <NavigationContainer>
+                    <AuthProvider>
+                      <PermissionsProvider>
+                        <Routes />
+                      </PermissionsProvider>
+                    </AuthProvider>
+                  </NavigationContainer>
+                </ToastProvider>
+              </TamaguiProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </GestureHandlerRootView>
       </SafeAreaView>
     </SafeAreaProvider>
   );

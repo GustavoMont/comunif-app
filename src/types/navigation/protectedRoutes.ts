@@ -1,3 +1,4 @@
+import { NavigationProp } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -5,7 +6,10 @@ import {
 
 export type RootStackParamList = {
   Home: undefined;
-  Profile: undefined;
+  Profile: {
+    userId: number;
+  };
+  EditProfile: undefined;
   AllCommunities: undefined;
   Community: {
     id: number;
@@ -15,6 +19,8 @@ export type RootStackParamList = {
     channelId: number;
   };
 };
+
+export type StackNavigation = NavigationProp<RootStackParamList>;
 
 export type ProtectedRoute = NativeStackNavigationProp<RootStackParamList>;
 
@@ -36,4 +42,14 @@ export type CommunityScreenProps = NativeStackScreenProps<
 export type CommunityChannelProps = NativeStackScreenProps<
   RootStackParamList,
   "CommunityChannel"
+>;
+
+export type ProfileScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "Profile"
+>;
+
+export type EditProfileScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  "EditProfile"
 >;

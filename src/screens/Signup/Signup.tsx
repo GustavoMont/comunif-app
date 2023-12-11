@@ -5,7 +5,6 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { FullScreenContainer } from "../../components/common/Layout/FullScreenContainer";
 import BackgroundCircle from "../../components/common/Layout/BackgroundCircle";
 import { Title } from "../../components/common/Typograph/Title";
 import { useTheme } from "styled-components/native";
@@ -72,8 +71,8 @@ const Signup: React.FC = () => {
   const { icons } = useTheme();
   const { signUp } = useAuth();
   const { showToast } = useAppToast();
-
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -88,9 +87,9 @@ const Signup: React.FC = () => {
   ];
 
   const onSubmit = async (body: RegisterPayload) => {
-    setActiveStep((prev) => (prev + 1) % steps.length);
     if (isLast) {
       try {
+        setIsLoading(true);
         await signUp(body);
       } catch (err: any) {
         const { response } = err as AxiosError<{ message: string }>;
@@ -99,7 +98,11 @@ const Signup: React.FC = () => {
           title: "Ocorreu um erro",
           message: response?.data.message || "Ocorreu um erro ao criar a conta",
         });
+      } finally {
+        setIsLoading(false);
       }
+    } else {
+      setActiveStep((prev) => (prev + 1) % steps.length);
     }
   };
 
@@ -108,61 +111,60 @@ const Signup: React.FC = () => {
   return (
     <BackgroundCircle circles={cicles} positions={positions[activeStep]}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <FullScreenContainer>
-          <YStack f={1} space={"$6"} ai={"center"} jc={"center"}>
-            <Title color="primary" size={32}>
-              Cadastro
-            </Title>
-            <YStack w={"100%"} gap={16}>
-              <StepHandler steps={steps} activeStep={activeStep} />
-              <View style={styles.buttonContainer}>
-                <Button
-                  disabled={isFirst}
-                  color={isFirst ? "darkWhite" : "lightBlack"}
-                  onPress={() =>
-                    setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
-                  }
-                  minSize
-                  leftIcon={
-                    <ChevronLeftIcon
+        <YStack f={1} space={"$6"} ai={"center"} jc={"center"}>
+          <Title color="primary" size={32}>
+            Cadastro
+          </Title>
+          <YStack w={"100%"} gap={16}>
+            <StepHandler steps={steps} activeStep={activeStep} />
+            <View style={styles.buttonContainer}>
+              <Button
+                disabled={isFirst}
+                color={isFirst ? "darkWhite" : "lightBlack"}
+                onPress={() =>
+                  setActiveStep((prev) => (prev !== 0 ? prev - 1 : prev))
+                }
+                minSize
+                isLoading={isLoading}
+                leftIcon={
+                  <ChevronLeftIcon
+                    size={icons.size.medium}
+                    color={icons.color.button}
+                  />
+                }
+              >
+                <BodyText color="white">Voltar</BodyText>
+              </Button>
+              <Button
+                onPress={handleSubmit(onSubmit)}
+                minSize
+                isLoading={isLoading}
+                rightIcon={
+                  isLast ? (
+                    <CheckIcon
                       size={icons.size.medium}
                       color={icons.color.button}
                     />
-                  }
-                >
-                  <BodyText color="white">Voltar</BodyText>
-                </Button>
-                <Button
-                  onPress={handleSubmit(onSubmit)}
-                  minSize
-                  rightIcon={
-                    isLast ? (
-                      <CheckIcon
-                        size={icons.size.medium}
-                        color={icons.color.button}
-                      />
-                    ) : (
-                      <ChevronRightIcon
-                        size={icons.size.medium}
-                        color={icons.color.button}
-                      />
-                    )
-                  }
-                >
-                  <BodyText color="white">
-                    {isLast ? "Finalizar" : "Avançar"}
-                  </BodyText>
-                </Button>
-              </View>
-            </YStack>
-            <Steps
-              size={(width * 0.5) / 4}
-              currentStep={activeStep}
-              stepsQuantity={steps.length}
-            />
+                  ) : (
+                    <ChevronRightIcon
+                      size={icons.size.medium}
+                      color={icons.color.button}
+                    />
+                  )
+                }
+              >
+                <BodyText color="white">
+                  {isLast ? "Finalizar" : "Avançar"}
+                </BodyText>
+              </Button>
+            </View>
           </YStack>
-          {/* </Container> */}
-        </FullScreenContainer>
+          <Steps
+            size={(width * 0.5) / 4}
+            currentStep={activeStep}
+            stepsQuantity={steps.length}
+          />
+        </YStack>
       </TouchableWithoutFeedback>
     </BackgroundCircle>
   );

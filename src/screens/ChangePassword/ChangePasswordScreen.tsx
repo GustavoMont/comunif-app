@@ -1,4 +1,3 @@
-import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
 import { KeyboardCloser } from "@src/components/common/Layout/KeyboardCloser";
 import { Title } from "@src/components/common/Typograph/Title";
 import { ChangePasswordScreenProps } from "@src/types/navigation/freeRoutes";
@@ -45,57 +44,55 @@ export const ChangePasswordScreen: React.FC<ChangePasswordScreenProps> = ({
     navigation.navigate("Login");
   };
 
-  const onSubmit = async (data: ChangePassword) => {
-    await mutate(data);
+  const onSubmit = (data: ChangePassword) => {
+    mutate(data);
   };
 
   const { icons, colors } = useTheme();
   return (
     <ResetPasswordContainer>
       <PasswordChangedModal isVisible={isModalOpen} onClose={onCloseModal} />
-      <FullScreenContainer>
-        <KeyboardCloser>
-          <YStack ai={"center"} jc={"center"} space={"$6"} flex={1}>
-            <Title weight={600} size={24} color="secondary">
-              Mudar a senha
-            </Title>
-            <YStack w={"100%"} space={"$4"}>
-              <ControledInput
-                secureTextEntry
-                label="Nova senha:"
-                placeholder="insira a nova senha"
-                control={control}
-                name="password"
-              />
-              <ControledInput
-                secureTextEntry
-                label="Confirmar senha:"
-                placeholder="confirmar senha"
-                control={control}
-                name="confirmPassword"
-              />
-            </YStack>
-            <Button
-              type="rounded"
-              minSize
-              isLoading={isLoading}
-              alignSelf="flex-end"
-              onPress={handleSubmit(onSubmit)}
-              rightIcon={
-                <CheckIcon
-                  width={icons.size.medium}
-                  height={icons.size.medium}
-                  color={colors.white}
-                />
-              }
-            >
-              <ButtonText size={20} color="white">
-                Alterar senha
-              </ButtonText>
-            </Button>
+      <KeyboardCloser>
+        <YStack ai={"center"} jc={"center"} space={"$6"} flex={1}>
+          <Title weight={600} size={24} color="secondary">
+            Mudar a senha
+          </Title>
+          <YStack w={"100%"} space={"$4"}>
+            <ControledInput
+              secureTextEntry
+              label="Nova senha:"
+              placeholder="insira a nova senha"
+              control={control}
+              name="password"
+            />
+            <ControledInput
+              secureTextEntry
+              label="Confirmar senha:"
+              placeholder="confirmar senha"
+              control={control}
+              name="confirmPassword"
+            />
           </YStack>
-        </KeyboardCloser>
-      </FullScreenContainer>
+          <Button
+            type="rounded"
+            minSize
+            isLoading={isLoading}
+            alignSelf="flex-end"
+            onPress={handleSubmit(onSubmit)}
+            rightIcon={
+              <CheckIcon
+                width={icons.size.medium}
+                height={icons.size.medium}
+                color={colors.white}
+              />
+            }
+          >
+            <ButtonText size={20} color="white">
+              Alterar senha
+            </ButtonText>
+          </Button>
+        </YStack>
+      </KeyboardCloser>
     </ResetPasswordContainer>
   );
 };

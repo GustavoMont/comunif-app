@@ -29,7 +29,7 @@ export interface ConfirmCodeBody {
 }
 
 export const confirmCode = async (data: ConfirmCodeBody) => {
-  const { data: access } = await api.post<AuthStorage>(
+  const { data: access } = await api.post<Pick<AuthStorage, "access">>(
     `/auth/reset-password/confirm-code`,
     data
   );

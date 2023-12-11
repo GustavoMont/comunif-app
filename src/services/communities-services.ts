@@ -27,7 +27,7 @@ interface AddUserCommunity {
 
 export const addUserToCommunity = async (body: AddUserCommunity) => {
   const { data: community } = await api.post<Community>(
-    `/communities/add-user`,
+    `/community-users`,
     body
   );
   return community;
@@ -38,4 +38,8 @@ export const listUserCommunities = async (userId: number) => {
     `/communities/users/${userId}`
   );
   return communities;
+};
+
+export const leaveCommunity = async (communityId: number, userId: number) => {
+  await api.delete(`/community-users/${communityId}/members/${userId}`);
 };

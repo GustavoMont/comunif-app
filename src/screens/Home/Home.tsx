@@ -5,20 +5,20 @@ import { listUserCommunities } from "@src/services/communities-services";
 import { FullScreenContainer } from "@src/components/common/Layout/FullScreenContainer";
 import { useAuth } from "@src/hooks/useAuth";
 import { Header } from "@src/components/home/Header";
-import { Separator, Spinner, View, YStack } from "tamagui";
+import { Spinner, View, YStack } from "tamagui";
 import { BodyText } from "@src/components/common/Typograph/BodyText";
 import { useTheme } from "styled-components/native";
 import { Button } from "@components/common/Buttons/Button";
 import { ButtonText } from "@components/common/Buttons/ButtonText";
 import { GlobeAltIcon, PlusIcon } from "react-native-heroicons/outline";
 import { Title } from "@src/components/common/Typograph/Title";
-import { FlatList } from "react-native";
-import { CommunityStory } from "@src/components/community/CommunityStory";
+import { XCommunitiesList } from "../Community/XCommunitiesList";
+import { Divider } from "@src/components/common/Layout/Divider";
 
 export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { user } = useAuth();
   const { data: communities, isLoading } = useQuery(
-    ["my-communities", user?.id],
+    ["user-communities", user?.id],
     async () => await listUserCommunities(user?.id ?? 0),
     {
       enabled: !!user,
@@ -41,21 +41,13 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
         )}
         {!isNewUser ? (
           <View>
-            <FlatList
-              data={communities}
-              renderItem={({ item }) => (
-                <CommunityStory
-                  community={item}
-                  onPress={({ id }) =>
-                    navigation.navigate("Community", {
-                      id,
-                    })
-                  }
-                />
-              )}
-              horizontal
-              keyExtractor={({ id }) => id.toString()}
-              ItemSeparatorComponent={() => <View ml={"$4"} />}
+            <XCommunitiesList
+              communities={communities ?? []}
+              onSelectCommunity={({ id }) =>
+                navigation.navigate("Community", {
+                  id,
+                })
+              }
             />
           </View>
         ) : (
@@ -78,7 +70,7 @@ export const Home: React.FC<HomeScreenProps> = ({ navigation }) => {
             </ButtonText>
           </Button>
         </View>
-        <Separator borderColor={colors.secondary} w={"100%"} />
+        <Divider />
       </YStack>
     </FullScreenContainer>
   );

@@ -42,7 +42,7 @@ export const CommunityHeader: React.FC<Props> = ({
           height: 200,
           uri: community.banner ?? "http://la.com",
         }}
-        w={Dimensions.get("screen").width}
+        style={{ width: Dimensions.get("window").width }}
       />
     </Container>
   );
@@ -57,6 +57,7 @@ const Container = styled.View`
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   overflow: hidden;
+  z-index: 2;
 `;
 
 const HeaderTitleContainer = styled.View`

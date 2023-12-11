@@ -10,7 +10,6 @@ import {
 } from "react-native-heroicons/outline";
 import colors from "@src/styles/themes/colors";
 import { ResetPasswordContainer } from "./ResetPasswordContainer";
-import { FullScreenContainer } from "@components/common/Layout/FullScreenContainer";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -48,7 +47,7 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
     resolver: yupResolver(resetPasswordValidation),
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { showToast } = useAppToast();
 
   const onSubmit = async (data: ResetPasswordDto) => {
@@ -59,7 +58,6 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
       setIsModalOpen(true);
     } catch (error) {
       const { response } = error as AxiosError<{ message: string }>;
-
       showToast({
         type: "error",
         title: "Ocorreu um erro",
@@ -78,61 +76,57 @@ export const ResetPassword: React.FC<Props> = ({ navigation }) => {
   return (
     <ResetPasswordContainer>
       <ResetPasswordModal isOpen={isModalOpen} onClose={close} />
-      <FullScreenContainer>
-        <KeyboardCloser>
-          <View style={styles.container}>
-            <Title weight={600} align="center" color="secondary">
-              Recuperar Senha
-            </Title>
-            <BodyText>
-              Enviaremos um código de recuperação para o e-mail
+      <KeyboardCloser>
+        <View style={styles.content}>
+          <Title weight={600} align="center" color="secondary">
+            Recuperar Senha
+          </Title>
+          <BodyText>Enviaremos um código de recuperação para o e-mail</BodyText>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field: { onBlur, onChange, value, name } }) => (
+              <TextInput
+                value={value}
+                onBlur={onBlur}
+                keyboardType="email-address"
+                onChangeText={onChange}
+                errorMessage={errors[name]?.message?.toString()}
+                label="E-mail:"
+                placeholder="insira seu e-mail"
+              />
+            )}
+          />
+          <Button
+            type="rounded"
+            color="secondary"
+            alignSelf="flex-end"
+            minSize
+            isLoading={isLoading}
+            accessibilityRole="button"
+            onPress={handleSubmit(onSubmit)}
+            rightIcon={<ChevronRightIcon size={20} color={colors.white} />}
+          >
+            <BodyText size={20} color="white">
+              Enviar
             </BodyText>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field: { onBlur, onChange, value, name } }) => (
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  keyboardType="email-address"
-                  onChangeText={onChange}
-                  errorMessage={errors[name]?.message?.toString()}
-                  label="E-mail:"
-                  placeholder="insira seu e-mail"
-                />
-              )}
-            />
-            <Button
-              type="rounded"
-              color="secondary"
-              alignSelf="flex-end"
-              minSize
-              isLoading={isLoading}
-              accessibilityRole="button"
-              onPress={handleSubmit(onSubmit)}
-              rightIcon={<ChevronRightIcon size={20} color={colors.white} />}
-            >
-              <BodyText size={20} color="white">
-                Enviar
-              </BodyText>
-            </Button>
-            <Link
-              icon={<EnvelopeOpenIcon color={colors.secondary} />}
-              type="text"
-              screen="ConfirmCode"
-              color="secondary"
-            >
-              Já possuo o código
-            </Link>
-          </View>
-        </KeyboardCloser>
-      </FullScreenContainer>
+          </Button>
+          <Link
+            icon={<EnvelopeOpenIcon color={colors.secondary} />}
+            type="text"
+            screen="ConfirmCode"
+            color="secondary"
+          >
+            Já possuo o código
+          </Link>
+        </View>
+      </KeyboardCloser>
     </ResetPasswordContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  content: {
     flex: 1,
     gap: 24,
     justifyContent: "center",

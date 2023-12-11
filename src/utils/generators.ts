@@ -1,8 +1,12 @@
+import { ListResponse } from "@src/models/ApiResponse";
 import { ChannelType } from "@src/models/ChannelType";
 import { Community } from "@src/models/Community";
 import { CommunityChannel } from "@src/models/CommunityChannel";
+import { EvasionReport } from "@src/models/EvasionReport";
 import { Message } from "@src/models/Message";
 import { User } from "@src/models/User";
+import { ImageFile } from "@src/types/RN";
+import moment from "moment";
 
 type Generator<T> = (costumInfo?: Partial<T>) => T;
 
@@ -17,6 +21,21 @@ export const arrayGenerator: ArrayGenerator = <T>(
       id: i + 1,
     } as any)
   );
+
+export const listResponseGenerator = <T>(
+  length: number,
+  generator: Generator<T>,
+  response?: Partial<ListResponse<T>>
+): ListResponse<T> => ({
+  meta: {
+    page: 1,
+    pageCount: length,
+    pages: 1,
+    total: length,
+  },
+  results: arrayGenerator(length, generator),
+  ...response,
+});
 
 export const userGenarator: Generator<User> = (user) => ({
   email: "email@email.com",
@@ -63,4 +82,26 @@ export const messageGenerator: Generator<Message> = (message) => ({
   user: userGenarator(),
   userId: 1,
   ...message,
+});
+
+export const imageFileGenerator: Generator<ImageFile> = (imageFile) => ({
+  name: "foto.png",
+  type: "image/png",
+  uri: "file://folder/subfolder/foto.png",
+  ...imageFile,
+});
+
+export const evasionReportGenerator: Generator<EvasionReport> = (
+  evasionReport
+) => ({
+  community: communityGenerator(),
+  communityId: 1,
+  id: 1,
+  reason: null,
+  removedAt: moment().toString(),
+  remover: null,
+  removerId: null,
+  user: userGenarator(),
+  userId: 1,
+  ...evasionReport,
 });

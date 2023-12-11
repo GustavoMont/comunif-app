@@ -14,5 +14,6 @@ const config: Config = {
   transformIgnorePatterns: [
     "node_modules/(?!((jest-)?react-native|react-native-confirmation-code-field|@react-native(-community)?)/)",
   ],
+  setupFiles: ["./node_modules/react-native-gesture-handler/jestSetup.js"],
 };
 export default config;

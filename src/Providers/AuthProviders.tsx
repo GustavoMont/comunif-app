@@ -31,6 +31,10 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const updateUser = (user: User) => {
+    setUser(user);
+  };
+
   const logout = async () => {
     await deleteToken();
     setUser(null);
@@ -96,7 +100,15 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signedIn, isCheckingToken, signUp, login, logout }}
+      value={{
+        user,
+        signedIn,
+        isCheckingToken,
+        signUp,
+        login,
+        logout,
+        updateUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

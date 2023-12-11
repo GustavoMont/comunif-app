@@ -85,6 +85,7 @@ describe("CommunityChannel Screen", () => {
     const community = communityGenerator({
       isMember: true,
       banner: "banner.com",
+      name: "toper-mans",
       communityChannels: arrayGenerator(2, communityChannelGenerator),
     });
     const navigation = {
@@ -124,11 +125,11 @@ describe("CommunityChannel Screen", () => {
           route.params.communityId
         );
       });
-      expect(await screen.findByText(community.name)).toBeOnTheScreen();
+      expect(await screen.findAllByText(community.name)).toHaveLength(2);
       const image = screen.getByTestId("community-pic");
       expect(image).toBeOnTheScreen();
       const bannerUrl = image.props.source.uri;
-      expect(bannerUrl).toBe(community.banner);
+      expect(bannerUrl).toContain(community.banner);
     });
     it("should back to community screen", () => {
       render(
@@ -194,6 +195,5 @@ describe("CommunityChannel Screen", () => {
         response.meta.pageCount / 2
       );
     });
-    it.todo("should use socket io to communicate");
   });
 });
